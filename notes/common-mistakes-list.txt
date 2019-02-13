@@ -1,0 +1,1 @@
+1. You cannot initialize an object of a Generic type parameter.
