@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="03f91d4a-a8b8-4f0c-b601-1d5000f709a5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/notes/common-mistakes-list.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArray.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="03f91d4a-a8b8-4f0c-b601-1d5000f709a5" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -75,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+            <state relative-caret-position="546">
+              <caret line="67" column="15" lean-forward="true" selection-start-line="67" selection-start-column="15" selection-end-line="67" selection-end-column="15" />
               <folding>
                 <element signature="e#783#784#0" expanded="true" />
                 <element signature="e#817#818#0" expanded="true" />
@@ -90,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="681">
-              <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+            <state relative-caret-position="591">
+              <caret line="47" selection-start-line="47" selection-end-line="47" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#205#206#0" expanded="true" />
@@ -140,9 +130,9 @@
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/notes/common-mistakes-list.txt" />
         <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArray.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImpl.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImplTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImpl.java" />
       </list>
     </option>
   </component>
@@ -220,15 +210,15 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550100343508" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550270359667" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -286,7 +276,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1550094407835</updated>
-      <workItem from="1550094410205" duration="2736000" />
+      <workItem from="1550094410205" duration="2912000" />
     </task>
     <servers />
   </component>
@@ -303,13 +293,21 @@
     <history-entry file="DynamicArrayImplTest_testMainFunctionality - 2019.02.14 at 02h 23m 09s.xml">
       <configuration name="DynamicArrayImplTest.testMainFunctionality" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="DynamicArrayImplTest_testMainFunctionality - 2019.02.14 at 02h 25m 13s.xml">
+      <configuration name="DynamicArrayImplTest.testMainFunctionality" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DynamicArrayImplTest_testMainFunctionality - 2019.02.14 at 02h 25m 28s.xml">
+      <configuration name="DynamicArrayImplTest.testMainFunctionality" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DynamicArrayImplTest_testMainFunctionality - 2019.02.14 at 02h 25m 46s.xml">
+      <configuration name="DynamicArrayImplTest.testMainFunctionality" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2736000" />
+    <option name="totallyTimeSpent" value="2912000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -381,8 +379,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        <state relative-caret-position="546">
+          <caret line="67" column="15" lean-forward="true" selection-start-line="67" selection-start-column="15" selection-end-line="67" selection-end-column="15" />
           <folding>
             <element signature="e#783#784#0" expanded="true" />
             <element signature="e#817#818#0" expanded="true" />
@@ -394,8 +392,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/datastructures/dynamicarray/DynamicArrayImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+        <state relative-caret-position="591">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#205#206#0" expanded="true" />
@@ -457,11 +455,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>com.github.alexeylisyutenko.toy-data-structures-algorithms</last-edited>
+          <last-edited>main|com.github.alexeylisyutenko.toy-data-structures-algorithms</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -481,7 +480,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Gradle: junit:junit:4.12</last-edited>
+          <last-edited>Gradle: org.apiguardian:apiguardian-api:1.0.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
