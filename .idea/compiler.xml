@@ -3,12 +3,18 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="com.github.alexeylisyutenko.datastructuresalgorithms.main" target="1.8" />
       <module name="com.github.alexeylisyutenko.datastructuresalgorithms.test" target="1.8" />
       <module name="com.github.alexeylisyutenko.toy_-datastructuresalgorithms.main" target="1.8" />
       <module name="com.github.alexeylisyutenko.toy_-datastructuresalgorithms.test" target="1.8" />
+      <module name="jmh-benchmarks" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,9 +1,9 @@
-package ru.alexeylisyutenko.maximumsubarray.devideandconquer;
+package ru.alexeylisyutenko.maximumsubarray.divideandconquer;
 
 import ru.alexeylisyutenko.maximumsubarray.MaximumSubarrayFinder;
 import ru.alexeylisyutenko.maximumsubarray.MaximumSubarrayInfo;
 
-public class DevideAndConquerMaximumSubarrayFinder implements MaximumSubarrayFinder {
+public class DivideAndConquerMaximumSubarrayFinder implements MaximumSubarrayFinder {
     @Override
     public MaximumSubarrayInfo find(int[] array) {
         return findMaxSubarray(array, 0, array.length - 1);

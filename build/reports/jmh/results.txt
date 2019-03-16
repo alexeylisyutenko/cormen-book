@@ -1,0 +1,2 @@
+Benchmark                Mode  Cnt           Score          Error  Units
+MyBenchmark.testMethod  thrpt   25  2817677362.925 ± 42858857.089  ops/s
