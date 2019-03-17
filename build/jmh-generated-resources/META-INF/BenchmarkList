@@ -1,1 +1,2 @@
-JMH S 47 ru.alexeylisyutenko.maximumsubarray.MyBenchmark S 76 ru.alexeylisyutenko.maximumsubarray.generated.MyBenchmark_testMethod_jmhTest S 10 testMethod S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
+JMH S 47 ru.alexeylisyutenko.maximumsubarray.MyBenchmark S 76 ru.alexeylisyutenko.maximumsubarray.generated.MyBenchmark_bruteForce_jmhTest S 10 bruteForce S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 47 ru.alexeylisyutenko.maximumsubarray.MyBenchmark S 82 ru.alexeylisyutenko.maximumsubarray.generated.MyBenchmark_divideAndConquer_jmhTest S 16 divideAndConquer S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
