@@ -2,42 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f91d4a-a8b8-4f0c-b601-1d5000f709a5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/jmh-reports/maximum-subarray-bruteforce-vs-divide-and-canquer-basecase-120.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jmh-reports/maximum-subarray-bruteforece-vs-pure-device-and-conquer-results.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquerbasecase/DivideAndConquerBaseCaseMaximumSubarrayFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/arrayinversion/ArrayInversion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/jmh/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/jmh/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteforceMaximumSubarrayFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteforceMaximumSubarrayFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/bruteforcebad/BruteforceBadMaximumSubarrayFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/bruteforcebad/BruteforceBadMaximumSubarrayFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ru/alexeylisyutenko/maximumsubarray/MaximumSubarrayFinderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ru/alexeylisyutenko/maximumsubarray/MaximumSubarrayFinderTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-classes/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_bruteForce_jmhTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-classes/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_bruteForce_jmhTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-classes/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_divideAndConquer_jmhTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-classes/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_divideAndConquer_jmhTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-resources/META-INF/BenchmarkList" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-resources/META-INF/BenchmarkList" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-resources/META-INF/CompilerHints" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-resources/META-INF/CompilerHints" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-sources/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_bruteForce_jmhTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-sources/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_bruteForce_jmhTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jmh-generated-sources/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_divideAndConquer_jmhTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/jmh-generated-sources/ru/alexeylisyutenko/maximumsubarray/generated/MyBenchmark_divideAndConquer_jmhTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/toy-data-structures-algorithms-1.0-SNAPSHOT-jmh.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/toy-data-structures-algorithms-1.0-SNAPSHOT-jmh.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jmh/results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/jmh/results.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jmh/jmh1011631089360664670stdout" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jmh/jmh11461195002218862603compilecommand" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jmh/jmh16338656746407627440stderr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteforceMaximumSubarrayFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteForceMaximumSubarrayFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforcebad/BruteforceBadMaximumSubarrayFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforcebad/BruteForceBadMaximumSubarrayFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/maximumsubarray/MaximumSubarrayFinderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/maximumsubarray/MaximumSubarrayFinderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/ru/alexeylisyutenko/maximumsubarray/divideandconquerbasecase/DivideAndConquerBaseCaseMaximumSubarrayFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/ru/alexeylisyutenko/maximumsubarray/divideandconquerbasecase/DivideAndConquerBaseCaseMaximumSubarrayFinder.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -111,11 +79,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jmh/java/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="66">
-              <caret line="53" column="11" lean-forward="true" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
+              <caret line="53" column="11" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2702#2703#0" expanded="true" />
@@ -123,15 +91,6 @@
                 <element signature="e#2919#2920#0" expanded="true" />
                 <element signature="e#2991#2992#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/util/Random.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="134" column="11" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -176,6 +135,36 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/arrayinversion/ArrayInversion.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="47" column="17" lean-forward="true" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/util/Collections.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="389">
+              <caret line="420" column="23" selection-start-line="420" selection-start-column="23" selection-end-line="420" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/lang/Integer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteForceMaximumSubarrayFinder.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -190,18 +179,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforcebad/BruteForceBadMaximumSubarrayFinder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -252,6 +229,8 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.java" />
         <option value="$PROJECT_DIR$/src/test/java/ru/alexeylisyutenko/maximumsubarray/MaximumSubarrayFinderTest.java" />
         <option value="$PROJECT_DIR$/src/jmh/java/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/arrayinversion/TwoNumbersInversion.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/arrayinversion/ArrayInversion.java" />
       </list>
     </option>
   </component>
@@ -281,24 +260,6 @@
             <path>
               <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
               <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="reports" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="reports" type="462c0819:PsiDirectoryNode" />
-              <item name="jmh" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
@@ -359,37 +320,7 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="alexeylisyutenko" type="462c0819:PsiDirectoryNode" />
-              <item name="maximumsubarray" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="alexeylisyutenko" type="462c0819:PsiDirectoryNode" />
-              <item name="maximumsubarray" type="462c0819:PsiDirectoryNode" />
-              <item name="bruteforce" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="alexeylisyutenko" type="462c0819:PsiDirectoryNode" />
-              <item name="maximumsubarray" type="462c0819:PsiDirectoryNode" />
-              <item name="divideandconquer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toy-data-structures-algorithms" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="alexeylisyutenko" type="462c0819:PsiDirectoryNode" />
-              <item name="maximumsubarray" type="462c0819:PsiDirectoryNode" />
-              <item name="divideandconquerbasecase" type="462c0819:PsiDirectoryNode" />
+              <item name="arrayinversion" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="toy-data-structures-algorithms" type="b2602c69:ProjectViewProjectNode" />
@@ -441,7 +372,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552832149640" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554057102708" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
@@ -491,6 +422,19 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration name="ArrayInversion" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.alexeylisyutenko.arrayinversion.ArrayInversion" />
+      <module name="com.github.alexeylisyutenko.toy-data-structures-algorithms.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.alexeylisyutenko.arrayinversion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="toy-data-structures-algorithms [jmhCompileGeneratedClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -503,25 +447,6 @@
         <option name="taskNames">
           <list>
             <option value="jmhCompileGeneratedClasses" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="toy-data-structures-algorithms [jmhJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jmhJar" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -585,11 +510,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ArrayInversion" />
         <item itemvalue="JUnit.MaximumSubarrayFinderTest.divideAndConquerBaseCaseSumArrayShouldWorkProperly" />
         <item itemvalue="Gradle.toy-data-structures-algorithms [wrapper]" />
         <item itemvalue="Gradle.toy-data-structures-algorithms [jmhRunBytecodeGenerator]" />
         <item itemvalue="Gradle.toy-data-structures-algorithms [jmhCompileGeneratedClasses]" />
-        <item itemvalue="Gradle.toy-data-structures-algorithms [jmhJar]" />
       </list>
     </recent_temporary>
   </component>
@@ -604,7 +529,7 @@
       <option name="presentableId" value="Default" />
       <updated>1550094407835</updated>
       <workItem from="1550094410205" duration="13070000" />
-      <workItem from="1552780817904" duration="13013000" />
+      <workItem from="1552780817904" duration="16045000" />
     </task>
     <servers />
   </component>
@@ -641,13 +566,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26083000" />
+    <option name="totallyTimeSpent" value="29115000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27848774" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27848774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -656,13 +581,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946752" weight="0.38053098" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946752" visible="true" weight="0.4477876" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.32920355" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49946752" visible="true" weight="0.3061947" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49946752" weight="0.3061947" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5005325" side_tool="true" weight="0.32920355" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32920355" />
@@ -813,13 +738,6 @@
     <entry file="file://$PROJECT_DIR$/jmh-reports/maximum-subarray-bruteforece-vs-pure-device-and-conquer-results.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteForceMaximumSubarrayFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" selection-start-line="7" selection-end-line="23" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jmh-reports/maximum-subarray-reports-basecase-120.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -831,13 +749,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="30" selection-start-line="30" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -873,13 +784,51 @@
     <entry file="file://$PROJECT_DIR$/src/jmh/java/ru/alexeylisyutenko/maximumsubarray/MyBenchmark.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
-          <caret line="53" column="11" lean-forward="true" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
+          <caret line="53" column="11" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2702#2703#0" expanded="true" />
             <element signature="e#2768#2769#0" expanded="true" />
             <element signature="e#2919#2920#0" expanded="true" />
             <element signature="e#2991#2992#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/bruteforce/BruteForceMaximumSubarrayFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" selection-start-line="7" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/util/Collections.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="420" column="23" selection-start-line="420" selection-start-column="23" selection-end-line="420" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/maximumsubarray/divideandconquer/DivideAndConquerMaximumSubarrayFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/alexeylisyutenko/arrayinversion/ArrayInversion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="47" column="17" lean-forward="true" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
