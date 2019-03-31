@@ -18,9 +18,11 @@ public class DivideAndConquerMaximumSubarrayFinder implements MaximumSubarrayFin
             MaximumSubarrayInfo rightMaxSubarray = findMaxSubarray(array, mid + 1, high);
             MaximumSubarrayInfo crossingMaxSubarray = findMaxCrossingSubarray(array, low, high, mid);
 
-            if (leftMaxSubarray.getSum() >= rightMaxSubarray.getSum() && leftMaxSubarray.getSum() >= crossingMaxSubarray.getSum()) {
+            if (leftMaxSubarray.getSum() >= rightMaxSubarray.getSum()
+                    && leftMaxSubarray.getSum() >= crossingMaxSubarray.getSum()) {
                 return leftMaxSubarray;
-            } else if (rightMaxSubarray.getSum() >= leftMaxSubarray.getSum() && rightMaxSubarray.getSum() >= crossingMaxSubarray.getSum()) {
+            } else if (rightMaxSubarray.getSum() >= leftMaxSubarray.getSum()
+                    && rightMaxSubarray.getSum() >= crossingMaxSubarray.getSum()) {
                 return rightMaxSubarray;
             } else {
                 return crossingMaxSubarray;

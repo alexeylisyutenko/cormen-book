@@ -31,13 +31,10 @@
 
 package ru.alexeylisyutenko.maximumsubarray;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.infra.Blackhole;
-import ru.alexeylisyutenko.maximumsubarray.bruteforce.BruteforceMaximumSubarrayFinder;
+import org.openjdk.jmh.annotations.*;
+import ru.alexeylisyutenko.maximumsubarray.bruteforce.BruteForceMaximumSubarrayFinder;
 import ru.alexeylisyutenko.maximumsubarray.divideandconquer.DivideAndConquerMaximumSubarrayFinder;
+import ru.alexeylisyutenko.maximumsubarray.divideandconquerbasecase.DivideAndConquerBaseCaseMaximumSubarrayFinder;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -45,27 +42,52 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 public class MyBenchmark {
 
-    final int[] array = randomIntArray(500, 31337);
-    final MaximumSubarrayFinder bruteForceMaximumSubarrayFinder = new BruteforceMaximumSubarrayFinder();
-    final MaximumSubarrayFinder divideAndConquerMaximumSubarrayFinder = new DivideAndConquerMaximumSubarrayFinder();
+    @Param({"10", "60", "80", "90", "110", "120", "130", "140", "150", "160", "170", "200", "250", "500"})
+    int size;
 
-    private static int[] randomIntArray(int size, long seed) {
-        Random random = new Random(seed);
-        return random.ints(size, -1000, 1000).toArray();
+    int[] array;
+    MaximumSubarrayFinder bruteForceMaximumSubarrayFinder;
+    MaximumSubarrayFinder divideAndConquerMaximumSubarrayFinder;
+    MaximumSubarrayFinder divideAndConquerBaseCaseMaximumSubarrayFinder;
+
+    @Setup
+    public void setup() {
+        array = randomIntArray(size, 31337);
+        bruteForceMaximumSubarrayFinder = new BruteForceMaximumSubarrayFinder();
+        divideAndConquerMaximumSubarrayFinder = new DivideAndConquerMaximumSubarrayFinder();
+        divideAndConquerBaseCaseMaximumSubarrayFinder = new DivideAndConquerBaseCaseMaximumSubarrayFinder();
     }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.SingleShotTime)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
     public MaximumSubarrayInfo bruteForce() {
         return bruteForceMaximumSubarrayFinder.find(array);
     }
 
     @Benchmark
-//    @BenchmarkMode(Mode.SingleShotTime)
+    @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
     public MaximumSubarrayInfo divideAndConquer() {
         return divideAndConquerMaximumSubarrayFinder.find(array);
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public MaximumSubarrayInfo divideAndConquerBaseCase() {
+        return divideAndConquerBaseCaseMaximumSubarrayFinder.find(array);
+    }
+
+    private int[] randomIntArray(int size, long seed) {
+        Random random = new Random(seed);
+        return random.ints(size, -1000, 1000).toArray();
     }
 
 }

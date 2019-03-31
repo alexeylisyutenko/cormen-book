@@ -1,0 +1,19 @@
+Benchmark                     (size)  Mode  Cnt   Score    Error  Units
+MyBenchmark.bruteForce            10  avgt   15   0.069 ±  0.002  us/op
+MyBenchmark.bruteForce            60  avgt   15   0.996 ±  0.032  us/op
+MyBenchmark.bruteForce            80  avgt   15   1.673 ±  0.062  us/op
+MyBenchmark.bruteForce           110  avgt   15   3.054 ±  0.129  us/op
+MyBenchmark.bruteForce           120  avgt   15   3.660 ±  0.147  us/op
+MyBenchmark.bruteForce           130  avgt   15   4.266 ±  0.152  us/op
+MyBenchmark.bruteForce           140  avgt   15   4.921 ±  0.180  us/op
+MyBenchmark.bruteForce           170  avgt   15   7.213 ±  0.253  us/op
+MyBenchmark.bruteForce           250  avgt   15  15.470 ±  0.590  us/op
+MyBenchmark.divideAndConquer      10  avgt   15   0.226 ±  0.009  us/op
+MyBenchmark.divideAndConquer      60  avgt   15   5.249 ± 14.311  us/op
+MyBenchmark.divideAndConquer      80  avgt   15   2.467 ±  0.031  us/op
+MyBenchmark.divideAndConquer     110  avgt   15   3.410 ±  0.102  us/op
+MyBenchmark.divideAndConquer     120  avgt   15   3.910 ±  0.332  us/op
+MyBenchmark.divideAndConquer     130  avgt   15   4.345 ±  0.408  us/op
+MyBenchmark.divideAndConquer     140  avgt   15   4.776 ±  0.467  us/op
+MyBenchmark.divideAndConquer     170  avgt   15   6.292 ±  0.700  us/op
+MyBenchmark.divideAndConquer     250  avgt   15   8.978 ±  0.482  us/op

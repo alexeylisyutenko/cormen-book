@@ -5,3 +5,5 @@ dontinline,*.*_ss_jmhStub
 dontinline,*.*_thrpt_jmhStub
 inline,ru/alexeylisyutenko/maximumsubarray/MyBenchmark.bruteForce
 inline,ru/alexeylisyutenko/maximumsubarray/MyBenchmark.divideAndConquer
+inline,ru/alexeylisyutenko/maximumsubarray/MyBenchmark.divideAndConquerBaseCase
+inline,ru/alexeylisyutenko/maximumsubarray/MyBenchmark.setup

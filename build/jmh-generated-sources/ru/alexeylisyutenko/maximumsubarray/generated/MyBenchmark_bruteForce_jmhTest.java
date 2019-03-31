@@ -75,7 +75,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_mybenchmark0_0.bruteForce(blackhole);
+                blackhole.consume(l_mybenchmark0_0.bruteForce());
                 res.allOps++;
             }
 
@@ -85,7 +85,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_mybenchmark0_0.bruteForce(blackhole);
+                    blackhole.consume(l_mybenchmark0_0.bruteForce());
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -116,7 +116,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_mybenchmark0_0.bruteForce(blackhole);
+            blackhole.consume(l_mybenchmark0_0.bruteForce());
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -142,7 +142,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_mybenchmark0_0.bruteForce(blackhole);
+                blackhole.consume(l_mybenchmark0_0.bruteForce());
                 res.allOps++;
             }
 
@@ -152,7 +152,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_mybenchmark0_0.bruteForce(blackhole);
+                    blackhole.consume(l_mybenchmark0_0.bruteForce());
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -183,7 +183,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_mybenchmark0_0.bruteForce(blackhole);
+            blackhole.consume(l_mybenchmark0_0.bruteForce());
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -209,7 +209,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_mybenchmark0_0.bruteForce(blackhole);
+                blackhole.consume(l_mybenchmark0_0.bruteForce());
                 res.allOps++;
             }
 
@@ -223,7 +223,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_mybenchmark0_0.bruteForce(blackhole);
+                    blackhole.consume(l_mybenchmark0_0.bruteForce());
                     res.allOps++;
                 }
                 control.preTearDown();
@@ -261,7 +261,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
             }
             for (int b = 0; b < batchSize; b++) {
                 if (control.volatileSpoiler) return;
-                l_mybenchmark0_0.bruteForce(blackhole);
+                blackhole.consume(l_mybenchmark0_0.bruteForce());
             }
             if (sample) {
                 buffer.add((System.nanoTime() - time) / opsPerInv);
@@ -317,7 +317,7 @@ public final class MyBenchmark_bruteForce_jmhTest {
         result.startTime = System.nanoTime();
         for (int b = 0; b < batchSize; b++) {
             if (control.volatileSpoiler) return;
-            l_mybenchmark0_0.bruteForce(blackhole);
+            blackhole.consume(l_mybenchmark0_0.bruteForce());
         }
         result.stopTime = System.nanoTime();
         result.realTime = realTime;
@@ -331,6 +331,11 @@ public final class MyBenchmark_bruteForce_jmhTest {
         MyBenchmark_jmhType val = f_mybenchmark0_0;
         if (val == null) {
             val = new MyBenchmark_jmhType();
+                Field f;
+                f = ru.alexeylisyutenko.maximumsubarray.MyBenchmark.class.getDeclaredField("size");
+                f.setAccessible(true);
+                f.set(val, Integer.valueOf(control.getParam("size")));
+            val.setup();
             f_mybenchmark0_0 = val;
         }
         return val;
