@@ -1,10 +1,8 @@
-package ru.alexeylisyutenko.arrayinversion;
+package ru.alexeylisyutenko.cormen.arrayinversion;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -15,14 +13,6 @@ public class ArrayInversion {
 
     public static void main(String[] args) {
         ArrayInversion arrayInversion = new ArrayInversion();
-//        arrayInversion.testFirstIsGreaterThanSecondProbability(100000000);
-
-//        int[] ints = arrayInversion.generateRandomPermutation(10);
-//        System.out.println(Arrays.toString(ints));
-
-//        long inversions = arrayInversion.calculateInversions(ints);
-//        System.out.println(inversions);
-
         arrayInversion.testInversionSizeExpectedValue(50, 1000000);
     }
 
