@@ -15,7 +15,10 @@ class RandomSearchTest {
         int[] array = randomIntArray(20);
         System.out.println(Arrays.toString(array));
 
-        Pair<Integer, Long> searchResult = RandomSearch.search(array, array[2]);
+        int elementToSearch = array[RandomUtils.nextInt(0, 20)];
+        System.out.println("Searching element: " + elementToSearch);
+
+        Pair<Integer, Long> searchResult = RandomSearch.search(array, elementToSearch);
         System.out.println(searchResult);
     }
 
