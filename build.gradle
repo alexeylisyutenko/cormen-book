@@ -6,7 +6,7 @@ plugins {
 group 'com.github.alexeylisyutenko'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -18,7 +18,8 @@ test {
 
 dependencies {
     jmh 'org.apache.commons:commons-lang3:3.8.1'
-    
+    compile 'com.google.guava:guava:27.1-jre'
+    compileOnly 'org.apache.commons:commons-lang3:3.8.1'
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
