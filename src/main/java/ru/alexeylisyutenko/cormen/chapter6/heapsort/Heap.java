@@ -1,13 +1,13 @@
 package ru.alexeylisyutenko.cormen.chapter6.heapsort;
 
-public class HeapSort {
+public class Heap {
 
     public static void sort(int[] array) {
         HeapArray heapArray = new HeapArray(array);
         heapSort(heapArray);
     }
 
-    private static void maxHeapify(HeapArray heapArray, int index) {
+    public static void maxHeapify(HeapArray heapArray, int index) {
         while (true) {
             int left = left(index);
             int right = right(index);
@@ -28,13 +28,13 @@ public class HeapSort {
         }
     }
 
-    private static void buildMaxHeap(HeapArray heapArray) {
+    public static void buildMaxHeap(HeapArray heapArray) {
         for (int i = heapArray.getHeapSize() / 2; i >= 1; i--) {
             maxHeapify(heapArray, i);
         }
     }
 
-    private static void heapSort(HeapArray heapArray) {
+    public static void heapSort(HeapArray heapArray) {
         buildMaxHeap(heapArray);
         for (int i = heapArray.getHeapSize(); i >= 2; i--) {
             heapArray.exchange(1, i);
@@ -43,12 +43,16 @@ public class HeapSort {
         }
     }
 
-    private static int left(int index) {
+    public static int left(int index) {
         return 2 * index;
     }
 
-    private static int right(int index) {
+    public static int right(int index) {
         return 2 * index + 1;
+    }
+
+    public static int parent(int index) {
+        return index / 2;
     }
 
 }
