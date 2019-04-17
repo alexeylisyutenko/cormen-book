@@ -21,7 +21,7 @@ public class HeapArray {
     }
 
     private void ensureIndexValidity(int index) {
-        if (index < 1 || index > heapSize) {
+        if (index < 1 || index > array.length) {
             throw new IllegalArgumentException("Incorrect index");
         }
     }
