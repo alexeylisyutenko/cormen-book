@@ -1,5 +1,7 @@
 package ru.alexeylisyutenko.cormen.chapter7;
 
+import static ru.alexeylisyutenko.helper.Helpers.exchange;
+
 public final class QuickSort {
 
     public static void sort(int[] array) {
@@ -27,10 +29,6 @@ public final class QuickSort {
         return i + 1;
     }
 
-    public static void exchange(int[] array, int firstIndex, int secondIndex) {
-        int temp = array[firstIndex];
-        array[firstIndex] = array[secondIndex];
-        array[secondIndex] = temp;
-    }
+
 
 }
