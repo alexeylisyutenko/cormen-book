@@ -13,7 +13,7 @@ public class FuzzySort {
 
     public static void fuzzyQuickSort(Interval[] intervals, int p, int r) {
         while (p < r) {
-            System.out.println("Running fuzzyQuickSort()");
+//            System.out.println("Running fuzzyQuickSort()");
             Pair<Integer, Integer> partition = partition(intervals, p, r);
             fuzzyQuickSort(intervals, p, partition.getLeft() - 1);
             p = partition.getRight() + 1;
@@ -26,7 +26,7 @@ public class FuzzySort {
         int lt = p;
         int gt = r;
         while (i <= gt) {
-            if (overlap(intervals[i], x)) {
+            if (overlaps(intervals[i], x)) {
                 x = new Interval(Math.max(intervals[i].getLeft(), x.getLeft()), Math.min(intervals[i].getRight(), x.getRight()));
                 i++;
             } else if (intervals[i].getLeft() < x.getLeft()) {
@@ -41,7 +41,7 @@ public class FuzzySort {
         return Pair.of(lt, gt);
     }
 
-    public static boolean overlap(Interval interval1, Interval interval2) {
+    public static boolean overlaps(Interval interval1, Interval interval2) {
         return !(interval1.getRight() < interval2.getLeft() || interval2.getRight() < interval1.getLeft());
     }
 
