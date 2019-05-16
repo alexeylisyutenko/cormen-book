@@ -16,6 +16,10 @@ test {
     useJUnitPlatform()
 }
 
+jmh {
+    exclude = ['MyBenchmark']
+}
+
 dependencies {
     jmh 'org.apache.commons:commons-lang3:3.8.1'
     compile 'com.google.guava:guava:27.1-jre'

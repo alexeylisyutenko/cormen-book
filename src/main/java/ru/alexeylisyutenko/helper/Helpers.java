@@ -15,6 +15,13 @@ public final class Helpers {
         return random.ints(size, 1, randomNumberBound).toArray();
     }
 
+    public static int[] randomIntArrayOfFixedLength(int size, int digits) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        int lowerBound = (int) Math.pow(10, digits - 1);
+        int upperBound = (int) Math.pow(10, digits) - 1;
+        return random.ints(size, lowerBound, upperBound).toArray();
+    }
+
     public static void exchange(int[] array, int firstIndex, int secondIndex) {
         int temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
