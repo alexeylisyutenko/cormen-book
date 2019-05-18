@@ -1,6 +1,7 @@
 package ru.alexeylisyutenko.cormen.chapter7;
 
 import com.google.common.collect.Ordering;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.helper.Helpers;
 
@@ -34,6 +35,20 @@ class HoareQuickSortTest {
         List<Integer> arrayAsList = IntStream.of(array).boxed().collect(Collectors.toList());
         boolean ordered = Ordering.natural().isOrdered(arrayAsList);
         assertTrue(ordered);
+    }
+
+    @Test
+    void hoareQuickSortMultipleTestsRandomArrays() {
+        for (int i = 0; i < 100000; i++) {
+            int size = RandomUtils.nextInt(0, 500);
+            int[] array = Helpers.randomPositiveIntArray(size, 1000);
+            int[] arrayCopy = Arrays.copyOf(array, array.length);
+
+            HoareQuickSort.sort(array);
+
+            Arrays.sort(arrayCopy);
+            assertArrayEquals(arrayCopy, array);
+        }
     }
 
 }

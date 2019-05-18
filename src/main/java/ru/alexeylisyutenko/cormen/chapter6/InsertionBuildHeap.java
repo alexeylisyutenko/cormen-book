@@ -1,7 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort.problem;
-
-import ru.alexeylisyutenko.cormen.chapter6.heapsort.Heap;
-import ru.alexeylisyutenko.cormen.chapter6.heapsort.HeapArray;
+package ru.alexeylisyutenko.cormen.chapter6;
 
 @SuppressWarnings("ALL")
 public final class InsertionBuildHeap {
@@ -19,9 +16,9 @@ public final class InsertionBuildHeap {
             throw new IllegalStateException(String.format("New key must be greater than current key value. Current value: %d.", heapArray.get(index)));
         }
         heapArray.set(index, key);
-        while (index > 1 && heapArray.get(Heap.parent(index)) < key) {
-            heapArray.exchange(Heap.parent(index), index);
-            index = Heap.parent(index);
+        while (index > 1 && heapArray.get(HeapSort.parent(index)) < key) {
+            heapArray.exchange(HeapSort.parent(index), index);
+            index = HeapSort.parent(index);
         }
     }
 

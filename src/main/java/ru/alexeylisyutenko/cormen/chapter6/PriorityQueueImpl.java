@@ -1,7 +1,6 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort;
+package ru.alexeylisyutenko.cormen.chapter6;
 
 import lombok.ToString;
-import ru.alexeylisyutenko.helper.Helpers;
 
 @ToString
 public class PriorityQueueImpl implements PriorityQueue {
@@ -16,7 +15,7 @@ public class PriorityQueueImpl implements PriorityQueue {
     @Override
     public int heapMaximum() {
         if (heapArray.getHeapSize() < 1) {
-            throw new IllegalStateException("Heap is empty");
+            throw new IllegalStateException("HeapSort is empty");
         }
         return heapArray.get(1);
     }
@@ -24,12 +23,12 @@ public class PriorityQueueImpl implements PriorityQueue {
     @Override
     public int heapExtractMaximum() {
         if (heapArray.getHeapSize() < 1) {
-            throw new IllegalStateException("Heap is empty");
+            throw new IllegalStateException("HeapSort is empty");
         }
         int maximum = heapArray.get(1);
         heapArray.set(1, heapArray.get(heapArray.getHeapSize()));
         heapArray.decHeapSize();
-        Heap.maxHeapify(heapArray, 1);
+        HeapSort.maxHeapify(heapArray, 1);
         return maximum;
     }
 
@@ -39,9 +38,9 @@ public class PriorityQueueImpl implements PriorityQueue {
             throw new IllegalStateException(String.format("New key must be greater than current key value. Current value: %d.", heapArray.get(index)));
         }
         heapArray.set(index, key);
-        while (index > 1 && heapArray.get(Heap.parent(index)) < key) {
-            heapArray.exchange(Heap.parent(index), index);
-            index = Heap.parent(index);
+        while (index > 1 && heapArray.get(HeapSort.parent(index)) < key) {
+            heapArray.exchange(HeapSort.parent(index), index);
+            index = HeapSort.parent(index);
         }
     }
 

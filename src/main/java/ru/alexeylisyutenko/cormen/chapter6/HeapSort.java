@@ -1,6 +1,6 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort;
+package ru.alexeylisyutenko.cormen.chapter6;
 
-public class Heap {
+public class HeapSort {
 
     public static void sort(int[] array) {
         HeapArray heapArray = new HeapArray(array);

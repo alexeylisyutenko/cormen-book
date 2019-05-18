@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QuickSortTest {
@@ -32,12 +33,12 @@ class QuickSortTest {
         for (int i = 0; i < 100000; i++) {
             int size = RandomUtils.nextInt(0, 500);
             int[] array = Helpers.randomPositiveIntArray(size, 1000);
+            int[] arrayCopy = Arrays.copyOf(array, array.length);
 
             QuickSort.sort(array);
 
-            List<Integer> arrayAsList = IntStream.of(array).boxed().collect(Collectors.toList());
-            boolean ordered = Ordering.natural().isOrdered(arrayAsList);
-            assertTrue(ordered);
+            Arrays.sort(arrayCopy);
+            assertArrayEquals(arrayCopy, array);
         }
     }
 

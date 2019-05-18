@@ -1,17 +1,15 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort.problem;
+package ru.alexeylisyutenko.cormen.chapter6;
 
 import org.junit.jupiter.api.Test;
-import ru.alexeylisyutenko.cormen.chapter6.heapsort.Heap;
-import ru.alexeylisyutenko.cormen.chapter6.heapsort.HeapArray;
+import ru.alexeylisyutenko.cormen.chapter6.HeapSort;
+import ru.alexeylisyutenko.cormen.chapter6.HeapArray;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class InsertionBuildHeapTest {
+class InsertionBuildHeapSortTest {
 
     @Test
     void compareTwoBuildHeapVersions() {
         HeapArray heapArray = new HeapArray(new int[]{4, 1, 3, 2, 16, 9, 10, 14, 8, 7});
-        Heap.buildMaxHeap(heapArray);
+        HeapSort.buildMaxHeap(heapArray);
         System.out.println(heapArray);
 
         HeapArray heapArray2 = new HeapArray(new int[]{4, 1, 3, 2, 16, 9, 10, 14, 8, 7});

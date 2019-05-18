@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort;
+package ru.alexeylisyutenko.cormen.chapter6;
 
 import lombok.ToString;
 

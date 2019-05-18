@@ -1,7 +1,8 @@
-package ru.alexeylisyutenko.cormen.chapter6.heapsort;
+package ru.alexeylisyutenko.cormen.chapter6;
 
 import org.junit.jupiter.api.Test;
-import ru.alexeylisyutenko.helper.Helpers;
+import ru.alexeylisyutenko.cormen.chapter6.PriorityQueue;
+import ru.alexeylisyutenko.cormen.chapter6.PriorityQueueImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -9,10 +9,10 @@ public final class QuickSort {
     }
 
     private static void quickSort(int[] array, int p, int r) {
-        if (p < r) {
+        while (p < r) {
             int q = partition(array, p, r);
             quickSort(array, p, q - 1);
-            quickSort(array, q + 1, r);
+            p = q + 1;
         }
     }
 
@@ -28,7 +28,5 @@ public final class QuickSort {
         exchange(array, i + 1, r);
         return i + 1;
     }
-
-
 
 }
