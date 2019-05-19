@@ -17,11 +17,11 @@ import static ru.alexeylisyutenko.helper.Helpers.randomPositiveIntArray;
 @State(Scope.Thread)
 public class SortingAlgorithmsBenchmark {
 
-//    @Param({"10", "100", "1000", "10000", "100000"})
-//    int size;
-
-    @Param({"10", "100", "200", "300", "300"})
+    @Param({"10", "100", "1000", "10000", "100000"})
     int size;
+
+//    @Param({"10", "100", "200", "300", "300"})
+//    int size;
 
     int[] array;
 
@@ -30,15 +30,15 @@ public class SortingAlgorithmsBenchmark {
         array = randomPositiveIntArray(size, (int) Math.pow(10, 7) - 1);
     }
 
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] baseline() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        return arrayToSort;
-//    }
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] baseline() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        return arrayToSort;
+    }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -51,38 +51,38 @@ public class SortingAlgorithmsBenchmark {
         return arrayToSort;
     }
 
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] hoareQuickSort() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        HoareQuickSort.sort(arrayToSort);
-//        return arrayToSort;
-//    }
-//
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] quickSortWithEqualElements() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        QuickSortWithEqualElements.sort(arrayToSort);
-//        return arrayToSort;
-//    }
-//
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] heapSort() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        HeapSort.sort(arrayToSort);
-//        return arrayToSort;
-//    }
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] hoareQuickSort() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        HoareQuickSort.sort(arrayToSort);
+        return arrayToSort;
+    }
+
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] quickSortWithEqualElements() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        QuickSortWithEqualElements.sort(arrayToSort);
+        return arrayToSort;
+    }
+
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] heapSort() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        HeapSort.sort(arrayToSort);
+        return arrayToSort;
+    }
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -95,26 +95,26 @@ public class SortingAlgorithmsBenchmark {
         return arrayToSort;
     }
 
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] mergeSort() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        MergeSort.sort(arrayToSort);
-//        return arrayToSort;
-//    }
-//
-//    @Benchmark
-//    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-//    @BenchmarkMode(Mode.AverageTime)
-//    @Warmup(iterations = 3, time = 2)
-//    @Measurement(iterations = 3, time = 2)
-//    public int[] mergeSortWithInsertionSortBaseCase() {
-//        int[] arrayToSort = Arrays.copyOf(array, array.length);
-//        MergeSortWithInsertionSortBaseCase.sort(arrayToSort);
-//        return arrayToSort;
-//    }
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] mergeSort() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        MergeSort.sort(arrayToSort);
+        return arrayToSort;
+    }
+
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    @Warmup(iterations = 3, time = 2)
+    @Measurement(iterations = 3, time = 2)
+    public int[] mergeSortWithInsertionSortBaseCase() {
+        int[] arrayToSort = Arrays.copyOf(array, array.length);
+        MergeSortWithInsertionSortBaseCase.sort(arrayToSort);
+        return arrayToSort;
+    }
 
 }
