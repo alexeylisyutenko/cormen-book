@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.maximumsubarray;
+package ru.alexeylisyutenko.cormen.chapter4.maximumsubarray;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

@@ -1,17 +1,20 @@
-package ru.alexeylisyutenko.cormen.maximumsubarray.divideandconquer;
+package ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.divideandconquerbasecase;
 
-import ru.alexeylisyutenko.cormen.maximumsubarray.MaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.MaximumSubarrayInfo;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.MaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.MaximumSubarrayInfo;
 
-public class DivideAndConquerMaximumSubarrayFinder implements MaximumSubarrayFinder {
+public class DivideAndConquerBaseCaseMaximumSubarrayFinder implements MaximumSubarrayFinder {
+
+    private static final int BASELINE_CONSTANT = 120;
+
     @Override
     public MaximumSubarrayInfo find(int[] array) {
         return findMaxSubarray(array, 0, array.length - 1);
     }
 
     private MaximumSubarrayInfo findMaxSubarray(int[] array, int low, int high) {
-        if (low == high) {
-            return new MaximumSubarrayInfo(low, high, array[low]);
+        if (high - low + 1 <= BASELINE_CONSTANT) {
+            return bruteForceFind(array, low, high);
         } else {
             int mid = (low + high) / 2;
             MaximumSubarrayInfo leftMaxSubarray = findMaxSubarray(array, low, mid);
@@ -28,6 +31,24 @@ public class DivideAndConquerMaximumSubarrayFinder implements MaximumSubarrayFin
                 return crossingMaxSubarray;
             }
         }
+    }
+
+    private MaximumSubarrayInfo bruteForceFind(int[] array, int low, int high) {
+        int maxLeft = -1;
+        int maxRight = -1;
+        long sum = Long.MIN_VALUE;
+        for (int i = low; i <= high; i++) {
+            long currentSum = 0;
+            for (int j = i; j <= high; j++) {
+                currentSum = currentSum + array[j];
+                if (currentSum > sum) {
+                    sum = currentSum;
+                    maxLeft = i;
+                    maxRight = j;
+                }
+            }
+        }
+        return new MaximumSubarrayInfo(maxLeft, maxRight, sum);
     }
 
     private MaximumSubarrayInfo findMaxCrossingSubarray(int[] array, int low, int high, int mid) {

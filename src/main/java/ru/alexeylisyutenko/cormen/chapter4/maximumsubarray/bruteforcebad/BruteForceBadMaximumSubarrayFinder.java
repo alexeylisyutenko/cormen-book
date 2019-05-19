@@ -1,7 +1,7 @@
-package ru.alexeylisyutenko.cormen.maximumsubarray.bruteforcebad;
+package ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.bruteforcebad;
 
-import ru.alexeylisyutenko.cormen.maximumsubarray.MaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.MaximumSubarrayInfo;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.MaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.MaximumSubarrayInfo;
 
 public class BruteForceBadMaximumSubarrayFinder implements MaximumSubarrayFinder {
     @Override

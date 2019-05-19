@@ -1,11 +1,11 @@
-package ru.alexeylisyutenko.cormen.maximumsubarray;
+package ru.alexeylisyutenko.cormen.chapter4.maximumsubarray;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
-import ru.alexeylisyutenko.cormen.maximumsubarray.bruteforce.BruteForceMaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.bruteforcebad.BruteForceBadMaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.divideandconquer.DivideAndConquerMaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.divideandconquerbasecase.DivideAndConquerBaseCaseMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.bruteforce.BruteForceMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.bruteforcebad.BruteForceBadMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.divideandconquer.DivideAndConquerMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.divideandconquerbasecase.DivideAndConquerBaseCaseMaximumSubarrayFinder;
 
 import java.util.Arrays;
 

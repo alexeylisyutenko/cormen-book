@@ -29,12 +29,12 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ru.alexeylisyutenko.cormen.maximumsubarray;
+package ru.alexeylisyutenko.cormen.chapter4.maximumsubarray;
 
 import org.openjdk.jmh.annotations.*;
-import ru.alexeylisyutenko.cormen.maximumsubarray.bruteforce.BruteForceMaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.divideandconquer.DivideAndConquerMaximumSubarrayFinder;
-import ru.alexeylisyutenko.cormen.maximumsubarray.divideandconquerbasecase.DivideAndConquerBaseCaseMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.bruteforce.BruteForceMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.divideandconquer.DivideAndConquerMaximumSubarrayFinder;
+import ru.alexeylisyutenko.cormen.chapter4.maximumsubarray.divideandconquerbasecase.DivideAndConquerBaseCaseMaximumSubarrayFinder;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
