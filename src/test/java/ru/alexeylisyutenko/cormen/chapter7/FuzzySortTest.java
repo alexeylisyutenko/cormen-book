@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.alexeylisyutenko.cormen.chapter7.FuzzySort.*;
-import static ru.alexeylisyutenko.helper.Helpers.round;
+import static ru.alexeylisyutenko.helper.Helpers.roundHalfUp;
 
 class FuzzySortTest {
 
@@ -84,10 +84,10 @@ class FuzzySortTest {
     private Interval[] generateRandomIntervals(int size, double maxDouble) {
         Interval[] intervals = new Interval[size];
         for (int i = 0; i < size; i++) {
-            double left = round(RandomUtils.nextDouble(0.0, maxDouble), 1);
+            double left = roundHalfUp(RandomUtils.nextDouble(0.0, maxDouble), 1);
             double right;
             do {
-                right = round(RandomUtils.nextDouble(0.0, maxDouble), 1);
+                right = roundHalfUp(RandomUtils.nextDouble(0.0, maxDouble), 1);
             } while (right < left);
             intervals[i] = new Interval(left, right);
         }
@@ -97,7 +97,7 @@ class FuzzySortTest {
     private Interval[] generateRandomOverlappedIntervals(int size) {
         Interval[] intervals = new Interval[size];
         for (int i = 0; i < size; i++) {
-            intervals[i] = new Interval(round(RandomUtils.nextDouble(0.0, 5.0), 1), round(RandomUtils.nextDouble(5.0, 10.0), 1));
+            intervals[i] = new Interval(roundHalfUp(RandomUtils.nextDouble(0.0, 5.0), 1), roundHalfUp(RandomUtils.nextDouble(5.0, 10.0), 1));
         }
         return intervals;
     }
