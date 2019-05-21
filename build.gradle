@@ -17,7 +17,7 @@ test {
 }
 
 jmh {
-    exclude = ['MyBenchmark']
+    exclude = ['MyBenchmark', 'SortingAlgorithmsBenchmark']
 }
 
 dependencies {

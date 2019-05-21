@@ -12,7 +12,7 @@ class BucketSortTest {
 
     @Test
     void bucketSortDemo() {
-        double[] array = randomDoubleArray(20, 3);
+        double[] array = randomDoubleArray(2000, 3);
         System.out.println(Arrays.toString(array));
         BucketSort.sort(array);
         System.out.println(Arrays.toString(array));

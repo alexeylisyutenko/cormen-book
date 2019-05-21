@@ -13,7 +13,6 @@ public final class Helpers {
 
     public static double[] randomDoubleArray(int size, int places) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-
         return random.doubles(size).map(value -> roundFloor(value, places)).toArray();
     }
 

@@ -1,0 +1,9 @@
+Benchmark                                                       (size)  Mode  Cnt      Score     Error  Units
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance      10  avgt   20      0.533 ±   0.018  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance      50  avgt   20      2.593 ±   0.080  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance     100  avgt   20      5.447 ±   0.108  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance     200  avgt   20     10.947 ±   0.330  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance     500  avgt   20     29.531 ±   1.124  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance    1000  avgt   20     64.904 ±   1.754  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance   10000  avgt   20    922.710 ±  28.769  us/op
+BucketSortPointsByOriginDistanceBenchmark.sortPointsByDistance  100000  avgt   20  24188.574 ± 960.064  us/op
