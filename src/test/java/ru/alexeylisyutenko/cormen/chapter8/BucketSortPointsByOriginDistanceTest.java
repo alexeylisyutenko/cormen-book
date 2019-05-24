@@ -11,7 +11,7 @@ class BucketSortPointsByOriginDistanceTest {
 
     @Test
     void bucketSortPointsDemo() {
-        DoublePoint[] points = generateRandomPoints(50000);
+        DoublePoint[] points = generateRandomPoints(5);
         System.out.println(Arrays.toString(points));
         DoublePoint[] sortedPoints = BucketSortPointsByOriginDistance.sort(points);
         System.out.println(Arrays.toString(sortedPoints));
