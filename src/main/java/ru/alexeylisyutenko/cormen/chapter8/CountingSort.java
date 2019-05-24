@@ -9,7 +9,7 @@ public class CountingSort {
      * @param k max number
      * @return sorted array 
      */
-    public static int[] sort(int[] array, int k) {
+    public static void sort(int[] array, int k) {
         if (k < 0) {
             throw new IllegalArgumentException("Incorrect k value: " + k);
         }
@@ -41,7 +41,7 @@ public class CountingSort {
             counts[current]--;
         }
 
-        return sortedArray;
+        System.arraycopy(sortedArray, 0, array, 0, sortedArray.length);
     }
 
 }

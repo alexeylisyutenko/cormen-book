@@ -17,7 +17,8 @@ test {
 }
 
 jmh {
-    exclude = ['MyBenchmark', 'SortingAlgorithmsBenchmark']
+    jvmArgs = ['-Djmh.separateClasspathJAR=true']
+    exclude = ['MyBenchmark', 'SortingAlgorithmsBenchmark', 'BucketSortPointsByOriginDistanceBenchmark']
 }
 
 dependencies {
