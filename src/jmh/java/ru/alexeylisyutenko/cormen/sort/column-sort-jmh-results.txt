@@ -1,0 +1,3 @@
+Benchmark                       Mode  Cnt      Score     Error  Units
+ColumnSortBenchmark.columnSort  avgt   25  13232.624 ± 174.925  us/op
+ColumnSortBenchmark.quickSort   avgt   25    288.469 ±   7.909  us/op
