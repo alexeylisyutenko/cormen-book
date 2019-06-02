@@ -17,7 +17,7 @@ class QuickSortTest {
 
     @Test
     void quickSortShouldWorkProperly() {
-        int[] array = Helpers.randomPositiveIntArray(20, 100);
+        int[] array = Helpers.randomPositiveIntArray(1000000, 10000000);
         System.out.println(Arrays.toString(array));
 
         QuickSort.sort(array);
