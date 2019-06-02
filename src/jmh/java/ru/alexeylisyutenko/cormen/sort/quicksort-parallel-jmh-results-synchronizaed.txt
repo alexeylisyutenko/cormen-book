@@ -1,0 +1,13 @@
+Benchmark                                           (size)  Mode  Cnt         Score        Error  Units
+QuickSortParallelBenchmark.quickSort                  1000  avgt   15        32.871 ±      1.583  us/op
+QuickSortParallelBenchmark.quickSort                 20000  avgt   15      1470.338 ±     51.459  us/op
+QuickSortParallelBenchmark.quickSort              10000000  avgt   15   1162388.260 ±  27114.806  us/op
+QuickSortParallelBenchmark.quickSort             100000000  avgt   15  12860676.829 ± 328267.139  us/op
+QuickSortParallelBenchmark.quickSortParallel          1000  avgt   15        38.335 ±      3.639  us/op
+QuickSortParallelBenchmark.quickSortParallel         20000  avgt   15       826.226 ±     83.524  us/op
+QuickSortParallelBenchmark.quickSortParallel      10000000  avgt   15    350399.461 ±  34321.540  us/op
+QuickSortParallelBenchmark.quickSortParallel     100000000  avgt   15   3979668.422 ± 367871.050  us/op
+QuickSortParallelBenchmark.standardParallelSort       1000  avgt   15        25.264 ±      2.794  us/op
+QuickSortParallelBenchmark.standardParallelSort      20000  avgt   15       656.645 ±     61.027  us/op
+QuickSortParallelBenchmark.standardParallelSort   10000000  avgt   15    349551.572 ±  22616.883  us/op
+QuickSortParallelBenchmark.standardParallelSort  100000000  avgt   15   3587038.300 ± 230466.909  us/op

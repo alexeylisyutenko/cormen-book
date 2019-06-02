@@ -12,7 +12,7 @@ import static ru.alexeylisyutenko.helper.Helpers.randomPositiveIntArray;
 @State(Scope.Thread)
 public class QuickSortParallelBenchmark {
 
-    @Param({"1000", "20000", "10000000", "100000000"})
+    @Param({"10000000", "100000000"})
     int size;
 
     int[] array;
