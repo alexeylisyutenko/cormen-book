@@ -18,10 +18,10 @@ public class OrderStatisticSelection {
         if (index < 1 || index > array.length) {
             throw new IllegalArgumentException("Incorrect index argument");
         }
-        return randomizedSelect(array, 0, array.length - 1, index);
+        return iterativeRandomizedSelect(array, 0, array.length - 1, index);
     }
 
-    private static int randomizedSelect(int[] array, int lo, int hi, int index) {
+    private static int recursiveRandomizedSelect(int[] array, int lo, int hi, int index) {
         if (lo == hi) {
             return array[lo];
         }
@@ -31,9 +31,28 @@ public class OrderStatisticSelection {
             return array[q];
         }
         if (index < k) {
-            return randomizedSelect(array, lo, q - 1, index);
+            return recursiveRandomizedSelect(array, lo, q - 1, index);
         } else {
-            return randomizedSelect(array, q + 1, hi, index - k);
+            return recursiveRandomizedSelect(array, q + 1, hi, index - k);
+        }
+    }
+
+    private static int iterativeRandomizedSelect(int[] array, int lo, int hi, int index) {
+        while (true) {
+            if (lo == hi) {
+                return array[lo];
+            }
+            int q = randomizedPartition(array, lo, hi);
+            int k = q - lo + 1;
+            if (k == index) {
+                return array[q];
+            }
+            if (index < k) {
+                hi = q - 1;
+            } else {
+                lo = q + 1;
+                index -= k;
+            }
         }
     }
 
