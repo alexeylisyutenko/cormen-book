@@ -3,6 +3,7 @@ package ru.alexeylisyutenko.helper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 public final class Helpers {
 
@@ -31,6 +32,10 @@ public final class Helpers {
         int lowerBound = (int) Math.pow(10, digits - 1);
         int upperBound = (int) Math.pow(10, digits) - 1;
         return random.ints(size, lowerBound, upperBound).toArray();
+    }
+
+    public static int[] sequentialIntArray(int size) {
+        return IntStream.rangeClosed(1, size).toArray();
     }
 
     public static void exchange(int[] array, int firstIndex, int secondIndex) {
