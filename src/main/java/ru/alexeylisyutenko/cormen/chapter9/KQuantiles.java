@@ -1,23 +1,22 @@
 package ru.alexeylisyutenko.cormen.chapter9;
 
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.alexeylisyutenko.helper.Helpers.exchange;
+import static ru.alexeylisyutenko.helper.Helpers.*;
 
 @SuppressWarnings("Duplicates")
 public class KQuantiles {
 
-    public static int[] quantiles(int[] array, int k) {
+    public static int[] kQuantiles(int[] array, int k) {
         if (k < 1 || k > array.length + 1) {
             throw new IllegalArgumentException("Incorrect k value");
         }
         int[] resultingQuantiles = new int[k - 1];
-        findQuantiles(array, 0, array.length - 1, k, resultingQuantiles, 0);
+        findKQuantiles(array, 0, array.length - 1, k, resultingQuantiles, 0);
         return resultingQuantiles;
     }
 
-    private static void findQuantiles(int[] array, int lo, int hi, int k, int[] resultingQuantiles, int offset) {
+    private static void findKQuantiles(int[] array, int lo, int hi, int k, int[] quantiles, int offset) {
         if (k == 1) {
             return;
         }
@@ -25,19 +24,22 @@ public class KQuantiles {
         int n = hi - lo + 1;
 
         int currentQuantileNumber = k / 2;
-        int currentQuantileIndex = (int) Math.ceil(currentQuantileNumber * (double) n / k);
+        int currentQuantileIndex = ceilToInt(currentQuantileNumber * (double) n / k);
 
         int selectedOrderStatistics = randomizedSelect(array, lo, hi, currentQuantileIndex);
-        resultingQuantiles[offset + currentQuantileNumber - 1] = selectedOrderStatistics;
+        quantiles[offset + currentQuantileNumber - 1] = selectedOrderStatistics;
 
-        int quantilesInLeftPart = (int) Math.floor((double) k / 2);
-        findQuantiles(array, lo, offset + currentQuantileIndex - 1, quantilesInLeftPart,
-                resultingQuantiles, offset);
+        int quantilesInLeftPart = floorToInt((double) k / 2);
+        if (quantilesInLeftPart > 1) {
+            findKQuantiles(array, lo, lo + currentQuantileIndex - 2, quantilesInLeftPart, quantiles, offset);
+        }
 
-        int quantilesInRightPart = (int) Math.ceil((double) k / 2);
-        findQuantiles(array, offset + currentQuantileIndex, hi, quantilesInRightPart,
-                resultingQuantiles, offset + currentQuantileNumber);
+        int quantilesInRightPart = ceilToInt((double) k / 2);
+        if (quantilesInRightPart > 1) {
+            findKQuantiles(array, lo + currentQuantileIndex, hi, quantilesInRightPart, quantiles, offset + currentQuantileNumber);
+        }
     }
+
 
     private static int randomizedSelect(int[] array, int lo, int hi, int index) {
         while (true) {

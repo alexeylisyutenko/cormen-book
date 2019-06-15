@@ -67,4 +67,18 @@ public final class Helpers {
         bd = bd.setScale(places, RoundingMode.FLOOR);
         return bd.doubleValue();
     }
+
+    public static int floorToInt(double val) {
+        if (Double.isInfinite(val)) {
+            throw new IllegalArgumentException("val must be finite");
+        }
+        return (int) Math.floor(val);
+    }
+
+    public static int ceilToInt(double val) {
+        if (Double.isInfinite(val)) {
+            throw new IllegalArgumentException("val must be finite");
+        }
+        return (int) Math.ceil(val);
+    }
 }
