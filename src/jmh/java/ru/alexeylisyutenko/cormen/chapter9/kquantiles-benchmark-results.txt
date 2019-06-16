@@ -1,0 +1,13 @@
+Benchmark                      (size)  Mode  Cnt      Score      Error  Units
+KQuantilesBenchmark.advanced       10  avgt   15      0.555 ±    0.030  us/op
+KQuantilesBenchmark.advanced      100  avgt   15      4.870 ±    0.098  us/op
+KQuantilesBenchmark.advanced     1000  avgt   15     37.919 ±    0.772  us/op
+KQuantilesBenchmark.advanced    10000  avgt   15    354.809 ±   10.382  us/op
+KQuantilesBenchmark.advanced   100000  avgt   15   3441.132 ±  194.832  us/op
+KQuantilesBenchmark.advanced  1000000  avgt   15  29046.331 ±  874.138  us/op
+KQuantilesBenchmark.sorting        10  avgt   15      0.178 ±    0.015  us/op
+KQuantilesBenchmark.sorting       100  avgt   15      1.359 ±    0.198  us/op
+KQuantilesBenchmark.sorting      1000  avgt   15     22.644 ±    3.583  us/op
+KQuantilesBenchmark.sorting     10000  avgt   15    579.480 ±   14.626  us/op
+KQuantilesBenchmark.sorting    100000  avgt   15   7450.517 ±  329.068  us/op
+KQuantilesBenchmark.sorting   1000000  avgt   15  92261.078 ± 5669.682  us/op

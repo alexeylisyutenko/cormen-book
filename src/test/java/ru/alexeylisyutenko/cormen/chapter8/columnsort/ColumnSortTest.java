@@ -15,7 +15,7 @@ class ColumnSortTest {
         int s = 3;
         int r = 2 * s * s;
 
-        int[] array = Helpers.randomPositiveIntArray(r * s, 100);
+        int[] array = Helpers.randomPositiveIntArray(r * s, 1000);
         System.out.println(Arrays.toString(array));
 
         ColumnSort.sort(array, r, s, true);

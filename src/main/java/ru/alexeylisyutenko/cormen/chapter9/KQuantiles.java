@@ -8,11 +8,11 @@ import static ru.alexeylisyutenko.helper.Helpers.*;
 public class KQuantiles {
 
     public static int[] kQuantiles(int[] array, int k) {
-        if (k < 1 || k > array.length + 1) {
+        if (k < 1 || k > array.length) {
             throw new IllegalArgumentException("Incorrect k value");
         }
         int[] resultingQuantiles = new int[k - 1];
-        findKQuantiles(array, 0, array.length - 1, k, resultingQuantiles, 0);
+        findKQuantilesTailRecursion(array, 0, array.length - 1, k, resultingQuantiles, 0);
         return resultingQuantiles;
     }
 
@@ -23,23 +23,44 @@ public class KQuantiles {
 
         int n = hi - lo + 1;
 
-        int currentQuantileNumber = k / 2;
-        int currentQuantileIndex = ceilToInt(currentQuantileNumber * (double) n / k);
+        int mediumQuantileNumber = k / 2;
+        int mediumQuantileIndex = ceilToInt(mediumQuantileNumber * (double) n / k);
 
-        int selectedOrderStatistics = randomizedSelect(array, lo, hi, currentQuantileIndex);
-        quantiles[offset + currentQuantileNumber - 1] = selectedOrderStatistics;
+        int selectedOrderStatistics = randomizedSelect(array, lo, hi, mediumQuantileIndex);
+        quantiles[offset + mediumQuantileNumber - 1] = selectedOrderStatistics;
 
         int quantilesInLeftPart = floorToInt((double) k / 2);
         if (quantilesInLeftPart > 1) {
-            findKQuantiles(array, lo, lo + currentQuantileIndex - 2, quantilesInLeftPart, quantiles, offset);
+            findKQuantiles(array, lo, lo + mediumQuantileIndex - 2, quantilesInLeftPart, quantiles, offset);
         }
 
         int quantilesInRightPart = ceilToInt((double) k / 2);
         if (quantilesInRightPart > 1) {
-            findKQuantiles(array, lo + currentQuantileIndex, hi, quantilesInRightPart, quantiles, offset + currentQuantileNumber);
+            findKQuantiles(array, lo + mediumQuantileIndex, hi, quantilesInRightPart, quantiles, offset + mediumQuantileNumber);
         }
     }
 
+    private static void findKQuantilesTailRecursion(int[] array, int lo, int hi, int k, int[] quantiles, int offset) {
+        while (k > 1) {
+            int n = hi - lo + 1;
+
+            int mediumQuantileNumber = k / 2;
+            int mediumQuantileIndex = ceilToInt(mediumQuantileNumber * (double) n / k);
+
+            int selectedOrderStatistics = randomizedSelect(array, lo, hi, mediumQuantileIndex);
+            quantiles[offset + mediumQuantileNumber - 1] = selectedOrderStatistics;
+
+            int quantilesInLeftPart = floorToInt((double) k / 2);
+            if (quantilesInLeftPart > 1) {
+                findKQuantilesTailRecursion(array, lo, lo + mediumQuantileIndex - 2, quantilesInLeftPart, quantiles, offset);
+            }
+
+            int quantilesInRightPart = ceilToInt((double) k / 2);
+            lo += mediumQuantileIndex;
+            k = quantilesInRightPart;
+            offset += mediumQuantileNumber;
+        }
+    }
 
     private static int randomizedSelect(int[] array, int lo, int hi, int index) {
         while (true) {
