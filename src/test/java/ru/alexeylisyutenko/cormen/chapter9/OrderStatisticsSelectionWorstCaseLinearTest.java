@@ -13,12 +13,12 @@ class OrderStatisticsSelectionWorstCaseLinearTest {
 
     @Test
     void selectDemo() {
-        int[] array = {18, 56, 5, 56, 56, 11};
+        int[] array = {18, 56, 5};
 //        int[] array = Helpers.sequentialIntArray(15);
 //        int[] array = Helpers.randomPositiveIntArray(14, 100);
         System.out.println(Arrays.toString(array));
 
-        int orderStatistics = OrderStatisticsSelectionWorstCaseLinear.select(array, 2);
+        int orderStatistics = OrderStatisticsSelectionWorstCaseLinear.select(array, 3);
         System.out.println(orderStatistics);
 
     }

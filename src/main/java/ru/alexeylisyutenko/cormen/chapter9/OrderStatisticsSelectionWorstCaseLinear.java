@@ -1,7 +1,5 @@
 package ru.alexeylisyutenko.cormen.chapter9;
 
-import java.util.Arrays;
-
 import static ru.alexeylisyutenko.helper.Helpers.*;
 
 @SuppressWarnings("Duplicates")
@@ -18,20 +16,34 @@ public class OrderStatisticsSelectionWorstCaseLinear {
         if (index < 1 || index > array.length) {
             throw new IllegalArgumentException("Incorrect index argument");
         }
-        return recursiveSelect(array, 0, array.length - 1, index);
+        return doSelect(array, 0, array.length - 1, index);
     }
 
-    private static int recursiveSelect(int[] array, int lo, int hi, int index) {
+    private static int doSelect(int[] array, int lo, int hi, int index) {
         int n = hi - lo + 1;
-
-        // Base-case think later. Rethink!.
-        if (n <= 5) {
-            insertionSort(array, lo, hi);
-            return array[lo + index - 1];
+        if (n == 1) {
+            return array[lo];
         }
 
+        // Find central median that we can use as a good pivot element.
+        int centralMedian = findCentralMedian(array, lo, hi, n);
+
+        // Partition array around central median.
+        int q = partition(array, lo, hi, centralMedian);
+
+        int k = q - lo + 1;
+        if (k == index) {
+            return array[q];
+        } else if (index < k) {
+            return doSelect(array, lo, q - 1, index);
+        } else {
+            return doSelect(array, q + 1, hi, index - k);
+        }
+    }
+
+    private static int findCentralMedian(int[] array, int lo, int hi, double n) {
         // Calculate number of groups of 5 elements.
-        int groups = ceilToInt((double) n / 5);
+        int groups = ceilToInt(n / 5);
 
         // Array for medians in each group.
         int[] medians = new int[groups];
@@ -50,30 +62,9 @@ public class OrderStatisticsSelectionWorstCaseLinear {
             medians[i] = array[medianIndex];
         }
 
-//        System.out.println(Arrays.toString(array));
-
-//        System.out.println("Medians: " + Arrays.toString(medians));
-
         // Find median of medians recursively.
         int centralMedianIndex = floorToInt((double) (medians.length + 1) / 2);
-        int centralMedian = recursiveSelect(medians, 0, medians.length - 1, centralMedianIndex);
-
-//        System.out.println("Central median: " + centralMedian);
-
-        // Partition array around central median.
-        int q = partition(array, lo, hi, centralMedian);
-//        System.out.println("After partition: \r\n" + Arrays.toString(Arrays.copyOfRange(array, lo, hi + 1)));
-//        System.out.println("q: " + q + ", array[q]: " + array[q]);
-
-        int k = q - lo + 1;
-
-        if (k == index) {
-            return array[q];
-        } else if (index < k) {
-            return recursiveSelect(array, lo, q - 1, index);
-        } else {
-            return recursiveSelect(array, q + 1, hi, index - k);
-        }
+        return doSelect(medians, 0, medians.length - 1, centralMedianIndex);
     }
 
     private static void insertionSort(int[] array, int lo, int hi) {
