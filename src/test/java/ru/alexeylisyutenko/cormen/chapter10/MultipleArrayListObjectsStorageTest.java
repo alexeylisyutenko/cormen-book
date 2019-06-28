@@ -23,7 +23,25 @@ class MultipleArrayListObjectsStorageTest {
     }
 
     @Test
-    void allocationShouldWorkProperly() {
+    void allocationAndFreeingShouldWorkProperly() {
+        ListObjectsStorage listObjectsStorage = new MultipleArrayListObjectsStorage(2);
+
+        ListObject listObject1 = listObjectsStorage.allocateObject();
+        assertEquals(0, listObject1.getPointer());
+
+        ListObject listObject2 = listObjectsStorage.allocateObject();
+        assertEquals(1, listObject2.getPointer());
+
+        assertThrows(ListObjectException.class, listObjectsStorage::allocateObject);
+
+        listObjectsStorage.freeObject(listObject1);
+
+        ListObject listObject3 = listObjectsStorage.allocateObject();
+        assertEquals(0, listObject3.getPointer());
+    }
+
+    @Test
+    void compactShouldWorkProperly() {
 
     }
 

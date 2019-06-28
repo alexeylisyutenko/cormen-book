@@ -53,18 +53,33 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
         freePointer = listObject.getPointer();
     }
 
+    public int[] getNextPointers() {
+        return nextPointers;
+    }
+
+    public int[] getKeys() {
+        return keys;
+    }
+
+    public int[] getPrevPointers() {
+        return prevPointers;
+    }
+
+    public int getFreePointer() {
+        return freePointer;
+    }
+
     @Override
     public String toString() {
-        return "MultipleArrayListObjectsStorage{" +
-                "\r\n\tnext=" + Arrays.toString(nextPointers) +
-                "\r\n\tkeys=" + Arrays.toString(keys) +
-                "\r\n\tprev=" + Arrays.toString(prevPointers) +
-                "\r\n\tfree=" + freePointer +
-                "\r\n}";
+        return "MultipleArrayListObjectsStorage{" + "\r\n" +
+                "\tnextPointers  " + Arrays.toString(nextPointers) + "\r\n" +
+                "\tkeys          " + Arrays.toString(keys) + "\r\n" +
+                "\tprevPointers  " + Arrays.toString(prevPointers) + "\r\n" +
+                "\tfreePointer   " + freePointer + "\r\n" +
+                "}";
     }
 
     private class MultipleArrayListObject implements ListObject {
-
         private final int pointer;
 
         private MultipleArrayListObject(int pointer) {
