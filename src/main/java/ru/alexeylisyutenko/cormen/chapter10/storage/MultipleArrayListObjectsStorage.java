@@ -1,10 +1,15 @@
-package ru.alexeylisyutenko.cormen.chapter10;
+package ru.alexeylisyutenko.cormen.chapter10.storage;
+
+import ru.alexeylisyutenko.cormen.chapter10.ListObject;
+import ru.alexeylisyutenko.cormen.chapter10.ListObjectException;
 
 import java.util.Arrays;
 
+import static ru.alexeylisyutenko.cormen.chapter10.ListConstants.NIL;
+
 public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
 
-    public static final int NIL = -1;
+    private static final int FREE_POSITION_PREV_MARK = -100;
 
     private final int[] nextPointers;
     private final int[] keys;
@@ -26,8 +31,10 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
     private void initializeFreeList(int size) {
         for (int i = 0; i < size - 1; i++) {
             nextPointers[i] = i + 1;
+            prevPointers[i] = FREE_POSITION_PREV_MARK;
         }
         nextPointers[size - 1] = NIL;
+        prevPointers[size - 1] = FREE_POSITION_PREV_MARK;
     }
 
     @Override
@@ -37,20 +44,44 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
         }
         MultipleArrayListObject listObject = new MultipleArrayListObject(freePointer);
         freePointer = listObject.getNext();
+        initializeListObject(listObject);
         return listObject;
+    }
+
+    private void initializeListObject(MultipleArrayListObject listObject) {
+        listObject.setKey(NIL);
+        listObject.setNext(NIL);
+        listObject.setPrev(NIL);
     }
 
     @Override
     public void freeObject(ListObject listObject) {
-        if (!(listObject instanceof MultipleArrayListObject)) {
-            throw new ListObjectException("Unsupported listObject class");
-        }
-        MultipleArrayListObjectsStorage listObjectsStorage = ((MultipleArrayListObject) listObject).getStorage();
-        if (listObjectsStorage != this) {
+        if (!listObjectBelongsToStorage(listObject)) {
             throw new ListObjectException("ListObject does not belong to this MultipleArrayListObjectsStorage instance");
         }
         listObject.setNext(freePointer);
+        prevPointers[listObject.getPointer()] = FREE_POSITION_PREV_MARK;
         freePointer = listObject.getPointer();
+    }
+
+    @Override
+    public boolean listObjectBelongsToStorage(ListObject listObject) {
+        if (!(listObject instanceof MultipleArrayListObject)) {
+            return false;
+        }
+        MultipleArrayListObjectsStorage listObjectsStorage = ((MultipleArrayListObject) listObject).getStorage();
+        return listObjectsStorage == this;
+    }
+
+    @Override
+    public ListObject getByPointer(int pointer) {
+        if (pointer < 0 || pointer >= nextPointers.length) {
+            throw new ListObjectException("Incorrect pointer");
+        }
+        if (prevPointers[pointer] == FREE_POSITION_PREV_MARK) {
+            throw new ListObjectException("There is no allocated object with such pointer");
+        }
+        return new MultipleArrayListObject(pointer);
     }
 
     public int[] getNextPointers() {

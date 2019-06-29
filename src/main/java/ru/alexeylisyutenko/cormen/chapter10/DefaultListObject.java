@@ -8,4 +8,8 @@ public class DefaultListObject implements ListObject {
     private int key;
     private int prev;
     private int pointer;
+
+    public DefaultListObject(int pointer) {
+        this.pointer = pointer;
+    }
 }

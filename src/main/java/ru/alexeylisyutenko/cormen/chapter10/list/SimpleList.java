@@ -1,4 +1,7 @@
-package ru.alexeylisyutenko.cormen.chapter10;
+package ru.alexeylisyutenko.cormen.chapter10.list;
+
+import ru.alexeylisyutenko.cormen.chapter10.ListObject;
+import ru.alexeylisyutenko.cormen.chapter10.storage.ListObjectsStorage;
 
 /**
  * Interface that represents list.
@@ -9,7 +12,7 @@ public interface SimpleList {
      * Search an object by its key.
      *
      * @param key key to search
-     * @return object with the corresponding key if such object exists, or nil if there is no such object
+     * @return object with the corresponding key if such object exists, or null if there is no such object
      */
     ListObject search(int key);
 
