@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter10.storage.ListObjectsStorage;
 import ru.alexeylisyutenko.cormen.chapter10.storage.MultipleArrayListObjectsStorage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MultipleArrayListObjectsStorageTest {
@@ -79,6 +82,142 @@ class MultipleArrayListObjectsStorageTest {
         assertEquals(listObject.getPrev(), listObjectByPointer.getPrev());
 
         assertThrows(ListObjectException.class, () -> listObjectsStorage.getByPointer(1));
+    }
+
+    @Test
+    void getSizeShouldWorkProperly() {
+        ListObjectsStorage listObjectsStorage = new MultipleArrayListObjectsStorage(10);
+        assertEquals(10, listObjectsStorage.getSize());
+    }
+
+    @Test
+    void compactifyDemo() {
+        ListObjectsStorage storage = new MultipleArrayListObjectsStorage(6);
+
+        System.out.println(storage);
+
+        ListObject listObject1 = storage.allocateObject();
+        listObject1.setKey(1);
+
+        ListObject listObject2 = storage.allocateObject();
+        listObject2.setKey(2);
+
+        ListObject listObject3 = storage.allocateObject();
+        listObject3.setKey(3);
+
+        ListObject listObject4 = storage.allocateObject();
+        listObject4.setKey(4);
+
+        ListObject listObject5 = storage.allocateObject();
+        listObject5.setKey(5);
+
+        ListObject listObject6 = storage.allocateObject();
+        listObject6.setKey(6);
+
+        storage.freeObject(listObject1);
+        storage.freeObject(listObject2);
+        storage.freeObject(listObject4);
+        System.out.println(storage);
+
+        System.out.println("List object 5: " + listObject5);
+        System.out.println("List object 6: " + listObject6);
+
+        storage.compactify(System.out::println);
+
+        System.out.println("List object 5: " + listObject5);
+        System.out.println("List object 6: " + listObject6);
+
+        System.out.println(storage);
+    }
+
+    @Test
+    void compactifyOfTheEmptyStorageShouldWorkProperly() {
+        MultipleArrayListObjectsStorage storage = new MultipleArrayListObjectsStorage(3);
+        List<ListObject> compactifiedListObjects = new ArrayList<>();
+        storage.compactify(compactifiedListObjects::add);
+
+        assertTrue(compactifiedListObjects.isEmpty());
+
+        assertArrayEquals(new int[] {1, 2, -1}, storage.getNextPointers());
+        assertArrayEquals(new int[] {-100, -100, -100}, storage.getPrevPointers());
+        assertEquals(0, storage.getFreePointer());
+    }
+
+    @Test
+    void compactifyOfAlreadyCompactStorageShouldWorkProperly() {
+        MultipleArrayListObjectsStorage storage = new MultipleArrayListObjectsStorage(3);
+
+        storage.allocateObject().setKey(1);
+        storage.allocateObject().setKey(2);
+
+        List<ListObject> compactifiedListObjects = new ArrayList<>();
+        storage.compactify(compactifiedListObjects::add);
+
+        assertTrue(compactifiedListObjects.isEmpty());
+
+        assertArrayEquals(new int[] {-1, -1, -1}, storage.getNextPointers());
+        assertArrayEquals(new int[] {1, 2, -1}, storage.getKeys());
+        assertArrayEquals(new int[] {-1, -1, -100}, storage.getPrevPointers());
+        assertEquals(2, storage.getFreePointer());
+    }
+
+    @Test
+    void compactifyOnFullStorageShouldWorkProperly() {
+        MultipleArrayListObjectsStorage storage = new MultipleArrayListObjectsStorage(3);
+
+        storage.allocateObject().setKey(1);
+        storage.allocateObject().setKey(2);
+        storage.allocateObject().setKey(3);
+
+        List<ListObject> compactifiedListObjects = new ArrayList<>();
+        storage.compactify(compactifiedListObjects::add);
+
+        assertTrue(compactifiedListObjects.isEmpty());
+
+        assertArrayEquals(new int[] {-1, -1, -1}, storage.getNextPointers());
+        assertArrayEquals(new int[] {1, 2, 3}, storage.getKeys());
+        assertArrayEquals(new int[] {-1, -1, -1}, storage.getPrevPointers());
+        assertEquals(-1, storage.getFreePointer());
+    }
+
+    @Test
+    void compactifyShouldWorkProperly() {
+        MultipleArrayListObjectsStorage storage = new MultipleArrayListObjectsStorage(6);
+
+        ListObject listObject1 = storage.allocateObject();
+        listObject1.setKey(1);
+
+        ListObject listObject2 = storage.allocateObject();
+        listObject2.setKey(2);
+
+        ListObject listObject3 = storage.allocateObject();
+        listObject3.setKey(3);
+
+        ListObject listObject4 = storage.allocateObject();
+        listObject4.setKey(4);
+
+        ListObject listObject5 = storage.allocateObject();
+        listObject5.setKey(5);
+
+        ListObject listObject6 = storage.allocateObject();
+        listObject6.setKey(6);
+
+        storage.freeObject(listObject1);
+        storage.freeObject(listObject2);
+        storage.freeObject(listObject4);
+
+        List<ListObject> compactifiedListObjects = new ArrayList<>();
+        storage.compactify(compactifiedListObjects::add);
+
+        assertEquals(2, compactifiedListObjects.size());
+        assertEquals(6, compactifiedListObjects.get(0).getKey());
+        assertEquals(5, compactifiedListObjects.get(1).getKey());
+
+        assertArrayEquals(new int[] {-1, -1, -1, 4, 5, -1}, storage.getNextPointers());
+        assertArrayEquals(new int[] {6, 5, 3, -1, 5, 6}, storage.getKeys());
+        assertArrayEquals(new int[] {-1, -1, -1, -100, -100, -100}, storage.getPrevPointers());
+        assertEquals(3, storage.getFreePointer());
+
     }
 
 }

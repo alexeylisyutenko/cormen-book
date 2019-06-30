@@ -3,6 +3,8 @@ package ru.alexeylisyutenko.cormen.chapter10.list;
 import ru.alexeylisyutenko.cormen.chapter10.ListObject;
 import ru.alexeylisyutenko.cormen.chapter10.storage.ListObjectsStorage;
 
+import java.util.function.Consumer;
+
 /**
  * Interface that represents list.
  */
@@ -38,4 +40,22 @@ public interface SimpleList {
      */
     ListObjectsStorage getStorage();
 
+    /**
+     * Iterate over all list objects.
+     *
+     * @param action action performed with each list object
+     */
+    void iterate(Consumer<ListObject> action);
+
+    /**
+     * Returns the head element in the list.
+     *
+     * @return head element in the list or null if the list is empty
+     */
+    ListObject getHead();
+
+    /**
+     * Compacts the storage use by list objects.
+     */
+    void compatify();
 }

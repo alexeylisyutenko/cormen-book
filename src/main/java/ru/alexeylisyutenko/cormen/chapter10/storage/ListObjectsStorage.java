@@ -2,6 +2,8 @@ package ru.alexeylisyutenko.cormen.chapter10.storage;
 
 import ru.alexeylisyutenko.cormen.chapter10.ListObject;
 
+import java.util.function.Consumer;
+
 /**
  * Storage representing heap for allocating and freeing ListObjects.
  */
@@ -37,5 +39,21 @@ public interface ListObjectsStorage {
      * @return list object with corresponding pointer
      */
     ListObject getByPointer(int pointer);
+
+    /**
+     * Returns the maximum size of the storage.
+     *
+     * @return maximum size of the storage
+     */
+    int getSize();
+
+    /**
+     * Compacts the allocated list objects.
+     * After this function call, all allocated list objects will be in the left part of the arrays.
+     *
+     * @param listObjectRelocationConsumer listObjectRelocationConsumer.accept() will be called for a list object whenever
+     *                                     it is moved to another position
+     */
+    void compactify(Consumer<ListObject> listObjectRelocationConsumer);
 
 }

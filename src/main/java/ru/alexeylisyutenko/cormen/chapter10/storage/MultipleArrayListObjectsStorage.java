@@ -1,9 +1,14 @@
 package ru.alexeylisyutenko.cormen.chapter10.storage;
 
+import org.apache.commons.lang3.StringUtils;
 import ru.alexeylisyutenko.cormen.chapter10.ListObject;
 import ru.alexeylisyutenko.cormen.chapter10.ListObjectException;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 import static ru.alexeylisyutenko.cormen.chapter10.ListConstants.NIL;
 
@@ -11,21 +16,34 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
 
     private static final int FREE_POSITION_PREV_MARK = -100;
 
+    private final int size;
     private final int[] nextPointers;
     private final int[] keys;
     private final int[] prevPointers;
 
     private int freePointer;
 
+    private final Set<MultipleArrayListObject> listObjects;
+
     public MultipleArrayListObjectsStorage(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("Incorrect size");
         }
+        this.size = size;
         this.nextPointers = new int[size];
         this.keys = new int[size];
         this.prevPointers = new int[size];
         this.freePointer = 0;
+        this.listObjects = Collections.newSetFromMap(new WeakHashMap<>());
+
+        initializaKeys();
         initializeFreeList(size);
+    }
+
+    private void initializaKeys() {
+        for (int i = 0; i < size; i++) {
+            keys[i] = NIL;
+        }
     }
 
     private void initializeFreeList(int size) {
@@ -45,6 +63,9 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
         MultipleArrayListObject listObject = new MultipleArrayListObject(freePointer);
         freePointer = listObject.getNext();
         initializeListObject(listObject);
+
+        listObjects.add(listObject);
+
         return listObject;
     }
 
@@ -60,8 +81,11 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
             throw new ListObjectException("ListObject does not belong to this MultipleArrayListObjectsStorage instance");
         }
         listObject.setNext(freePointer);
+        listObject.setKey(NIL);
         prevPointers[listObject.getPointer()] = FREE_POSITION_PREV_MARK;
         freePointer = listObject.getPointer();
+
+        listObjects.remove(listObject);
     }
 
     @Override
@@ -81,7 +105,65 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
         if (prevPointers[pointer] == FREE_POSITION_PREV_MARK) {
             throw new ListObjectException("There is no allocated object with such pointer");
         }
-        return new MultipleArrayListObject(pointer);
+
+        MultipleArrayListObject listObject = new MultipleArrayListObject(pointer);
+        listObjects.add(listObject);
+        return listObject;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public void compactify(Consumer<ListObject> listObjectRelocationConsumer) {
+        int left = 0;
+        int right = size - 1;
+
+        while (left < right) {
+            // Find leftmost empty position.
+            while (left < size && prevPointers[left] != FREE_POSITION_PREV_MARK) {
+                left++;
+            }
+
+            // Find rightmost non empty position.
+            while (right > 0 && prevPointers[right] == FREE_POSITION_PREV_MARK) {
+                right--;
+            }
+
+            if (left < right) {
+                // Move alement with index right to the element with index left.
+                prevPointers[left] = prevPointers[right];
+                keys[left] = keys[right];
+                nextPointers[left] = nextPointers[right];
+
+                // Mark right element as empty.
+                prevPointers[right] = FREE_POSITION_PREV_MARK;
+
+                // Update ListObjects instances.
+                updateListObjects(right, left);
+
+                // Notify client code that ListObject was moved.
+                listObjectRelocationConsumer.accept(new MultipleArrayListObject(left));
+            }
+        }
+
+        // Rebuild free list.
+        for (int i = left; i < getSize(); i++) {
+            if (i == getSize() - 1) {
+                nextPointers[getSize() - 1] = NIL;
+            } else {
+                nextPointers[i] = i + 1;
+            }
+        }
+        freePointer = left == getSize() ? NIL : left;
+    }
+
+    private void updateListObjects(int oldPointer, int newPointer) {
+        listObjects.stream()
+                .filter(listObject -> listObject.getPointer() == oldPointer)
+                .forEach(listObject -> listObject.pointer = newPointer);
     }
 
     public int[] getNextPointers() {
@@ -103,15 +185,27 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
     @Override
     public String toString() {
         return "MultipleArrayListObjectsStorage{" + "\r\n" +
-                "\tnextPointers  " + Arrays.toString(nextPointers) + "\r\n" +
-                "\tkeys          " + Arrays.toString(keys) + "\r\n" +
-                "\tprevPointers  " + Arrays.toString(prevPointers) + "\r\n" +
+                "\tindexes       " + intArrayToStringFormatted(IntStream.range(0, size).toArray()) + "\r\n" +
+                "\tnextPointers  " + intArrayToStringFormatted(nextPointers) + "\r\n" +
+                "\tkeys          " + intArrayToStringFormatted(keys) + "\r\n" +
+                "\tprevPointers  " + intArrayToStringFormatted(prevPointers) + "\r\n" +
                 "\tfreePointer   " + freePointer + "\r\n" +
                 "}";
     }
 
+    private String intArrayToStringFormatted(int[] array) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
+        for (int i = 0; i < array.length; i++) {
+            stringBuilder.append(StringUtils.center("" + array[i], 7));
+        }
+        stringBuilder.append(']');
+        return stringBuilder.toString();
+    }
+
     private class MultipleArrayListObject implements ListObject {
-        private final int pointer;
+
+        private int pointer;
 
         private MultipleArrayListObject(int pointer) {
             this.pointer = pointer;
@@ -124,7 +218,7 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
 
         @Override
         public void setNext(int next) {
-            if (next < -1 || next >= nextPointers.length) {
+            if (next < -1 || next >= size) {
                 throw new ListObjectException("Incorrect next argument");
             }
             nextPointers[pointer] = next;
@@ -147,7 +241,7 @@ public class MultipleArrayListObjectsStorage implements ListObjectsStorage {
 
         @Override
         public void setPrev(int prev) {
-            if (prev < -1 || prev >= prevPointers.length) {
+            if (prev < -1 || prev >= size) {
                 throw new ListObjectException("Incorrect prev argument");
             }
             prevPointers[pointer] = prev;
