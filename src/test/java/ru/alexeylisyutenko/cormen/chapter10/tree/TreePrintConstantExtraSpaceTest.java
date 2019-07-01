@@ -8,7 +8,9 @@ class TreePrintConstantExtraSpaceTest {
 
     @Test
     void printTreeDemo() {
-        new DefaultTreeNode(null, )
+        DefaultTreeNode rootNode = new DefaultTreeNode();
+        rootNode.setKey(1);
+        rootNode.setParent(null);
 
     }
 

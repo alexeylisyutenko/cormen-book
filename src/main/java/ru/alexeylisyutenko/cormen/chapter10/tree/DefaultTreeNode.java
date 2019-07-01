@@ -1,11 +1,12 @@
 package ru.alexeylisyutenko.cormen.chapter10.tree;
 
-import lombok.Value;
+import lombok.Builder;
+import lombok.Data;
 
-@Value
+@Data
 public class DefaultTreeNode implements TreeNode {
-    private final TreeNode parent;
-    private final TreeNode left;
-    private final TreeNode right;
-    private final int key;
+    private TreeNode parent;
+    private TreeNode left;
+    private TreeNode right;
+    private int key;
 }
