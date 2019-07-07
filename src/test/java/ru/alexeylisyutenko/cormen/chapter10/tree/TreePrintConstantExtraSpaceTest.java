@@ -30,7 +30,6 @@ class TreePrintConstantExtraSpaceTest {
     @Test
     void printTreeDemo() {
         TreePrintConstantExtraSpace.printTree(rootNode);
-
     }
 
 }

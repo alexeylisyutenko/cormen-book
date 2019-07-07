@@ -5,6 +5,8 @@ import ru.alexeylisyutenko.cormen.chapter10.storage.ListObjectsStorage;
 
 import java.util.function.Consumer;
 
+import static ru.alexeylisyutenko.cormen.chapter10.ListConstants.NIL;
+
 /**
  * Interface that represents list.
  */
@@ -58,4 +60,21 @@ public interface SimpleList {
      * Compacts the storage use by list objects.
      */
     void compatify();
+
+    /**
+     * Returns list object by its pointer.
+     * If pointer is not equal to NIL then this method makes a request to underlying storage, otherwise it
+     * returns nil ListObject.
+     *
+     * @param pointer pointer to list object
+     * @return {@link ListObject} with corresponding pointer
+     */
+    ListObject getObjectByPointer(int pointer);
+
+    /**
+     * Returns sentinel list object (nil List Object)
+     * @return sentinel list object
+     */
+    ListObject getNil();
+
 }

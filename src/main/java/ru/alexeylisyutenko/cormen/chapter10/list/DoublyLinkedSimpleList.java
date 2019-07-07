@@ -25,12 +25,18 @@ public class DoublyLinkedSimpleList implements SimpleList {
         nil.setPrev(NIL);
     }
 
-    private ListObject getObjectByPointer(int pointer) {
+    @Override
+    public ListObject getObjectByPointer(int pointer) {
         if (pointer == NIL) {
             return nil;
         } else {
             return storage.getByPointer(pointer);
         }
+    }
+
+    @Override
+    public ListObject getNil() {
+        return nil;
     }
 
     @Override
