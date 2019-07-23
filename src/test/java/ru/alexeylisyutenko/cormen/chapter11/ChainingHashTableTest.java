@@ -1,7 +1,9 @@
 package ru.alexeylisyutenko.cormen.chapter11;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.DivisionMethodIntegerHashFunctionFactory;
+import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.MultiplicationMethodIntegerHashFunctionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,15 +11,12 @@ class ChainingHashTableTest {
 
     @Test
     void simpleHashTableDemo() {
-        HashTable<Integer, String> hashTable = new ChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), 13);
+//        HashTable<Integer, String> hashTable = new ChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), 13);
+        HashTable<Integer, String> hashTable = new ChainingHashTable<>(new MultiplicationMethodIntegerHashFunctionFactory(), 8);
 
-        System.out.println(hashTable.search(0));
-        hashTable.insert(0, "Hello");
-        System.out.println(hashTable.search(0));
-
-        hashTable.insert(13, "Hello - 2");
-
-        hashTable.delete(13);
+        hashTable.insert(RandomUtils.nextInt(), "Hello - 1");
+        hashTable.insert(RandomUtils.nextInt(), "Hello - 2");
+        hashTable.insert(RandomUtils.nextInt(), "Hello - 3");
 
         System.out.println(hashTable);
     }
