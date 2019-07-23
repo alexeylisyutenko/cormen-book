@@ -1,8 +1,6 @@
 package ru.alexeylisyutenko.cormen.chapter11;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunction.HashFunction;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.HashFunctionFactory;

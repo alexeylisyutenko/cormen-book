@@ -12,6 +12,7 @@ public class DivisionMethodIntegerHashFunction implements HashFunction<Integer> 
     @Override
     public int calculateHash(Integer key) {
         Objects.requireNonNull(key, "key cannot be null");
-        return key % hashTableSize;
+        long longKey = key & 0x00000000ffffffffL;
+        return (int) (longKey % hashTableSize);
     }
 }

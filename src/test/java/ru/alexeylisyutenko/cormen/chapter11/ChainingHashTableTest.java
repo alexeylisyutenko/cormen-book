@@ -3,8 +3,7 @@ package ru.alexeylisyutenko.cormen.chapter11;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.DivisionMethodIntegerHashFunctionFactory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ChainingHashTableTest {
 
@@ -28,8 +27,34 @@ class ChainingHashTableTest {
         HashTable<Integer, String> hashTable = new ChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), 13);
 
         assertNull(hashTable.search(123));
-        hashTable.insert(123, "test");
-        assertEquals("test", hashTable.search(123));
+        hashTable.insert(123, "test 1");
+        assertEquals("test 1", hashTable.search(123));
+
+        assertNull(hashTable.search(555));
+        hashTable.insert(555, "test 2");
+        assertEquals("test 2", hashTable.search(555));
+
+        HashTableException insertException = assertThrows(HashTableException.class, () -> hashTable.insert(123, "some value"));
+        assertEquals("An item with a key '123' is already in the hash table", insertException.getMessage());
+
+        HashTableException deleteException = assertThrows(HashTableException.class, () -> hashTable.delete(777));
+        assertEquals("There is no item with a key '777' in the hash table", deleteException.getMessage());
+
+        assertEquals("test 1", hashTable.search(123));
+        hashTable.delete(123);
+        assertNull(hashTable.search(123));
+
+        assertEquals("test 2", hashTable.search(555));
+        hashTable.delete(555);
+        assertNull(hashTable.search(555));
+
+        hashTable.insert(0, "test 3");
+        hashTable.insert(13, "test 4");
+        assertEquals("test 3", hashTable.search(0));
+        assertEquals("test 4", hashTable.search(13));
+
+        hashTable.insert(-13, "negative key");
+        assertEquals("negative key", hashTable.search(-13));
     }
 
 }
