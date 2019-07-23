@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.datastructures.dynamicarray;
+package ru.alexeylisyutenko.other.dynamicarray;
 
 public class DynamicArrayImpl<T> implements DynamicArray<T> {
 

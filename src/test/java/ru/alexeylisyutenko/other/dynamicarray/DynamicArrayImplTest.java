@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.datastructures.dynamicarray;
+package ru.alexeylisyutenko.other.dynamicarray;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
