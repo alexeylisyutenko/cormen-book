@@ -3,6 +3,9 @@ package ru.alexeylisyutenko.cormen.chapter11;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.DivisionMethodIntegerHashFunctionFactory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 class ChainingHashTableTest {
 
     @Test
@@ -24,7 +27,9 @@ class ChainingHashTableTest {
     void mainChainingHashTableOperationsShouldWorkProperly() {
         HashTable<Integer, String> hashTable = new ChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), 13);
 
-
+        assertNull(hashTable.search(123));
+        hashTable.insert(123, "test");
+        assertEquals("test", hashTable.search(123));
     }
 
 }
