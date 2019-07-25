@@ -1,10 +1,13 @@
 package ru.alexeylisyutenko.cormen.chapter11.builtinchaininghashtable;
 
 import ru.alexeylisyutenko.cormen.chapter11.HashTable;
+import ru.alexeylisyutenko.cormen.chapter11.HashTableException;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunction.HashFunction;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.HashFunctionFactory;
 
 import java.util.Objects;
+
+import static ru.alexeylisyutenko.cormen.chapter11.builtinchaininghashtable.HashEntry.NIL_HASH_ENTRY_INDEX;
 
 /**
  * Hash table implementation which uses the hash table itself as a storage for linked list elements.
@@ -33,17 +36,114 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public void insert(K key, V value) {
+        Objects.requireNonNull(key, "key cannot be null");
+        Objects.requireNonNull(value, "value cannot be null");
 
+        ensureThereIsNoSuchKeyInTheTable(key);
+
+        int hash = calculateHash(key);
+        if (storage.isHashEntryEmpty(hash)) {
+
+            // Slot is empty. We just need to use this entry to store the key-value pair.
+            HashEntry<K, V> hashEntry = storage.allocateParticularHashEntry(hash);
+            hashEntry.setKey(key);
+            hashEntry.setValue(value);
+            hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
+            hashEntry.setNextIndex(NIL_HASH_ENTRY_INDEX);
+
+        } else {
+            HashEntry<K, V> hashEntry = storage.getHashEntry(hash);
+            if (calculateHash(hashEntry.getKey()) == hash) {
+                // Slot contains an entry with correct hash. We just need to add a new hash entry to the list.
+                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
+
+                // Move slot's root to the new location.
+                moveHashEntry(hashEntry, newHashEntry);
+
+                // Setup previous link to the slot's root.
+                newHashEntry.setPreviousIndex(hashEntry.getIndex());
+
+                // Setup slot's root.
+                hashEntry.setKey(key);
+                hashEntry.setValue(value);
+                hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
+                hashEntry.setNextIndex(newHashEntry.getIndex());
+
+            } else {
+                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
+
+                // Move the element to the new location.
+                moveHashEntry(hashEntry, newHashEntry);
+
+                // Insert new slot's root.
+                hashEntry.setKey(key);
+                hashEntry.setValue(value);
+                hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
+                hashEntry.setNextIndex(NIL_HASH_ENTRY_INDEX);
+            }
+        }
+    }
+
+    private void moveHashEntry(HashEntry<K, V> src, HashEntry<K, V> dest) {
+        dest.setKey(src.getKey());
+        dest.setValue(src.getValue());
+        dest.setPreviousIndex(src.getPreviousIndex());
+        dest.setNextIndex(src.getNextIndex());
+
+        if (src.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(src.getPreviousIndex()).setNextIndex(dest.getIndex());
+        }
+        if (src.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(src.getNextIndex()).setPreviousIndex(dest.getIndex());
+        }
     }
 
     @Override
     public V search(K key) {
-        return null;
+        Objects.requireNonNull(key, "key cannot be null");
+        HashEntry<K, V> hashEntry = searchHashEntry(key);
+        return hashEntry != null ? hashEntry.getValue() : null;
     }
 
     @Override
     public void delete(K key) {
 
+    }
+
+    @Override
+    public String toString() {
+        return storage.toString();
+    }
+
+    private HashEntry<K, V> searchHashEntry(K key) {
+        int hash = calculateHash(key);
+        HashEntry<K, V> currentHashEntry = storage.getHashEntry(hash);
+        if (currentHashEntry.isEmpty()) {
+            return null;
+        }
+        while (true) {
+            if (currentHashEntry.getKey().equals(key)) {
+                return currentHashEntry;
+            }
+            if (currentHashEntry.getNextIndex() == NIL_HASH_ENTRY_INDEX) {
+                return null;
+            }
+            currentHashEntry = storage.getHashEntry(currentHashEntry.getNextIndex());
+        }
+    }
+
+    private int calculateHash(K key) {
+        int hash = hashFunction.calculateHash(key);
+        if (hash < 0 || hash >= hashTableSize) {
+            throw new HashTableException("Hash function returned incorrect hash value: " + hash);
+        }
+        return hash;
+    }
+
+    private void ensureThereIsNoSuchKeyInTheTable(K key) {
+        if (search(key) != null) {
+            throw new HashTableException(String.format("An item with a key '%s' is already in the hash table", key.toString()));
+        }
     }
 
 }

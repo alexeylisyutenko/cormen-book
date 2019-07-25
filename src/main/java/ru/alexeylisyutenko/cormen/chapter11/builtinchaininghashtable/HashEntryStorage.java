@@ -5,7 +5,11 @@ interface HashEntryStorage<K, V> {
 
     HashEntry<K, V> allocateHashEntry();
 
+    HashEntry<K, V> allocateParticularHashEntry(int index);
+
     void releaseHashEntry(HashEntry<K, V> hashEntry);
 
     int getSize();
+
+    boolean isHashEntryEmpty(int index);
 }

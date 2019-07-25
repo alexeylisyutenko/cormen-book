@@ -8,7 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 class HashEntry<K, V> {
-
     public static int NIL_HASH_ENTRY_INDEX = -1;
 
     private final int index;

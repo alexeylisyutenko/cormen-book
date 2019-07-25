@@ -35,12 +35,46 @@ class DefaultHashEntryStorage<K, V> implements HashEntryStorage<K, V> {
         if (freeListHeadIndex == NIL_HASH_ENTRY_INDEX) {
             throw new HashTableException("Out of space");
         }
+
         HashEntry<K, V> hashEntry = getHashEntry(freeListHeadIndex);
         if (hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
             getHashEntry(hashEntry.getNextIndex()).setPreviousIndex(NIL_HASH_ENTRY_INDEX);
         }
         freeListHeadIndex = hashEntry.getNextIndex();
+
+        prepareHashEntryBeforeAllocation(hashEntry);
+        return hashEntry;
+    }
+
+    private void prepareHashEntryBeforeAllocation(HashEntry<K, V> hashEntry) {
         hashEntry.setEmpty(false);
+        hashEntry.setKey(null);
+        hashEntry.setValue(null);
+        hashEntry.setNextIndex(NIL_HASH_ENTRY_INDEX);
+        hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
+    }
+
+    @Override
+    public HashEntry<K, V> allocateParticularHashEntry(int index) {
+        if (!isHashEntryEmpty(index)) {
+            throw new HashTableException(String.format("Hash entry with index '%d' is not empty", index));
+        }
+
+        HashEntry<K, V> hashEntry = getHashEntry(index);
+
+        // Setup previous -> next link.
+        if (hashEntry.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
+            getHashEntry(hashEntry.getPreviousIndex()).setNextIndex(hashEntry.getNextIndex());
+        } else {
+            freeListHeadIndex = hashEntry.getNextIndex();
+        }
+
+        // Setup next -> previous link.
+        if (hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+            getHashEntry(hashEntry.getNextIndex()).setPreviousIndex(hashEntry.getPreviousIndex());
+        }
+
+        prepareHashEntryBeforeAllocation(hashEntry);
         return hashEntry;
     }
 
@@ -60,6 +94,11 @@ class DefaultHashEntryStorage<K, V> implements HashEntryStorage<K, V> {
     @Override
     public int getSize() {
         return table.length;
+    }
+
+    @Override
+    public boolean isHashEntryEmpty(int index) {
+        return getHashEntry(index).isEmpty();
     }
 
     @Override
