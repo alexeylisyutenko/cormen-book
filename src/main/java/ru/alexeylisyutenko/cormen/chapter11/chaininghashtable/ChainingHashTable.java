@@ -94,9 +94,9 @@ public class ChainingHashTable<K, V> implements HashTable<K, V> {
             throw new HashTableException(String.format("There is no item with a key '%s' in the hash table", key.toString()));
         }
 
-        // Delete a hash entry from
-        int hash = calculateHash(key);
+        // Delete a hash entry.
         if (hashEntry.getPrevious() == null) {
+            int hash = calculateHash(key);
             table[hash] = hashEntry.getNext();
         } else {
             hashEntry.getPrevious().setNext(hashEntry.getNext());

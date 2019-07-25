@@ -43,14 +43,12 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
 
         int hash = calculateHash(key);
         if (storage.isHashEntryEmpty(hash)) {
-
             // Slot is empty. We just need to use this entry to store the key-value pair.
             HashEntry<K, V> hashEntry = storage.allocateParticularHashEntry(hash);
             hashEntry.setKey(key);
             hashEntry.setValue(value);
             hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
             hashEntry.setNextIndex(NIL_HASH_ENTRY_INDEX);
-
         } else {
             HashEntry<K, V> hashEntry = storage.getHashEntry(hash);
             if (calculateHash(hashEntry.getKey()) == hash) {
@@ -63,16 +61,16 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
                 // Setup previous link to the slot's root.
                 newHashEntry.setPreviousIndex(hashEntry.getIndex());
 
-                // Setup slot's root.
+                // Setup new slot's root.
                 hashEntry.setKey(key);
                 hashEntry.setValue(value);
                 hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
                 hashEntry.setNextIndex(newHashEntry.getIndex());
-
             } else {
+                // Slot contains an entry with incorrect hash. We should move that entry to another position and insert new root entry here.
                 HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
 
-                // Move the element to the new location.
+                // Move the element, which occupies the slot, to the new location.
                 moveHashEntry(hashEntry, newHashEntry);
 
                 // Insert new slot's root.
@@ -81,20 +79,6 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
                 hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
                 hashEntry.setNextIndex(NIL_HASH_ENTRY_INDEX);
             }
-        }
-    }
-
-    private void moveHashEntry(HashEntry<K, V> src, HashEntry<K, V> dest) {
-        dest.setKey(src.getKey());
-        dest.setValue(src.getValue());
-        dest.setPreviousIndex(src.getPreviousIndex());
-        dest.setNextIndex(src.getNextIndex());
-
-        if (src.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
-            storage.getHashEntry(src.getPreviousIndex()).setNextIndex(dest.getIndex());
-        }
-        if (src.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
-            storage.getHashEntry(src.getNextIndex()).setPreviousIndex(dest.getIndex());
         }
     }
 
@@ -107,7 +91,67 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public void delete(K key) {
+        Objects.requireNonNull(key, "key cannot be null");
 
+        // Try to find a hash entry to delete.
+        HashEntry<K, V> hashEntry = searchHashEntry(key);
+        if (hashEntry == null) {
+            throw new HashTableException(String.format("There is no item with a key '%s' in the hash table", key.toString()));
+        }
+
+        // Delete an entry.
+        boolean inRoot = hashEntry.getPreviousIndex() == NIL_HASH_ENTRY_INDEX;
+        if (inRoot) {
+            boolean hasNext = hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX;
+            if (hasNext) {
+                HashEntry<K, V> nextHashEntry = storage.getHashEntry(hashEntry.getNextIndex());
+
+                hashEntry.setKey(nextHashEntry.getKey());
+                hashEntry.setValue(nextHashEntry.getValue());
+                hashEntry.setNextIndex(nextHashEntry.getNextIndex());
+                if (nextHashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+                    storage.getHashEntry(nextHashEntry.getNextIndex()).setPreviousIndex(hashEntry.getIndex());
+                }
+
+                storage.releaseHashEntry(nextHashEntry);
+            } else {
+                storage.releaseHashEntry(hashEntry);
+            }
+        } else {
+            boolean hasNext = hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX;
+            if (hasNext) {
+                HashEntry<K, V> nextHashEntry = storage.getHashEntry(hashEntry.getNextIndex());
+
+                hashEntry.setKey(nextHashEntry.getKey());
+                hashEntry.setValue(nextHashEntry.getValue());
+                hashEntry.setNextIndex(nextHashEntry.getNextIndex());
+                if (nextHashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+                    storage.getHashEntry(nextHashEntry.getNextIndex()).setPreviousIndex(hashEntry.getIndex());
+                }
+
+                storage.releaseHashEntry(nextHashEntry);
+
+            } else {
+                storage.getHashEntry(hashEntry.getPreviousIndex()).setNextIndex(NIL_HASH_ENTRY_INDEX);
+                storage.releaseHashEntry(hashEntry);
+            }
+        }
+    }
+
+    private void moveHashEntry(HashEntry<K, V> src, HashEntry<K, V> dest) {
+        dest.setKey(src.getKey());
+        dest.setValue(src.getValue());
+        dest.setPreviousIndex(src.getPreviousIndex());
+        dest.setNextIndex(src.getNextIndex());
+
+        // TODO: Check the case when two entries are adjacent.
+
+        if (src.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(src.getPreviousIndex()).setNextIndex(dest.getIndex());
+        }
+        if (src.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(src.getNextIndex()).setPreviousIndex(dest.getIndex());
+        }
     }
 
     @Override

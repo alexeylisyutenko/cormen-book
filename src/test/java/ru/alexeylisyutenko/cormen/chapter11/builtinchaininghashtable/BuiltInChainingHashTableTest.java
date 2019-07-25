@@ -34,6 +34,9 @@ class BuiltInChainingHashTableTest {
         System.out.println(hashTable.search(8));
         System.out.println(hashTable.search(16));
         System.out.println(hashTable.search(1));
+
+        hashTable.delete(1);
+        System.out.println(hashTable);
     }
 
 

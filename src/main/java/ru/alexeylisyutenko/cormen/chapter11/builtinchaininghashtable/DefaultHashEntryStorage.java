@@ -81,6 +81,8 @@ class DefaultHashEntryStorage<K, V> implements HashEntryStorage<K, V> {
     @Override
     public void releaseHashEntry(HashEntry<K, V> hashEntry) {
         hashEntry.setEmpty(true);
+        hashEntry.setKey(null);
+        hashEntry.setValue(null);
         hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
         hashEntry.setNextIndex(freeListHeadIndex);
 
