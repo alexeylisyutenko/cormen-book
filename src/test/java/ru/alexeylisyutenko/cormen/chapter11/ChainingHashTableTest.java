@@ -2,6 +2,7 @@ package ru.alexeylisyutenko.cormen.chapter11;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
+import ru.alexeylisyutenko.cormen.chapter11.chaininghashtable.ChainingHashTable;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.DivisionMethodIntegerHashFunctionFactory;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.MultiplicationMethodIntegerHashFunctionFactory;
 

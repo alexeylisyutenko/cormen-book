@@ -1,7 +1,9 @@
-package ru.alexeylisyutenko.cormen.chapter11;
+package ru.alexeylisyutenko.cormen.chapter11.chaininghashtable;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.alexeylisyutenko.cormen.chapter11.HashTable;
+import ru.alexeylisyutenko.cormen.chapter11.HashTableException;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunction.HashFunction;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.HashFunctionFactory;
 
@@ -131,4 +133,5 @@ public class ChainingHashTable<K, V> implements HashTable<K, V> {
                     '}';
         }
     }
+
 }
