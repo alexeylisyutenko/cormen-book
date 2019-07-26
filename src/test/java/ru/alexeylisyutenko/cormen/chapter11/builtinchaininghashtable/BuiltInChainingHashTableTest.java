@@ -95,6 +95,16 @@ class BuiltInChainingHashTableTest {
         for (Integer key : keysToKeep) {
             assertEquals(key + "", hashTable.search(key));
         }
+
+        // Insert deleted keys back again.
+        for (Integer key : keysToDelete) {
+            hashTable.insert(key, key + "");
+        }
+
+        // Check that all inserted items can be successfully searched.
+        for (Integer key : keys) {
+            assertEquals(key + "", hashTable.search(key));
+        }
     }
 
     private List<Integer> generateRandomDistinctIntegers(int count) {
@@ -114,6 +124,5 @@ class BuiltInChainingHashTableTest {
         Collections.shuffle(indexes);
         return indexes.stream().limit(numberOfItemsToInsert / 2).collect(Collectors.toSet());
     }
-
 
 }

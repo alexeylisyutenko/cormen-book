@@ -53,10 +53,10 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
             HashEntry<K, V> hashEntry = storage.getHashEntry(hash);
             if (calculateHash(hashEntry.getKey()) == hash) {
                 // Slot contains an entry with correct hash. We just need to add a new hash entry to the list.
-                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
 
                 // Move slot's root to the new location.
-                moveHashEntry(hashEntry, newHashEntry);
+                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
+                moveHashEntryToNewLocation(hashEntry, newHashEntry);
 
                 // Setup previous link to the slot's root.
                 newHashEntry.setPreviousIndex(hashEntry.getIndex());
@@ -68,10 +68,10 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
                 hashEntry.setNextIndex(newHashEntry.getIndex());
             } else {
                 // Slot contains an entry with incorrect hash. We should move that entry to another position and insert new root entry here.
-                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
 
                 // Move the element, which occupies the slot, to the new location.
-                moveHashEntry(hashEntry, newHashEntry);
+                HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
+                moveHashEntryToNewLocation(hashEntry, newHashEntry);
 
                 // Insert new slot's root.
                 hashEntry.setKey(key);
@@ -100,57 +100,37 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
         }
 
         // Delete an entry.
-        boolean inRoot = hashEntry.getPreviousIndex() == NIL_HASH_ENTRY_INDEX;
-        if (inRoot) {
-            boolean hasNext = hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX;
-            if (hasNext) {
-                HashEntry<K, V> nextHashEntry = storage.getHashEntry(hashEntry.getNextIndex());
+        boolean hasNext = hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX;
+        if (hasNext) {
+            HashEntry<K, V> nextHashEntry = storage.getHashEntry(hashEntry.getNextIndex());
 
-                hashEntry.setKey(nextHashEntry.getKey());
-                hashEntry.setValue(nextHashEntry.getValue());
-                hashEntry.setNextIndex(nextHashEntry.getNextIndex());
-                if (nextHashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
-                    storage.getHashEntry(nextHashEntry.getNextIndex()).setPreviousIndex(hashEntry.getIndex());
-                }
-
-                storage.releaseHashEntry(nextHashEntry);
-            } else {
-                storage.releaseHashEntry(hashEntry);
+            // Move the next entry to the current entry position.
+            hashEntry.setKey(nextHashEntry.getKey());
+            hashEntry.setValue(nextHashEntry.getValue());
+            hashEntry.setNextIndex(nextHashEntry.getNextIndex());
+            if (nextHashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+                storage.getHashEntry(nextHashEntry.getNextIndex()).setPreviousIndex(hashEntry.getIndex());
             }
+
+            storage.releaseHashEntry(nextHashEntry);
         } else {
-            boolean hasNext = hashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX;
-            if (hasNext) {
-                HashEntry<K, V> nextHashEntry = storage.getHashEntry(hashEntry.getNextIndex());
-
-                hashEntry.setKey(nextHashEntry.getKey());
-                hashEntry.setValue(nextHashEntry.getValue());
-                hashEntry.setNextIndex(nextHashEntry.getNextIndex());
-                if (nextHashEntry.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
-                    storage.getHashEntry(nextHashEntry.getNextIndex()).setPreviousIndex(hashEntry.getIndex());
-                }
-
-                storage.releaseHashEntry(nextHashEntry);
-
-            } else {
+            if (hashEntry.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
                 storage.getHashEntry(hashEntry.getPreviousIndex()).setNextIndex(NIL_HASH_ENTRY_INDEX);
-                storage.releaseHashEntry(hashEntry);
             }
+            storage.releaseHashEntry(hashEntry);
         }
     }
 
-    private void moveHashEntry(HashEntry<K, V> src, HashEntry<K, V> dest) {
-        dest.setKey(src.getKey());
-        dest.setValue(src.getValue());
-        dest.setPreviousIndex(src.getPreviousIndex());
-        dest.setNextIndex(src.getNextIndex());
-
-        // TODO: Check the case when two entries are adjacent.
-
-        if (src.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
-            storage.getHashEntry(src.getPreviousIndex()).setNextIndex(dest.getIndex());
+    private void moveHashEntryToNewLocation(HashEntry<K, V> source, HashEntry<K, V> destination) {
+        destination.setKey(source.getKey());
+        destination.setValue(source.getValue());
+        destination.setPreviousIndex(source.getPreviousIndex());
+        destination.setNextIndex(source.getNextIndex());
+        if (source.getPreviousIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(source.getPreviousIndex()).setNextIndex(destination.getIndex());
         }
-        if (src.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
-            storage.getHashEntry(src.getNextIndex()).setPreviousIndex(dest.getIndex());
+        if (source.getNextIndex() != NIL_HASH_ENTRY_INDEX) {
+            storage.getHashEntry(source.getNextIndex()).setPreviousIndex(destination.getIndex());
         }
     }
 
