@@ -6,7 +6,7 @@ package ru.alexeylisyutenko.cormen.chapter11;
 public interface HashTable<K, V> {
 
     /**
-     * Insert new entry into the hash table.
+     * Insert new entry into the calculateHash table.
      * <p>
      * If there is an entry with such key in the table {@link HashTableException} will bi thrown.
      * </p>

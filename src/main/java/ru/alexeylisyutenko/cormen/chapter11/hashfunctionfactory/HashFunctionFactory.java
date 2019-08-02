@@ -3,14 +3,14 @@ package ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunction.HashFunction;
 
 /**
- *  Factory of hash functions.
+ *  Factory of calculateHash functions.
  */
 public interface HashFunctionFactory<K> {
     /**
-     * Create a new hash function.
+     * Create a new calculateHash function.
      *
-     * @param hashTableSize size of a hash table where a new hash function will be used at
-     * @return a new hash function
+     * @param hashTableSize size of a calculateHash table where a new calculateHash function will be used at
+     * @return a new calculateHash function
      */
     HashFunction<K> create(int hashTableSize);
 }

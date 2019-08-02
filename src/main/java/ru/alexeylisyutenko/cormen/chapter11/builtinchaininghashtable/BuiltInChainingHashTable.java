@@ -10,7 +10,7 @@ import java.util.Objects;
 import static ru.alexeylisyutenko.cormen.chapter11.builtinchaininghashtable.HashEntry.NIL_HASH_ENTRY_INDEX;
 
 /**
- * Hash table implementation which uses the hash table itself as a storage for linked list elements.
+ * Hash table implementation which uses the calculateHash table itself as a storage for linked list elements.
  * This implementation corresponds to an exercise 11.2-4 from Cormen's book.
  */
 @SuppressWarnings("unchecked")
@@ -52,7 +52,7 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
         } else {
             HashEntry<K, V> hashEntry = storage.getHashEntry(hash);
             if (calculateHash(hashEntry.getKey()) == hash) {
-                // Slot contains an entry with correct hash. We just need to add a new hash entry to the list.
+                // Slot contains an entry with correct calculateHash. We just need to add a new calculateHash entry to the list.
 
                 // Move slot's root to the new location.
                 HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
@@ -67,7 +67,7 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
                 hashEntry.setPreviousIndex(NIL_HASH_ENTRY_INDEX);
                 hashEntry.setNextIndex(newHashEntry.getIndex());
             } else {
-                // Slot contains an entry with incorrect hash. We should move that entry to another position and insert new root entry here.
+                // Slot contains an entry with incorrect calculateHash. We should move that entry to another position and insert new root entry here.
 
                 // Move the element, which occupies the slot, to the new location.
                 HashEntry<K, V> newHashEntry = storage.allocateHashEntry();
@@ -93,10 +93,10 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
     public void delete(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        // Try to find a hash entry to delete.
+        // Try to find a calculateHash entry to delete.
         HashEntry<K, V> hashEntry = searchHashEntry(key);
         if (hashEntry == null) {
-            throw new HashTableException(String.format("There is no item with a key '%s' in the hash table", key.toString()));
+            throw new HashTableException(String.format("There is no item with a key '%s' in the calculateHash table", key.toString()));
         }
 
         // Delete an entry.
@@ -159,14 +159,14 @@ public class BuiltInChainingHashTable<K, V> implements HashTable<K, V> {
     private int calculateHash(K key) {
         int hash = hashFunction.calculateHash(key);
         if (hash < 0 || hash >= hashTableSize) {
-            throw new HashTableException("Hash function returned incorrect hash value: " + hash);
+            throw new HashTableException("Hash function returned incorrect calculateHash value: " + hash);
         }
         return hash;
     }
 
     private void ensureThereIsNoSuchKeyInTheTable(K key) {
         if (search(key) != null) {
-            throw new HashTableException(String.format("An item with a key '%s' is already in the hash table", key.toString()));
+            throw new HashTableException(String.format("An item with a key '%s' is already in the calculateHash table", key.toString()));
         }
     }
 

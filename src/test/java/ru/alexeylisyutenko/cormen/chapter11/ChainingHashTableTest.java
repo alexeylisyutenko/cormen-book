@@ -35,10 +35,10 @@ class ChainingHashTableTest {
         assertEquals("test 2", hashTable.search(555));
 
         HashTableException insertException = assertThrows(HashTableException.class, () -> hashTable.insert(123, "some value"));
-        assertEquals("An item with a key '123' is already in the hash table", insertException.getMessage());
+        assertEquals("An item with a key '123' is already in the calculateHash table", insertException.getMessage());
 
         HashTableException deleteException = assertThrows(HashTableException.class, () -> hashTable.delete(777));
-        assertEquals("There is no item with a key '777' in the hash table", deleteException.getMessage());
+        assertEquals("There is no item with a key '777' in the calculateHash table", deleteException.getMessage());
 
         assertEquals("test 1", hashTable.search(123));
         hashTable.delete(123);

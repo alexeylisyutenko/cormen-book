@@ -81,7 +81,7 @@ class BuiltInChainingHashTableTest {
             }
         }
 
-        // Delete some items from the hash table.
+        // Delete some items from the calculateHash table.
         for (Integer keyToDelete : keysToDelete) {
             hashTable.delete(keyToDelete);
         }

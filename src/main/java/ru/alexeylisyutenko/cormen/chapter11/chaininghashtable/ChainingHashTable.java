@@ -52,7 +52,7 @@ public class ChainingHashTable<K, V> implements HashTable<K, V> {
 
     private void ensureThereIsNoSuchKeyInTheTable(K key) {
         if (search(key) != null) {
-            throw new HashTableException(String.format("An item with a key '%s' is already in the hash table", key.toString()));
+            throw new HashTableException(String.format("An item with a key '%s' is already in the calculateHash table", key.toString()));
         }
     }
 
@@ -79,7 +79,7 @@ public class ChainingHashTable<K, V> implements HashTable<K, V> {
     private int calculateHash(K key) {
         int hash = hashFunction.calculateHash(key);
         if (hash < 0 || hash >= hashTableSize) {
-            throw new HashTableException("Hash function returned incorrect hash value: " + hash);
+            throw new HashTableException("Hash function returned incorrect calculateHash value: " + hash);
         }
         return hash;
     }
@@ -88,13 +88,13 @@ public class ChainingHashTable<K, V> implements HashTable<K, V> {
     public void delete(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        // Try to find a hash entry to delete.
+        // Try to find a calculateHash entry to delete.
         HashEntry<K, V> hashEntry = searchHashEntry(key);
         if (hashEntry == null) {
-            throw new HashTableException(String.format("There is no item with a key '%s' in the hash table", key.toString()));
+            throw new HashTableException(String.format("There is no item with a key '%s' in the calculateHash table", key.toString()));
         }
 
-        // Delete a hash entry.
+        // Delete a calculateHash entry.
         if (hashEntry.getPrevious() == null) {
             int hash = calculateHash(key);
             table[hash] = hashEntry.getNext();
