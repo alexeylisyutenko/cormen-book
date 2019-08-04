@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.alexeylisyutenko.cormen.chapter11.HashTable;
+import ru.alexeylisyutenko.cormen.chapter11.HashTableException;
 import ru.alexeylisyutenko.cormen.chapter11.probesequence.ProbeSequenceFunction;
 import ru.alexeylisyutenko.cormen.chapter11.probesequencefactory.ProbeSequenceFunctionFactory;
 
@@ -33,7 +34,23 @@ public class OpenAddressingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public void insert(K key, V value) {
+        int probeNumber = 0;
+        int hash;
+        do {
+            hash = probeSequenceFunction.calculateHash(key, probeNumber);
+            if (table[hash] == null || table[hash].isDeleted()) {
+                if (table[hash] == null) {
+                    table[hash] = new HashEntry<>();
+                }
+                table[hash].setKey(key);
+                table[hash].setValue(value);
+                table[hash].setDeleted(false);
+                return;
+            }
+            probeNumber++;
+        } while (table[hash] != null && probeNumber < hashTableSize);
 
+        throw new HashTableException("There is no more space in the hash table");
     }
 
     @Override
@@ -42,7 +59,7 @@ public class OpenAddressingHashTable<K, V> implements HashTable<K, V> {
         int hash;
         do {
             hash = probeSequenceFunction.calculateHash(key, probeNumber);
-            if (table[hash] != null && table[hash].getKey().equals(key)) {
+            if (table[hash] != null && !table[hash].isDeleted() && table[hash].getKey().equals(key)) {
                 return table[hash].getValue();
             }
             probeNumber++;
@@ -56,9 +73,14 @@ public class OpenAddressingHashTable<K, V> implements HashTable<K, V> {
         int hash;
         do {
             hash = probeSequenceFunction.calculateHash(key, probeNumber);
+            if (table[hash] != null && table[hash].getKey().equals(key)) {
+                table[hash].setDeleted(true);
+                return;
+            }
+            probeNumber++;
+        } while (table[hash] != null && probeNumber < hashTableSize);
 
-
-        } while ();
+        throw new HashTableException(String.format("There is no item with a key '%s' in the calculateHash table", key.toString()));
     }
 
     @Override
