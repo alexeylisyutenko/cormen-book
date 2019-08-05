@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter11.HashTableException;
 import ru.alexeylisyutenko.cormen.chapter11.RandomizedHashTableTestHelper;
 import ru.alexeylisyutenko.cormen.chapter11.hashfunctionfactory.DivisionMethodIntegerHashFunctionFactory;
-import ru.alexeylisyutenko.cormen.chapter11.probesequence.ProbeSequenceFunction;
 import ru.alexeylisyutenko.cormen.chapter11.probesequencefactory.IntegerDoubleHashingProbeSequenceFunctionFactory;
 import ru.alexeylisyutenko.cormen.chapter11.probesequencefactory.IntegerLinearProbeSequenceFunctionFactory;
-import ru.alexeylisyutenko.cormen.chapter11.probesequencefactory.ProbeSequenceFunctionFactory;
 import ru.alexeylisyutenko.helper.Primes;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +37,7 @@ class OpenAddressingHashTableTest {
         HashTableException exception = assertThrows(HashTableException.class, () -> hashTable.delete(0));
         assertEquals("There is no item with a key '0' in the calculateHash table", exception.getMessage());
 
-        hashTable.insert(0 ,"0");
+        hashTable.insert(0, "0");
         assertEquals("0", hashTable.search(0));
 
         hashTable.insert(5, "5");
@@ -56,7 +54,7 @@ class OpenAddressingHashTableTest {
         RandomizedHashTableTestHelper.run(hashTableSize -> {
             IntegerLinearProbeSequenceFunctionFactory sequenceFunctionFactory = new IntegerLinearProbeSequenceFunctionFactory(new DivisionMethodIntegerHashFunctionFactory());
             return new OpenAddressingHashTable<>(sequenceFunctionFactory, hashTableSize);
-        }, 100000);
+        }, 100000, 1000);
     }
 
     @Test
@@ -64,7 +62,7 @@ class OpenAddressingHashTableTest {
         RandomizedHashTableTestHelper.run(hashTableSize -> {
             hashTableSize = Primes.smallestPrimeGreaterThan(hashTableSize);
             return new OpenAddressingHashTable<>(new IntegerDoubleHashingProbeSequenceFunctionFactory(), hashTableSize);
-        }, 100000);
+        }, 100000, 1000);
     }
 
 }

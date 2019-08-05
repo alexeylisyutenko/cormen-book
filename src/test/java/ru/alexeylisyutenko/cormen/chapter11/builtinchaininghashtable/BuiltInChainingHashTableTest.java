@@ -39,7 +39,7 @@ class BuiltInChainingHashTableTest {
 
     @Test
     void randomizedHashTableTest() {
-        RandomizedHashTableTestHelper.run(hashTableSize -> new BuiltInChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), hashTableSize), 100000);
+        RandomizedHashTableTestHelper.run(hashTableSize -> new BuiltInChainingHashTable<>(new DivisionMethodIntegerHashFunctionFactory(), hashTableSize), 100000, 1000);
     }
 
 }

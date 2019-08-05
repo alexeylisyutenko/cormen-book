@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class RandomizedHashTableTestHelper {
 
-    public static void run(HashTableSupplier supplier, int testCount) {
+    public static void run(HashTableSupplier supplier, int testCount, int hashTableSizeUpperBound) {
         for (int i = 0; i < testCount; i++) {
-            singleRandomizedTest(supplier);
+            singleRandomizedTest(supplier, hashTableSizeUpperBound);
         }
     }
 
-    private static void singleRandomizedTest(HashTableSupplier supplier) {
-        int hashTableSize = RandomUtils.nextInt(1, 256);
+    private static void singleRandomizedTest(HashTableSupplier supplier, int hashTableSizeUpperBound) {
+        int hashTableSize = RandomUtils.nextInt(1, hashTableSizeUpperBound);
         HashTable<Integer, String> hashTable = supplier.create(hashTableSize);
 
         // Insert n random items.
