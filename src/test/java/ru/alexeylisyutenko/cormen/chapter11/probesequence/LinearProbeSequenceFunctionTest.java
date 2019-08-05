@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LinearProbeSequenceFunctionTest {
 
-
     @Test
     void calculateHashShouldWorkProperly() {
         LinearProbeSequenceFunction<Integer> probeSequenceFunction = new LinearProbeSequenceFunction<>(new DivisionMethodIntegerHashFunction(5), 5);
