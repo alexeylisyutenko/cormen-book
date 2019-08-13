@@ -11,7 +11,7 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void treeWalkDemo() {
-        BinaryTreeNode<Integer> root = BinaryTreeDemoFactory.createDemoBinarySearchTree();
+        BinaryTreeNode<Integer> root = BinaryTreeNodesDemoFactory.createDemoBinarySearchTree();
         BinarySearchTreeWalkAlgorithms.postorderTreeWalk(root, System.out::println);
     }
 
@@ -23,11 +23,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void inorderTreeWalkShouldWorkProperly() {
-        inorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeDemoFactory.createDemoBinarySearchTree());
-        inorderTreeWalkTest(List.of(), BinaryTreeDemoFactory.createEmptyNodeDemoBinarySearchTree());
-        inorderTreeWalkTest(List.of(1), BinaryTreeDemoFactory.createSingleNodeDemoBinarySearchTree());
-        inorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createLeftDegenerateDemoBinarySearchTree());
-        inorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createRightDegenerateDemoBinarySearchTree());
+        inorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeNodesDemoFactory.createDemoBinarySearchTree());
+        inorderTreeWalkTest(List.of(), BinaryTreeNodesDemoFactory.createEmptyNodeDemoBinarySearchTree());
+        inorderTreeWalkTest(List.of(1), BinaryTreeNodesDemoFactory.createSingleNodeDemoBinarySearchTree());
+        inorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createLeftDegenerateDemoBinarySearchTree());
+        inorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
     void preorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
@@ -38,11 +38,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void preorderTreeWalkShouldWorkProperly() {
-        preorderTreeWalkTest(List.of(6, 5, 2, 5, 7, 8), BinaryTreeDemoFactory.createDemoBinarySearchTree());
-        preorderTreeWalkTest(List.of(), BinaryTreeDemoFactory.createEmptyNodeDemoBinarySearchTree());
-        preorderTreeWalkTest(List.of(1), BinaryTreeDemoFactory.createSingleNodeDemoBinarySearchTree());
-        preorderTreeWalkTest(List.of(6, 5, 4, 3, 2, 1), BinaryTreeDemoFactory.createLeftDegenerateDemoBinarySearchTree());
-        preorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createRightDegenerateDemoBinarySearchTree());
+        preorderTreeWalkTest(List.of(6, 5, 2, 5, 7, 8), BinaryTreeNodesDemoFactory.createDemoBinarySearchTree());
+        preorderTreeWalkTest(List.of(), BinaryTreeNodesDemoFactory.createEmptyNodeDemoBinarySearchTree());
+        preorderTreeWalkTest(List.of(1), BinaryTreeNodesDemoFactory.createSingleNodeDemoBinarySearchTree());
+        preorderTreeWalkTest(List.of(6, 5, 4, 3, 2, 1), BinaryTreeNodesDemoFactory.createLeftDegenerateDemoBinarySearchTree());
+        preorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
     void postorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
@@ -53,11 +53,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void postorderTreeWalkShouldWorkProperly() {
-        postorderTreeWalkTest(List.of(2, 5, 5, 8, 7, 6), BinaryTreeDemoFactory.createDemoBinarySearchTree());
-        postorderTreeWalkTest(List.of(), BinaryTreeDemoFactory.createEmptyNodeDemoBinarySearchTree());
-        postorderTreeWalkTest(List.of(1), BinaryTreeDemoFactory.createSingleNodeDemoBinarySearchTree());
-        postorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createLeftDegenerateDemoBinarySearchTree());
-        postorderTreeWalkTest(List.of(6, 5, 4, 3, 2, 1), BinaryTreeDemoFactory.createRightDegenerateDemoBinarySearchTree());
+        postorderTreeWalkTest(List.of(2, 5, 5, 8, 7, 6), BinaryTreeNodesDemoFactory.createDemoBinarySearchTree());
+        postorderTreeWalkTest(List.of(), BinaryTreeNodesDemoFactory.createEmptyNodeDemoBinarySearchTree());
+        postorderTreeWalkTest(List.of(1), BinaryTreeNodesDemoFactory.createSingleNodeDemoBinarySearchTree());
+        postorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createLeftDegenerateDemoBinarySearchTree());
+        postorderTreeWalkTest(List.of(6, 5, 4, 3, 2, 1), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
     void stackBasedInorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
@@ -68,11 +68,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void stackBasedInorderTreeWalkShouldWorkProperly() {
-        stackBasedInorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeDemoFactory.createDemoBinarySearchTree());
-        stackBasedInorderTreeWalkTest(List.of(), BinaryTreeDemoFactory.createEmptyNodeDemoBinarySearchTree());
-        stackBasedInorderTreeWalkTest(List.of(1), BinaryTreeDemoFactory.createSingleNodeDemoBinarySearchTree());
-        stackBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createLeftDegenerateDemoBinarySearchTree());
-        stackBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createRightDegenerateDemoBinarySearchTree());
+        stackBasedInorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeNodesDemoFactory.createDemoBinarySearchTree());
+        stackBasedInorderTreeWalkTest(List.of(), BinaryTreeNodesDemoFactory.createEmptyNodeDemoBinarySearchTree());
+        stackBasedInorderTreeWalkTest(List.of(1), BinaryTreeNodesDemoFactory.createSingleNodeDemoBinarySearchTree());
+        stackBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createLeftDegenerateDemoBinarySearchTree());
+        stackBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
     void iterationBasedInorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
@@ -83,11 +83,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void iterationBasedInorderTreeWalkShouldWorkProperly() {
-        iterationBasedInorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeDemoFactory.createDemoBinarySearchTree());
-        iterationBasedInorderTreeWalkTest(List.of(), BinaryTreeDemoFactory.createEmptyNodeDemoBinarySearchTree());
-        iterationBasedInorderTreeWalkTest(List.of(1), BinaryTreeDemoFactory.createSingleNodeDemoBinarySearchTree());
-        iterationBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createLeftDegenerateDemoBinarySearchTree());
-        iterationBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeDemoFactory.createRightDegenerateDemoBinarySearchTree());
+        iterationBasedInorderTreeWalkTest(List.of(2, 5, 5, 6, 7, 8), BinaryTreeNodesDemoFactory.createDemoBinarySearchTree());
+        iterationBasedInorderTreeWalkTest(List.of(), BinaryTreeNodesDemoFactory.createEmptyNodeDemoBinarySearchTree());
+        iterationBasedInorderTreeWalkTest(List.of(1), BinaryTreeNodesDemoFactory.createSingleNodeDemoBinarySearchTree());
+        iterationBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createLeftDegenerateDemoBinarySearchTree());
+        iterationBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
 }

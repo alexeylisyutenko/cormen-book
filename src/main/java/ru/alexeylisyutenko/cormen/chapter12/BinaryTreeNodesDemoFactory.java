@@ -1,6 +1,6 @@
 package ru.alexeylisyutenko.cormen.chapter12;
 
-public final class BinaryTreeDemoFactory {
+public final class BinaryTreeNodesDemoFactory {
 
     public static BinaryTreeNode<Integer> createDemoBinarySearchTree() {
         // Third level.
