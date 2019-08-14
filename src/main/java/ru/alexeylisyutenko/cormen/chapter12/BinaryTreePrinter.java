@@ -40,7 +40,7 @@ public final class BinaryTreePrinter {
 
             BinaryTreePrinter.printWhitespaces(betweenSpaces);
         }
-        System.out.println("");
+        System.out.println();
 
         for (int i = 1; i <= endgeLines; i++) {
             for (int j = 0; j < nodes.size(); j++) {
@@ -52,7 +52,6 @@ public final class BinaryTreePrinter {
 
                 if (nodes.get(j).getLeft() != null) {
                     System.out.print("/");
-
                 } else {
                     BinaryTreePrinter.printWhitespaces(1);
                 }
@@ -68,7 +67,7 @@ public final class BinaryTreePrinter {
                 BinaryTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
             }
 
-            System.out.println("");
+            System.out.println();
         }
 
         printNodeInternal(newNodes, level + 1, maxLevel);

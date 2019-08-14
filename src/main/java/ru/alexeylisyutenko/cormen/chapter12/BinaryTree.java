@@ -92,4 +92,9 @@ public interface BinaryTree<K extends Comparable<K>> {
      */
     K getPredecessorOf(K key);
 
+    /**
+     * Removes all keys from the tree.
+     */
+    void clear();
+
 }

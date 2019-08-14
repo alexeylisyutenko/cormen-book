@@ -48,7 +48,43 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
 
     @Override
     public void delete(K key) {
+        Objects.requireNonNull(key, "key cannot be null");
 
+        BinaryTreeNode<K> node = search(key);
+        if (node == null) {
+            throw new BinaryTreeException("There is no such key in the tree: " + key);
+        }
+
+        if (node.getLeft() == null) {
+            transplant(node, node.getRight());
+        } else if (node.getRight() == null) {
+            transplant(node, node.getLeft());
+        } else {
+            BinaryTreeNode<K> successorNode = findMinimumNode(node.getRight());
+            if (node.getRight() != successorNode) {
+                transplant(successorNode, successorNode.getRight());
+                successorNode.setRight(node.getRight());
+            }
+            transplant(node, successorNode);
+            successorNode.setLeft(node.getLeft());
+        }
+    }
+
+    /**
+     * Replaces one subtree as a child of its parent with another subtree.
+     */
+    private void transplant(BinaryTreeNode<K> originalNode, BinaryTreeNode<K> replacementNode) {
+        BinaryTreeNode<K> parentNode = originalNode.getParent();
+        if (parentNode == null) {
+            root = replacementNode;
+        } else if (parentNode.getLeft() == originalNode) {
+            parentNode.setLeft(replacementNode);
+        } else {
+            parentNode.setRight(replacementNode);
+        }
+        if (replacementNode != null) {
+            replacementNode.setParent(parentNode);
+        }
     }
 
     @Override
@@ -84,29 +120,91 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
         return search(key) != null;
     }
 
+    private BinaryTreeNode<K> findMinimumNode(BinaryTreeNode<K> baseNode) {
+        BinaryTreeNode<K> node = baseNode;
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node;
+    }
+
     @Override
     public K getMinimum() {
-        return null;
+        if (root == null) {
+            return null;
+        }
+        BinaryTreeNode<K> minimumNode = findMinimumNode(root);
+        return minimumNode != null ? minimumNode.getKey() : null;
+    }
+
+    private BinaryTreeNode<K> findMaximumNode(BinaryTreeNode<K> baseNode) {
+        BinaryTreeNode<K> node = baseNode;
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node;
     }
 
     @Override
     public K getMaximum() {
-        return null;
+        if (root == null) {
+            return null;
+        }
+        BinaryTreeNode<K> maximumNode = findMaximumNode(root);
+        return maximumNode != null ? maximumNode.getKey() : null;
     }
 
     @Override
     public K getSuccessorOf(K key) {
-        return null;
+        Objects.requireNonNull(key, "key cannot be null");
+
+        BinaryTreeNode<K> node = search(key);
+        if (node == null) {
+            throw new BinaryTreeException("There is no such key in the tree: " + key);
+        }
+
+        if (node.getRight() != null) {
+            BinaryTreeNode<K> minimumNode = findMinimumNode(node.getRight());
+            return minimumNode.getKey();
+        } else {
+            BinaryTreeNode<K> parentNode = node.getParent();
+            while (parentNode != null && parentNode.getLeft() != node) {
+                node = parentNode;
+                parentNode = node.getParent();
+            }
+            return parentNode != null ? parentNode.getKey() : null;
+        }
     }
 
     @Override
     public K getPredecessorOf(K key) {
-        return null;
+        Objects.requireNonNull(key, "key cannot be null");
+
+        BinaryTreeNode<K> node = search(key);
+        if (node == null) {
+            throw new BinaryTreeException("There is no such key in the tree: " + key);
+        }
+
+        if (node.getLeft() != null) {
+            BinaryTreeNode<K> maximumNode = findMaximumNode(node.getLeft());
+            return maximumNode.getKey();
+        } else {
+            BinaryTreeNode<K> parentNode = node.getParent();
+            while (parentNode != null && parentNode.getRight() != node) {
+                node = parentNode;
+                parentNode = node.getParent();
+            }
+            return parentNode != null ? parentNode.getKey() : null;
+        }
+    }
+
+    @Override
+    public void clear() {
+        root = null;
     }
 
     public void print() {
         BinaryTreePrinter.printNode(root);
     }
-
 
 }

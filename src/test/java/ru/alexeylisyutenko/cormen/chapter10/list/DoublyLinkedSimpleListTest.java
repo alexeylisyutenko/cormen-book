@@ -58,7 +58,7 @@ class DoublyLinkedSimpleListTest {
         list.insert(listObject);
 
         assertArrayEquals(new int[]{-1, -1}, storage.getNextPointers());
-        assertArrayEquals(new int[]{1, 0}, storage.getKeys());
+        assertArrayEquals(new int[]{1, -1}, storage.getKeys());
         assertArrayEquals(new int[]{-1, -100}, storage.getPrevPointers());
         assertEquals(1, storage.getFreePointer());
         assertEquals(0, list.getHead().getPointer());
@@ -126,7 +126,7 @@ class DoublyLinkedSimpleListTest {
         list.getStorage().freeObject(listObject2);
 
         assertArrayEquals(new int[]{-1, -1}, storage.getNextPointers());
-        assertArrayEquals(new int[]{1, 2}, storage.getKeys());
+        assertArrayEquals(new int[]{1, -1}, storage.getKeys());
         assertArrayEquals(new int[]{-1, -100}, storage.getPrevPointers());
         assertEquals(1, storage.getFreePointer());
         assertEquals(0, list.getHead().getPointer());
@@ -149,7 +149,7 @@ class DoublyLinkedSimpleListTest {
         list.getStorage().freeObject(listObject);
 
         assertArrayEquals(new int[]{-1, -1}, storage.getNextPointers());
-        assertArrayEquals(new int[]{1, 2}, storage.getKeys());
+        assertArrayEquals(new int[]{-1, 2}, storage.getKeys());
         assertArrayEquals(new int[]{-100, -1}, storage.getPrevPointers());
         assertEquals(0, storage.getFreePointer());
         assertEquals(1, list.getHead().getPointer());
