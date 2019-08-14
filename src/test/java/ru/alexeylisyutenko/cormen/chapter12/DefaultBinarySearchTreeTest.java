@@ -48,6 +48,38 @@ class DefaultBinarySearchTreeTest {
         tree.print();
     }
 
+    private void initializeTreeWithDemoData() {
+        tree.insert(1);
+        tree.insert(3);
+        tree.insert(2);
+        tree.insert(5);
+        tree.insert(4);
+    }
+
+    /**
+     * Cormen book exercise 12.3-4.
+     */
+    @Test
+    void commutativeDeletionCounterExampleDemo() {
+        initializeTreeWithDemoData();
+
+        tree.print();
+
+        int x = 2;
+        int y = 3;
+
+        tree.delete(x);
+        tree.delete(y);
+        tree.print();
+
+        tree.clear();
+        initializeTreeWithDemoData();
+
+        tree.delete(y);
+        tree.delete(x);
+        tree.print();
+    }
+
     @Test
     void insertShouldWorkProperly() {
         tree.insert(15);
