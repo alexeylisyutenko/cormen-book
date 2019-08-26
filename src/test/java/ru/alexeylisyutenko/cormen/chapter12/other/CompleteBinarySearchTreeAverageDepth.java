@@ -6,7 +6,7 @@ public class CompleteBinarySearchTreeAverageDepth {
 
     @Test
     void calculateAverageDepth() {
-        int numberOfNodes = (1 << 3) - 1;
+        int numberOfNodes = (1 << 20) - 1;
         System.out.println("Number of nodes:" + numberOfNodes);
 
         int height = (int) Math.floor(Math.log(numberOfNodes) / Math.log(2));

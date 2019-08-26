@@ -2,10 +2,10 @@ package ru.alexeylisyutenko.cormen.chapter12;
 
 public class DefaultBinaryTreeNode<K> implements BinaryTreeNode<K> {
 
-    private BinaryTreeNode<K> parent;
-    private BinaryTreeNode<K> left;
-    private BinaryTreeNode<K> right;
-    private K key;
+    protected BinaryTreeNode<K> parent;
+    protected BinaryTreeNode<K> left;
+    protected BinaryTreeNode<K> right;
+    protected K key;
 
     public DefaultBinaryTreeNode(BinaryTreeNode<K> left, BinaryTreeNode<K> right, K key) {
         this(null, left, right, key);
