@@ -1,25 +1,26 @@
 package ru.alexeylisyutenko.cormen.chapter13;
 
-import ru.alexeylisyutenko.cormen.chapter12.BinaryTree;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTree;
+import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
 
 import java.util.function.Consumer;
 
-public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K> {
+public class RedBlackBinarySearchTree<K extends Comparable<K>> implements BinarySearchTree<K> {
 
-    private final RedBlackTreeNode<K> nil;
+    private final RedBlackSearchTreeNode<K> nil;
 
-    private RedBlackTreeNode<K> root;
+    private RedBlackSearchTreeNode<K> root;
 
-    public RedBlackBinaryTree() {
-        this.nil = new SentinelRedBlackTreeNode<>();
+    public RedBlackBinarySearchTree() {
+        this.nil = new SentinelRedBlackSearchTreeNode<>();
         this.root = nil;
     }
 
-    private void rotateLeft(RedBlackTreeNode<K> xNode) {
+    private void rotateLeft(RedBlackSearchTreeNode<K> xNode) {
         if (xNode.getRight() == nil) {
             throw new IllegalStateException("Right child of a xNode must exist for left rotation");
         }
-        RedBlackTreeNode<K> yNode = xNode.getRight();
+        RedBlackSearchTreeNode<K> yNode = xNode.getRight();
 
         // Put yNode's left to xNode's right.
         xNode.setRight(yNode.getLeft());
@@ -31,7 +32,7 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         if (xNode.getParent() == nil) {
             root = yNode;
         } else {
-            RedBlackTreeNode<K> xParent = xNode.getParent();
+            RedBlackSearchTreeNode<K> xParent = xNode.getParent();
             if (xParent.getLeft() == xNode) {
                 xParent.setLeft(yNode);
             } else {
@@ -44,11 +45,11 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         xNode.setParent(yNode);
     }
 
-    private void rotateRight(RedBlackTreeNode<K> yNode) {
+    private void rotateRight(RedBlackSearchTreeNode<K> yNode) {
         if (yNode.getLeft() == nil) {
             throw new IllegalStateException("Left child of a yNode must exist for right rotation");
         }
-        RedBlackTreeNode<K> xNode = yNode.getLeft();
+        RedBlackSearchTreeNode<K> xNode = yNode.getLeft();
 
         // Put xNode's right to yNode's left.
         yNode.setLeft(xNode.getRight());
@@ -57,7 +58,7 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         }
 
         // Update yNode's parent to point to xNode instead of yNode.
-        RedBlackTreeNode<K> yParent = yNode.getParent();
+        RedBlackSearchTreeNode<K> yParent = yNode.getParent();
         if (yParent == nil) {
             root = xNode;
         } else {
@@ -73,13 +74,45 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         yNode.setParent(xNode);
     }
 
-    private void insertFixup(RedBlackTreeNode<K> zNode) {
+    private void insertFixup(RedBlackSearchTreeNode<K> zNode) {
 
     }
 
     @Override
     public void insert(K key) {
+        RedBlackSearchTreeNode<K> parentNode = nil;
+        RedBlackSearchTreeNode<K> currentNode = root;
 
+        while (currentNode != nil) {
+            parentNode = currentNode;
+            int comparisonResult = key.compareTo(currentNode.getKey());
+            if (comparisonResult < 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+
+        DefaultRedBlackSearchTreeNode<K> nodeToInsert = new DefaultRedBlackSearchTreeNode<>();
+        nodeToInsert.setLeft(nil);
+        nodeToInsert.setRight(nil);
+        nodeToInsert.setKey(key);
+        nodeToInsert.setColor(RedBlackTreeNodeColor.RED);
+
+        if (parentNode == nil) {
+            nodeToInsert.setParent(nil);
+            root = nodeToInsert;
+        } else {
+            nodeToInsert.setParent(parentNode);
+            int comparisonResult = key.compareTo(parentNode.getKey());
+            if (comparisonResult < 0) {
+                parentNode.setLeft(nodeToInsert);
+            } else {
+                parentNode.setRight(nodeToInsert);
+            }
+        }
+
+        insertFixup(nodeToInsert);
     }
 
     @Override
@@ -137,7 +170,15 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         root = nil;
     }
 
-    private static class SentinelRedBlackTreeNode<K> implements RedBlackTreeNode<K> {
+    RedBlackSearchTreeNode<K> getRoot() {
+        return root;
+    }
+
+    void print() {
+        BinaryTreePrinter.printNode(root, nil);
+    }
+
+    private static class SentinelRedBlackSearchTreeNode<K> implements RedBlackSearchTreeNode<K> {
         @Override
         public RedBlackTreeNodeColor getColor() {
             return RedBlackTreeNodeColor.BLACK;
@@ -149,32 +190,32 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         }
 
         @Override
-        public RedBlackTreeNode<K> getParent() {
+        public RedBlackSearchTreeNode<K> getParent() {
             return null;
         }
 
         @Override
-        public void setParent(RedBlackTreeNode<K> parent) {
+        public void setParent(RedBlackSearchTreeNode<K> parent) {
             throw new UnsupportedOperationException("setParent() method cannot be called on sentinel node");
         }
 
         @Override
-        public RedBlackTreeNode<K> getLeft() {
+        public RedBlackSearchTreeNode<K> getLeft() {
             return null;
         }
 
         @Override
-        public void setLeft(RedBlackTreeNode<K> left) {
+        public void setLeft(RedBlackSearchTreeNode<K> left) {
             throw new UnsupportedOperationException("setLeft() method cannot be called on sentinel node");
         }
 
         @Override
-        public RedBlackTreeNode<K> getRight() {
+        public RedBlackSearchTreeNode<K> getRight() {
             return null;
         }
 
         @Override
-        public void setRight(RedBlackTreeNode<K> right) {
+        public void setRight(RedBlackSearchTreeNode<K> right) {
             throw new UnsupportedOperationException("setRight() method cannot be called on sentinel node");
         }
 
@@ -186,6 +227,11 @@ public class RedBlackBinaryTree<K extends Comparable<K>> implements BinaryTree<K
         @Override
         public void setKey(K key) {
             throw new UnsupportedOperationException("setKey() method cannot be called on sentinel node");
+        }
+
+        @Override
+        public String toString() {
+            return "nil";
         }
     }
 

@@ -2,19 +2,21 @@ package ru.alexeylisyutenko.cormen.chapter12;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.cormen.chapter12.simplebinarytree.SimpleBinarySearchTree;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefaultBinarySearchTreeTest {
+class SimpleBinarySearchTreeTest {
 
-    private DefaultBinarySearchTree<Integer> tree;
+    private SimpleBinarySearchTree<Integer> tree;
 
     @BeforeEach
     void setup() {
-        tree = new DefaultBinarySearchTree<>();
+        tree = new SimpleBinarySearchTree<>();
     }
 
     @Test
@@ -184,7 +186,7 @@ class DefaultBinarySearchTreeTest {
         assertEquals(Integer.valueOf(18), tree.getSuccessorOf(15));
         assertNull(tree.getSuccessorOf(18));
 
-        BinaryTreeException exception = assertThrows(BinaryTreeException.class, () -> tree.getSuccessorOf(555));
+        BinarySearchTreeException exception = assertThrows(BinarySearchTreeException.class, () -> tree.getSuccessorOf(555));
         assertEquals("There is no such key in the tree: 555", exception.getMessage());
     }
 
@@ -202,7 +204,7 @@ class DefaultBinarySearchTreeTest {
         assertEquals(Integer.valueOf(6), tree.getPredecessorOf(9));
         assertNull(tree.getPredecessorOf(3));
 
-        BinaryTreeException exception = assertThrows(BinaryTreeException.class, () -> tree.getPredecessorOf(555));
+        BinarySearchTreeException exception = assertThrows(BinarySearchTreeException.class, () -> tree.getPredecessorOf(555));
         assertEquals("There is no such key in the tree: 555", exception.getMessage());
     }
 

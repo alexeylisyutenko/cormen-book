@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter12;
+package ru.alexeylisyutenko.cormen.chapter12.base;
 
 import java.util.function.Consumer;
 
@@ -7,7 +7,7 @@ import java.util.function.Consumer;
  *
  * @param <K> key type
  */
-public interface BinaryTree<K extends Comparable<K>> {
+public interface BinarySearchTree<K extends Comparable<K>> {
 
     /**
      * Insert a node with corresponding key to the tree.
@@ -20,7 +20,7 @@ public interface BinaryTree<K extends Comparable<K>> {
      * Delete a node with some key.
      *
      * @param key a key to delete
-     * @throws BinaryTreeException if there is no such key in the tree
+     * @throws BinarySearchTreeException if there is no such key in the tree
      */
     void delete(K key);
 
@@ -79,7 +79,7 @@ public interface BinaryTree<K extends Comparable<K>> {
      *
      * @param key a key whose successor will be returned
      * @return successor if key is not the maximum key, or if the key is the maximum key then null is returned
-     * @throws BinaryTreeException if there is no such key in the tree
+     * @throws BinarySearchTreeException if there is no such key in the tree
      */
     K getSuccessorOf(K key);
 
@@ -88,7 +88,7 @@ public interface BinaryTree<K extends Comparable<K>> {
      *
      * @param key a key whose predecessor will be returned
      * @return predecessor if key is not the minimum key, or if the key is the minimum key then null is returned
-     * @throws BinaryTreeException if there is no such key in the tree
+     * @throws BinarySearchTreeException if there is no such key in the tree
      */
     K getPredecessorOf(K key);
 

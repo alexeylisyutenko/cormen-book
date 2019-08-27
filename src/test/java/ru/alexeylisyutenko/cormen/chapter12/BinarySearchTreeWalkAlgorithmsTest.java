@@ -1,6 +1,9 @@
 package ru.alexeylisyutenko.cormen.chapter12;
 
 import org.junit.jupiter.api.Test;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeWalkAlgorithms;
+import ru.alexeylisyutenko.cormen.chapter12.simplebinarytree.BinaryTreeNodesDemoFactory;
+import ru.alexeylisyutenko.cormen.chapter12.simplebinarytree.SimpleBinarySearchTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +14,11 @@ class BinarySearchTreeWalkAlgorithmsTest {
 
     @Test
     void treeWalkDemo() {
-        BinaryTreeNode<Integer> root = BinaryTreeNodesDemoFactory.createDemoBinarySearchTree();
+        SimpleBinarySearchTreeNode<Integer> root = BinaryTreeNodesDemoFactory.createDemoBinarySearchTree();
         BinarySearchTreeWalkAlgorithms.postorderTreeWalk(root, System.out::println);
     }
 
-    void inorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
+    void inorderTreeWalkTest(List<Integer> expectedOrder, SimpleBinarySearchTreeNode<Integer> treeRoot) {
         List<Integer> walkResult = new ArrayList<>();
         BinarySearchTreeWalkAlgorithms.inorderTreeWalk(treeRoot, walkResult::add);
         assertArrayEquals(expectedOrder.toArray(), walkResult.toArray());
@@ -30,7 +33,7 @@ class BinarySearchTreeWalkAlgorithmsTest {
         inorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
-    void preorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
+    void preorderTreeWalkTest(List<Integer> expectedOrder, SimpleBinarySearchTreeNode<Integer> treeRoot) {
         List<Integer> walkResult = new ArrayList<>();
         BinarySearchTreeWalkAlgorithms.preorderTreeWalk(treeRoot, walkResult::add);
         assertArrayEquals(expectedOrder.toArray(), walkResult.toArray());
@@ -45,7 +48,7 @@ class BinarySearchTreeWalkAlgorithmsTest {
         preorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
-    void postorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
+    void postorderTreeWalkTest(List<Integer> expectedOrder, SimpleBinarySearchTreeNode<Integer> treeRoot) {
         List<Integer> walkResult = new ArrayList<>();
         BinarySearchTreeWalkAlgorithms.postorderTreeWalk(treeRoot, walkResult::add);
         assertArrayEquals(expectedOrder.toArray(), walkResult.toArray());
@@ -60,7 +63,7 @@ class BinarySearchTreeWalkAlgorithmsTest {
         postorderTreeWalkTest(List.of(6, 5, 4, 3, 2, 1), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
-    void stackBasedInorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
+    void stackBasedInorderTreeWalkTest(List<Integer> expectedOrder, SimpleBinarySearchTreeNode<Integer> treeRoot) {
         List<Integer> walkResult = new ArrayList<>();
         BinarySearchTreeWalkAlgorithms.stackBasedInorderTreeWalk(treeRoot, walkResult::add);
         assertArrayEquals(expectedOrder.toArray(), walkResult.toArray());
@@ -75,7 +78,7 @@ class BinarySearchTreeWalkAlgorithmsTest {
         stackBasedInorderTreeWalkTest(List.of(1, 2, 3, 4, 5, 6), BinaryTreeNodesDemoFactory.createRightDegenerateDemoBinarySearchTree());
     }
 
-    void iterationBasedInorderTreeWalkTest(List<Integer> expectedOrder, BinaryTreeNode<Integer> treeRoot) {
+    void iterationBasedInorderTreeWalkTest(List<Integer> expectedOrder, SimpleBinarySearchTreeNode<Integer> treeRoot) {
         List<Integer> walkResult = new ArrayList<>();
         BinarySearchTreeWalkAlgorithms.iterationBasedInorderTreeWalk(treeRoot, walkResult::add);
         assertArrayEquals(expectedOrder.toArray(), walkResult.toArray());

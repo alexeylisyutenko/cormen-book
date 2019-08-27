@@ -1,14 +1,19 @@
-package ru.alexeylisyutenko.cormen.chapter12;
+package ru.alexeylisyutenko.cormen.chapter12.simplebinarytree;
+
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTree;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeWalkAlgorithms;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryTree<K> {
+public class SimpleBinarySearchTree<K extends Comparable<K>> implements BinarySearchTree<K> {
 
-    private BinaryTreeNode<K> root;
+    private SimpleBinarySearchTreeNode<K> root;
 
-    private BinaryTreeNode<K> search(K key) {
-        BinaryTreeNode<K> node = root;
+    private SimpleBinarySearchTreeNode<K> search(K key) {
+        SimpleBinarySearchTreeNode<K> node = root;
         while (node != null) {
             int comparisonResult = key.compareTo(node.getKey());
             if (comparisonResult == 0) {
@@ -27,8 +32,8 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
     public void insert(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        BinaryTreeNode<K> previous = null;
-        BinaryTreeNode<K> current = root;
+        SimpleBinarySearchTreeNode<K> previous = null;
+        SimpleBinarySearchTreeNode<K> current = root;
         while (current != null) {
             previous = current;
             if (key.compareTo(current.getKey()) < 0) {
@@ -38,11 +43,11 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
             }
         }
         if (previous == null) {
-            root = new DefaultBinaryTreeNode<>(null, null, key);
+            root = new DefaultSimpleBinarySearchTreeNode<>(null, null, key);
         } else if (key.compareTo(previous.getKey()) < 0) {
-            previous.setLeft(new DefaultBinaryTreeNode<>(null, null, key));
+            previous.setLeft(new DefaultSimpleBinarySearchTreeNode<>(null, null, key));
         } else {
-            previous.setRight(new DefaultBinaryTreeNode<>(null, null, key));
+            previous.setRight(new DefaultSimpleBinarySearchTreeNode<>(null, null, key));
         }
     }
 
@@ -50,9 +55,9 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
     public void delete(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        BinaryTreeNode<K> node = search(key);
+        SimpleBinarySearchTreeNode<K> node = search(key);
         if (node == null) {
-            throw new BinaryTreeException("There is no such key in the tree: " + key);
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
         if (node.getLeft() == null) {
@@ -60,7 +65,7 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
         } else if (node.getRight() == null) {
             transplant(node, node.getLeft());
         } else {
-            BinaryTreeNode<K> successorNode = findMinimumNode(node.getRight());
+            SimpleBinarySearchTreeNode<K> successorNode = findMinimumNode(node.getRight());
             if (node.getRight() != successorNode) {
                 transplant(successorNode, successorNode.getRight());
                 successorNode.setRight(node.getRight());
@@ -73,8 +78,8 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
     /**
      * Replaces one subtree as a child of its parent with another subtree.
      */
-    private void transplant(BinaryTreeNode<K> originalNode, BinaryTreeNode<K> replacementNode) {
-        BinaryTreeNode<K> parentNode = originalNode.getParent();
+    private void transplant(SimpleBinarySearchTreeNode<K> originalNode, SimpleBinarySearchTreeNode<K> replacementNode) {
+        SimpleBinarySearchTreeNode<K> parentNode = originalNode.getParent();
         if (parentNode == null) {
             root = replacementNode;
         } else if (parentNode.getLeft() == originalNode) {
@@ -120,8 +125,8 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
         return search(key) != null;
     }
 
-    private BinaryTreeNode<K> findMinimumNode(BinaryTreeNode<K> baseNode) {
-        BinaryTreeNode<K> node = baseNode;
+    private SimpleBinarySearchTreeNode<K> findMinimumNode(SimpleBinarySearchTreeNode<K> baseNode) {
+        SimpleBinarySearchTreeNode<K> node = baseNode;
         while (node.getLeft() != null) {
             node = node.getLeft();
         }
@@ -133,12 +138,12 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
         if (root == null) {
             return null;
         }
-        BinaryTreeNode<K> minimumNode = findMinimumNode(root);
+        SimpleBinarySearchTreeNode<K> minimumNode = findMinimumNode(root);
         return minimumNode != null ? minimumNode.getKey() : null;
     }
 
-    private BinaryTreeNode<K> findMaximumNode(BinaryTreeNode<K> baseNode) {
-        BinaryTreeNode<K> node = baseNode;
+    private SimpleBinarySearchTreeNode<K> findMaximumNode(SimpleBinarySearchTreeNode<K> baseNode) {
+        SimpleBinarySearchTreeNode<K> node = baseNode;
         while (node.getRight() != null) {
             node = node.getRight();
         }
@@ -150,7 +155,7 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
         if (root == null) {
             return null;
         }
-        BinaryTreeNode<K> maximumNode = findMaximumNode(root);
+        SimpleBinarySearchTreeNode<K> maximumNode = findMaximumNode(root);
         return maximumNode != null ? maximumNode.getKey() : null;
     }
 
@@ -158,16 +163,16 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
     public K getSuccessorOf(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        BinaryTreeNode<K> node = search(key);
+        SimpleBinarySearchTreeNode<K> node = search(key);
         if (node == null) {
-            throw new BinaryTreeException("There is no such key in the tree: " + key);
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
         if (node.getRight() != null) {
-            BinaryTreeNode<K> minimumNode = findMinimumNode(node.getRight());
+            SimpleBinarySearchTreeNode<K> minimumNode = findMinimumNode(node.getRight());
             return minimumNode.getKey();
         } else {
-            BinaryTreeNode<K> parentNode = node.getParent();
+            SimpleBinarySearchTreeNode<K> parentNode = node.getParent();
             while (parentNode != null && parentNode.getLeft() != node) {
                 node = parentNode;
                 parentNode = node.getParent();
@@ -180,16 +185,16 @@ public class DefaultBinarySearchTree<K extends Comparable<K>> implements BinaryT
     public K getPredecessorOf(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        BinaryTreeNode<K> node = search(key);
+        SimpleBinarySearchTreeNode<K> node = search(key);
         if (node == null) {
-            throw new BinaryTreeException("There is no such key in the tree: " + key);
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
         if (node.getLeft() != null) {
-            BinaryTreeNode<K> maximumNode = findMaximumNode(node.getLeft());
+            SimpleBinarySearchTreeNode<K> maximumNode = findMaximumNode(node.getLeft());
             return maximumNode.getKey();
         } else {
-            BinaryTreeNode<K> parentNode = node.getParent();
+            SimpleBinarySearchTreeNode<K> parentNode = node.getParent();
             while (parentNode != null && parentNode.getRight() != node) {
                 node = parentNode;
                 parentNode = node.getParent();

@@ -1,14 +1,17 @@
 package ru.alexeylisyutenko.cormen.chapter13;
 
-public class DefaultRedBlackTreeNode<K> implements RedBlackTreeNode<K> {
+public class DefaultRedBlackSearchTreeNode<K> implements RedBlackSearchTreeNode<K> {
 
-    private RedBlackTreeNode<K> parent;
-    private RedBlackTreeNode<K> left;
-    private RedBlackTreeNode<K> right;
+    private RedBlackSearchTreeNode<K> parent;
+    private RedBlackSearchTreeNode<K> left;
+    private RedBlackSearchTreeNode<K> right;
     private K key;
     private RedBlackTreeNodeColor color;
 
-    public DefaultRedBlackTreeNode(RedBlackTreeNode<K> parent, RedBlackTreeNode<K> left, RedBlackTreeNode<K> right, K key, RedBlackTreeNodeColor color) {
+    public DefaultRedBlackSearchTreeNode() {
+    }
+
+    public DefaultRedBlackSearchTreeNode(RedBlackSearchTreeNode<K> parent, RedBlackSearchTreeNode<K> left, RedBlackSearchTreeNode<K> right, K key, RedBlackTreeNodeColor color) {
         this.parent = parent;
         this.left = left;
         this.right = right;
@@ -17,32 +20,32 @@ public class DefaultRedBlackTreeNode<K> implements RedBlackTreeNode<K> {
     }
 
     @Override
-    public RedBlackTreeNode<K> getParent() {
+    public RedBlackSearchTreeNode<K> getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(RedBlackTreeNode<K> parent) {
+    public void setParent(RedBlackSearchTreeNode<K> parent) {
         this.parent = parent;
     }
 
     @Override
-    public RedBlackTreeNode<K> getLeft() {
+    public RedBlackSearchTreeNode<K> getLeft() {
         return left;
     }
 
     @Override
-    public void setLeft(RedBlackTreeNode<K> left) {
+    public void setLeft(RedBlackSearchTreeNode<K> left) {
         this.left = left;
     }
 
     @Override
-    public RedBlackTreeNode<K> getRight() {
+    public RedBlackSearchTreeNode<K> getRight() {
         return right;
     }
 
     @Override
-    public void setRight(RedBlackTreeNode<K> right) {
+    public void setRight(RedBlackSearchTreeNode<K> right) {
         this.right = right;
     }
 

@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter12;
+package ru.alexeylisyutenko.cormen.chapter12.base;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public final class BinarySearchTreeWalkAlgorithms {
 
-    public static <K> void inorderTreeWalk(BinaryTreeNode<K> node, Consumer<K> consumer) {
+    public static <K> void inorderTreeWalk(BinarySearchTreeNode<K> node, Consumer<K> consumer) {
         if (node != null) {
             inorderTreeWalk(node.getLeft(), consumer);
             consumer.accept(node.getKey());
@@ -14,7 +14,7 @@ public final class BinarySearchTreeWalkAlgorithms {
         }
     }
 
-    public static <K> void preorderTreeWalk(BinaryTreeNode<K> node, Consumer<K> consumer) {
+    public static <K> void preorderTreeWalk(BinarySearchTreeNode<K> node, Consumer<K> consumer) {
         if (node != null) {
             consumer.accept(node.getKey());
             preorderTreeWalk(node.getLeft(), consumer);
@@ -22,7 +22,7 @@ public final class BinarySearchTreeWalkAlgorithms {
         }
     }
 
-    public static <K> void postorderTreeWalk(BinaryTreeNode<K> node, Consumer<K> consumer) {
+    public static <K> void postorderTreeWalk(BinarySearchTreeNode<K> node, Consumer<K> consumer) {
         if (node != null) {
             postorderTreeWalk(node.getLeft(), consumer);
             postorderTreeWalk(node.getRight(), consumer);
@@ -30,8 +30,8 @@ public final class BinarySearchTreeWalkAlgorithms {
         }
     }
 
-    public static <K> void stackBasedInorderTreeWalk(BinaryTreeNode<K> node, Consumer<K> consumer) {
-        Deque<BinaryTreeNode<K>> stack = new LinkedList<>();
+    public static <K> void stackBasedInorderTreeWalk(BinarySearchTreeNode<K> node, Consumer<K> consumer) {
+        Deque<BinarySearchTreeNode<K>> stack = new LinkedList<>();
         while (!stack.isEmpty() || node != null) {
             if (node != null) {
                 stack.push(node);
@@ -44,12 +44,12 @@ public final class BinarySearchTreeWalkAlgorithms {
         }
     }
 
-    public static <K> void iterationBasedInorderTreeWalk(BinaryTreeNode<K> node, Consumer<K> consumer) {
-        BinaryTreeNode<K> previous = null;
-        BinaryTreeNode<K> current = node;
+    public static <K> void iterationBasedInorderTreeWalk(BinarySearchTreeNode<K> node, Consumer<K> consumer) {
+        BinarySearchTreeNode<K> previous = null;
+        BinarySearchTreeNode<K> current = node;
         while (current != null) {
 
-            BinaryTreeNode<K> next;
+            BinarySearchTreeNode<K> next;
             if (previous == current.getParent()) {
                 // We're coming from parent.
                 if (current.getLeft() == null && current.getRight() == null) {
