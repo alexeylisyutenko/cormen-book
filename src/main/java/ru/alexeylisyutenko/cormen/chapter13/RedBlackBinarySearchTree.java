@@ -5,6 +5,9 @@ import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
 
 import java.util.function.Consumer;
 
+import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
+import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
+
 public class RedBlackBinarySearchTree<K extends Comparable<K>> implements BinarySearchTree<K> {
 
     private final RedBlackSearchTreeNode<K> nil;
@@ -27,6 +30,9 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         if (yNode.getLeft() != nil) {
             yNode.getLeft().setParent(xNode);
         }
+
+        // Update yNode parent.
+        yNode.setParent(xNode.getParent());
 
         // Update xNode's parent to point to yNode instead of xNode.
         if (xNode.getParent() == nil) {
@@ -57,6 +63,9 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
             xNode.getRight().setParent(yNode);
         }
 
+        // Update xNode parent.
+        xNode.setParent(yNode.getParent());
+
         // Update yNode's parent to point to xNode instead of yNode.
         RedBlackSearchTreeNode<K> yParent = yNode.getParent();
         if (yParent == nil) {
@@ -75,7 +84,49 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void insertFixup(RedBlackSearchTreeNode<K> zNode) {
+        while (zNode.getParent().getColor() != BLACK) {
+            RedBlackSearchTreeNode<K> parentNode = zNode.getParent();
+            RedBlackSearchTreeNode<K> grandFatherNode = zNode.getParent().getParent();
 
+            // Case 1.
+            if (grandFatherNode.getLeft().getColor() == RED && grandFatherNode.getRight().getColor() == RED) {
+                grandFatherNode.getLeft().setColor(BLACK);
+                grandFatherNode.getRight().setColor(BLACK);
+                grandFatherNode.setColor(RED);
+                zNode = grandFatherNode;
+            } else {
+                if (grandFatherNode.getLeft() == parentNode) {
+                    // zNode is in the left grandfather's subtree.
+                    // Case 2.
+                    if (parentNode.getRight() == zNode) {
+                        rotateLeft(parentNode);
+                        zNode = parentNode;
+                        parentNode = zNode.getParent();
+                        grandFatherNode = zNode.getParent().getParent();
+                    }
+
+                    // Case 3.
+                    parentNode.setColor(BLACK);
+                    grandFatherNode.setColor(RED);
+                    rotateRight(grandFatherNode);
+                } else {
+                    // zNode is in the right grandfather's subtree.
+                    // Case 2.
+                    if (parentNode.getLeft() == zNode) {
+                        rotateRight(parentNode);
+                        zNode = parentNode;
+                        parentNode = zNode.getParent();
+                        grandFatherNode = zNode.getParent().getParent();
+                    }
+
+                    // Case 3.
+                    parentNode.setColor(BLACK);
+                    grandFatherNode.setColor(RED);
+                    rotateLeft(grandFatherNode);
+                }
+            }
+        }
+        root.setColor(BLACK);
     }
 
     @Override
@@ -97,7 +148,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         nodeToInsert.setLeft(nil);
         nodeToInsert.setRight(nil);
         nodeToInsert.setKey(key);
-        nodeToInsert.setColor(RedBlackTreeNodeColor.RED);
+        nodeToInsert.setColor(RED);
 
         if (parentNode == nil) {
             nodeToInsert.setParent(nil);
@@ -120,29 +171,70 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     }
 
+    private void inorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
+        if (node != nil) {
+            inorderWalkRecursive(node.getLeft(), consumer);
+            consumer.accept(node.getKey());
+            inorderWalkRecursive(node.getRight(), consumer);
+        }
+    }
+
     @Override
     public void inorderWalk(Consumer<K> consumer) {
+        inorderWalkRecursive(root, consumer);
+    }
 
+    private void preorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
+        if (node != nil) {
+            consumer.accept(node.getKey());
+            preorderWalkRecursive(node.getLeft(), consumer);
+            preorderWalkRecursive(node.getRight(), consumer);
+        }
     }
 
     @Override
     public void preorderWalk(Consumer<K> consumer) {
+        preorderWalkRecursive(root, consumer);
+    }
 
+    private void postorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
+        if (node != nil) {
+            postorderWalkRecursive(node.getLeft(), consumer);
+            postorderWalkRecursive(node.getRight(), consumer);
+            consumer.accept(node.getKey());
+        }
     }
 
     @Override
     public void postorderWalk(Consumer<K> consumer) {
-
+        postorderWalkRecursive(root, consumer);
     }
 
     @Override
     public int size() {
-        return 0;
+        var ref = new Object() {
+            int counter = 0;
+        };
+        inorderWalk((key) -> ref.counter++);
+        return ref.counter;
+    }
+
+    private RedBlackSearchTreeNode<K> search(K key) {
+        RedBlackSearchTreeNode<K> currentNode = root;
+        while (currentNode != nil && !currentNode.getKey().equals(key)) {
+            int comparisonResult = key.compareTo(currentNode.getKey());
+            if (comparisonResult < 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+        return currentNode;
     }
 
     @Override
     public boolean contains(K key) {
-        return false;
+        return search(key) != nil;
     }
 
     @Override
@@ -181,7 +273,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     private static class SentinelRedBlackSearchTreeNode<K> implements RedBlackSearchTreeNode<K> {
         @Override
         public RedBlackTreeNodeColor getColor() {
-            return RedBlackTreeNodeColor.BLACK;
+            return BLACK;
         }
 
         @Override
