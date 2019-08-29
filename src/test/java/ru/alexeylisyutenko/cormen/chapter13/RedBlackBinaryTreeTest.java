@@ -65,6 +65,20 @@ class RedBlackBinaryTreeTest {
         System.out.println("Predecessor of 1: " + tree.getPredecessorOf(1));
     }
 
+    @Disabled
+    @Test
+    void demo2() {
+        tree.insert(41);
+        tree.insert(38);
+        tree.insert(31);
+        tree.insert(12);
+        tree.insert(19);
+        tree.insert(18);
+
+        tree.print();
+    }
+
+
     @Test
     void insertShouldWorkProperly() {
         tree.insert(15);

@@ -17,8 +17,14 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     private RedBlackSearchTreeNode<K> root;
 
     public RedBlackBinarySearchTree() {
-        this.nil = new SentinelRedBlackSearchTreeNode<>();
+        this.nil = createSentinelNode();
         this.root = nil;
+    }
+
+    private RedBlackSearchTreeNode<K> createSentinelNode() {
+        RedBlackSearchTreeNode<K> sentinel = new DefaultRedBlackSearchTreeNode<>();
+        sentinel.setColor(BLACK);
+        return sentinel;
     }
 
     private void rotateLeft(RedBlackSearchTreeNode<K> xNode) {
@@ -326,63 +332,6 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     void print() {
         BinaryTreePrinter.printNode(root, nil);
-    }
-
-    private static class SentinelRedBlackSearchTreeNode<K> implements RedBlackSearchTreeNode<K> {
-        @Override
-        public RedBlackTreeNodeColor getColor() {
-            return BLACK;
-        }
-
-        @Override
-        public void setColor(RedBlackTreeNodeColor color) {
-            throw new UnsupportedOperationException("setColor() method cannot be called on sentinel node");
-        }
-
-        @Override
-        public RedBlackSearchTreeNode<K> getParent() {
-            return null;
-        }
-
-        @Override
-        public void setParent(RedBlackSearchTreeNode<K> parent) {
-            throw new UnsupportedOperationException("setParent() method cannot be called on sentinel node");
-        }
-
-        @Override
-        public RedBlackSearchTreeNode<K> getLeft() {
-            return null;
-        }
-
-        @Override
-        public void setLeft(RedBlackSearchTreeNode<K> left) {
-            throw new UnsupportedOperationException("setLeft() method cannot be called on sentinel node");
-        }
-
-        @Override
-        public RedBlackSearchTreeNode<K> getRight() {
-            return null;
-        }
-
-        @Override
-        public void setRight(RedBlackSearchTreeNode<K> right) {
-            throw new UnsupportedOperationException("setRight() method cannot be called on sentinel node");
-        }
-
-        @Override
-        public K getKey() {
-            return null;
-        }
-
-        @Override
-        public void setKey(K key) {
-            throw new UnsupportedOperationException("setKey() method cannot be called on sentinel node");
-        }
-
-        @Override
-        public String toString() {
-            return "nil";
-        }
     }
 
 }
