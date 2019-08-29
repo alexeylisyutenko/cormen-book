@@ -1,8 +1,10 @@
 package ru.alexeylisyutenko.cormen.chapter13;
 
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTree;
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
@@ -237,24 +239,80 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         return search(key) != nil;
     }
 
+    private RedBlackSearchTreeNode<K> findMinimumNode(RedBlackSearchTreeNode<K> baseNode) {
+        RedBlackSearchTreeNode<K> currentNode = baseNode;
+        while (currentNode.getLeft() != nil) {
+            currentNode = currentNode.getLeft();
+        }
+        return currentNode;
+    }
+
     @Override
     public K getMinimum() {
-        return null;
+        if (root == nil) {
+            return null;
+        }
+        RedBlackSearchTreeNode<K> minimumNode = findMinimumNode(root);
+        return minimumNode != nil ? minimumNode.getKey() : null;
+    }
+
+    private RedBlackSearchTreeNode<K> findMaximumNode(RedBlackSearchTreeNode<K> baseNode) {
+        RedBlackSearchTreeNode<K> currentNode = baseNode;
+        while (currentNode.getRight() != nil) {
+            currentNode = currentNode.getRight();
+        }
+        return currentNode;
     }
 
     @Override
     public K getMaximum() {
-        return null;
+        if (root == nil) {
+            return null;
+        }
+        RedBlackSearchTreeNode<K> maximumNode = findMaximumNode(root);
+        return maximumNode != nil ? maximumNode.getKey() : null;
     }
 
     @Override
     public K getSuccessorOf(K key) {
-        return null;
+        Objects.requireNonNull(key, "key cannot be null");
+
+        RedBlackSearchTreeNode<K> node = search(key);
+        if (node == nil) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
+        }
+
+        if (node.getRight() != nil) {
+            return findMinimumNode(node.getRight()).getKey();
+        } else {
+            RedBlackSearchTreeNode<K> parentNode = node.getParent();
+            while (parentNode != nil && parentNode.getLeft() != node) {
+                node = parentNode;
+                parentNode = parentNode.getParent();
+            }
+            return parentNode != nil ? parentNode.getKey() : null;
+        }
     }
 
     @Override
     public K getPredecessorOf(K key) {
-        return null;
+        Objects.requireNonNull(key, "key cannot be null");
+
+        RedBlackSearchTreeNode<K> node = search(key);
+        if (node == nil) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
+        }
+
+        if (node.getLeft() != nil) {
+            return findMaximumNode(node.getLeft()).getKey();
+        } else {
+            RedBlackSearchTreeNode<K> parentNode = node.getParent();
+            while (parentNode != nil && parentNode.getRight() != node) {
+                node = parentNode;
+                parentNode = parentNode.getParent();
+            }
+            return parentNode != nil ? parentNode.getKey() : null;
+        }
     }
 
     @Override
