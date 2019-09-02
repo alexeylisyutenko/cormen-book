@@ -1,6 +1,7 @@
 package ru.alexeylisyutenko.cormen.chapter11;
 
 import org.apache.commons.lang3.RandomUtils;
+import ru.alexeylisyutenko.helper.Helpers;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class RandomizedHashTableTestHelper {
 
         // Insert n random items.
         int numberOfItemsToInsert = RandomUtils.nextInt((hashTableSize / 2) + 1, hashTableSize + 1);
-        List<Integer> keys = generateRandomDistinctIntegers(numberOfItemsToInsert);
+        List<Integer> keys = Helpers.generateRandomDistinctIntegers(numberOfItemsToInsert);
         for (Integer integer : keys) {
             hashTable.insert(integer, integer + "");
         }
@@ -70,18 +71,6 @@ public class RandomizedHashTableTestHelper {
         for (Integer key : keys) {
             assertEquals(key + "", hashTable.search(key));
         }
-    }
-
-    private static List<Integer> generateRandomDistinctIntegers(int count) {
-        HashSet<Integer> integerHashSet = new HashSet<>();
-        for (int i = 0; i < count; i++) {
-            int randomInt;
-            do {
-                randomInt = RandomUtils.nextBoolean() ? RandomUtils.nextInt() : -RandomUtils.nextInt();
-            } while (integerHashSet.contains(randomInt));
-            integerHashSet.add(randomInt);
-        }
-        return new ArrayList<>(integerHashSet);
     }
 
     private static Set<Integer> getIndexesOfNumbersToDelete(int numberOfItemsToInsert) {

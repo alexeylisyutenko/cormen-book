@@ -1,7 +1,9 @@
 package ru.alexeylisyutenko.cormen.chapter13;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static ru.alexeylisyutenko.helper.Helpers.generateRandomDistinctIntegers;
 
 class RedBlackBinaryTreeTest {
 
@@ -67,17 +69,16 @@ class RedBlackBinaryTreeTest {
 
     @Disabled
     @Test
-    void demo2() {
-        tree.insert(41);
-        tree.insert(38);
-        tree.insert(31);
-        tree.insert(12);
-        tree.insert(19);
-        tree.insert(18);
+    void deletionDemo() {
+        for (int i = 1; i < 16; i += 2) {
+            tree.insert(i);
+            tree.insert(i + 1);
+        }
+        tree.print();
 
+        tree.delete(4);
         tree.print();
     }
-
 
     @Test
     void insertShouldWorkProperly() {
@@ -92,6 +93,69 @@ class RedBlackBinaryTreeTest {
         assertTrue(tree.contains(3));
         assertFalse(tree.contains(555));
     }
+
+    @Test
+    void deleteShouldWorkProperly() {
+        tree.insert(15);
+        tree.insert(6);
+        tree.insert(18);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(21);
+        tree.insert(16);
+        tree.insert(2);
+        tree.insert(4);
+        tree.insert(13);
+        tree.insert(9);
+        tree.insert(17);
+
+        assertTrue(tree.contains(2));
+        tree.delete(2);
+        assertFalse(tree.contains(2));
+
+        assertTrue(tree.contains(13));
+        tree.delete(13);
+        assertFalse(tree.contains(13));
+
+        assertTrue(tree.contains(15));
+        tree.delete(15);
+        assertFalse(tree.contains(15));
+
+        assertTrue(tree.contains(3));
+        assertTrue(tree.contains(4));
+        assertTrue(tree.contains(6));
+        assertTrue(tree.contains(7));
+        assertTrue(tree.contains(9));
+        assertTrue(tree.contains(18));
+        assertTrue(tree.contains(16));
+        assertTrue(tree.contains(17));
+        assertTrue(tree.contains(21));
+    }
+
+    @Test
+    void specialCaseDeletionShouldWorkProperly() {
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(5);
+        tree.insert(7);
+        tree.insert(8);
+
+        System.out.println("After insertion:");
+        tree.print();
+
+        tree.delete(1);
+        System.out.println("After deletion of 1:");
+        tree.print();
+
+        tree.delete(7);
+        System.out.println("After deletion of 7:");
+        tree.print();
+
+        tree.delete(8);
+
+        tree.print();
+    }
+
     @Test
     void sizeShouldWorkProperly() {
         assertEquals(0, tree.size());
@@ -199,6 +263,50 @@ class RedBlackBinaryTreeTest {
         List<Integer> walkResult = new ArrayList<>();
         tree.postorderWalk(walkResult::add);
         assertArrayEquals(new Integer[]{3, 9, 6, 18, 15}, walkResult.toArray());
+    }
+
+    @Test
+    @RepeatedTest(1000)
+    void randomizedInsertionAndDeletionTest() {
+        int size = RandomUtils.nextInt(1, 2000);
+        singleRandomizedTest(size);
+    }
+
+    private void singleRandomizedTest(int size) {
+        // Prepare lists.
+        List<Integer> integers = generateRandomDistinctIntegers(size, 1, 2 * size);
+        List<Integer> integersToDelete = new ArrayList<>();
+        List<Integer> integersToLeave = new ArrayList<>();
+        for (Integer integer : integers) {
+            if (RandomUtils.nextBoolean()) {
+                integersToDelete.add(integer);
+            } else {
+                integersToLeave.add(integer);
+            }
+        }
+
+        // Add to integers to the tree.
+        integers.forEach(tree::insert);
+
+        // Check that all integers.
+        for (Integer integer : integers) {
+            assertTrue(tree.contains(integer));
+        }
+
+        // Delete integers.
+        for (Integer integer : integersToDelete) {
+            tree.delete(integer);
+        }
+
+        // Check that there are no deleted integers.
+        for (Integer integer : integersToDelete) {
+            assertFalse(tree.contains(integer));
+        }
+
+        // Check there are left integers.
+        for (Integer integer : integersToLeave) {
+            assertTrue(tree.contains(integer));
+        }
     }
 
 }

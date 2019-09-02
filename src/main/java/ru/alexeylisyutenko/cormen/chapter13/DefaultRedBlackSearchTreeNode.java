@@ -71,7 +71,7 @@ public class DefaultRedBlackSearchTreeNode<K> implements RedBlackSearchTreeNode<
 
     @Override
     public String toString() {
-        return key.toString() + (color == RedBlackTreeNodeColor.RED ? "r" : "b");
+        return key + (color == RedBlackTreeNodeColor.RED ? "r" : "b");
     }
 
 }

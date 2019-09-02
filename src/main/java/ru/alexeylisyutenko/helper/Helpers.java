@@ -1,7 +1,12 @@
 package ru.alexeylisyutenko.helper;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -80,5 +85,29 @@ public final class Helpers {
             throw new IllegalArgumentException("val must be finite");
         }
         return (int) Math.ceil(val);
+    }
+
+    public static List<Integer> generateRandomDistinctIntegers(int count) {
+        HashSet<Integer> integerHashSet = new HashSet<>();
+        for (int i = 0; i < count; i++) {
+            int randomInt;
+            do {
+                randomInt = RandomUtils.nextBoolean() ? RandomUtils.nextInt() : -RandomUtils.nextInt();
+            } while (integerHashSet.contains(randomInt));
+            integerHashSet.add(randomInt);
+        }
+        return new ArrayList<>(integerHashSet);
+    }
+
+    public static List<Integer> generateRandomDistinctIntegers(int count, int startInclusive, int endExclusive) {
+        HashSet<Integer> integerHashSet = new HashSet<>();
+        for (int i = 0; i < count; i++) {
+            int randomInt;
+            do {
+                randomInt = RandomUtils.nextInt(startInclusive, endExclusive);
+            } while (integerHashSet.contains(randomInt));
+            integerHashSet.add(randomInt);
+        }
+        return new ArrayList<>(integerHashSet);
     }
 }

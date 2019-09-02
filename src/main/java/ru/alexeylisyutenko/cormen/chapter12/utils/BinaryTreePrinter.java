@@ -54,7 +54,14 @@ public final class BinaryTreePrinter<T> {
                 System.out.print(" ");
             }
 
-            printWhitespaces(betweenSpaces);
+            // Between spaces printing.
+            int currentBetweenSpaces;
+            if (isNull(node)) {
+                currentBetweenSpaces = betweenSpaces;
+            } else {
+                currentBetweenSpaces = Math.max(0, betweenSpaces - node.toString().length() + 1);
+            }
+            printWhitespaces(currentBetweenSpaces);
         }
         System.out.println();
 

@@ -174,9 +174,126 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         insertFixup(nodeToInsert);
     }
 
+    private void transplant(RedBlackSearchTreeNode<K> uNode, RedBlackSearchTreeNode<K> vNode) {
+        RedBlackSearchTreeNode<K> uNodeParent = uNode.getParent();
+        if (uNodeParent == nil) {
+            root = vNode;
+        } else if (uNodeParent.getLeft() == uNode) {
+            uNodeParent.setLeft(vNode);
+        } else {
+            uNodeParent.setRight(vNode);
+        }
+        vNode.setParent(uNodeParent);
+    }
+
     @Override
     public void delete(K key) {
+        Objects.requireNonNull(key, "key cannot be null");
 
+        RedBlackSearchTreeNode<K> zNode = search(key);
+        if (zNode == null) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
+        }
+
+        RedBlackSearchTreeNode<K> yNode = zNode;
+        RedBlackTreeNodeColor yNodeOriginalColor = yNode.getColor();
+
+        RedBlackSearchTreeNode<K> xNode;
+
+        if (zNode.getLeft() == nil) {
+            xNode = zNode.getRight();
+            transplant(zNode, zNode.getRight());
+        } else if (zNode.getRight() == nil) {
+            xNode = zNode.getLeft();
+            transplant(zNode, zNode.getLeft());
+        } else {
+            yNode = findMinimumNode(zNode.getRight());
+            yNodeOriginalColor = yNode.getColor();
+            xNode = yNode.getRight();
+
+            if (yNode.getParent() == zNode) {
+                xNode.setParent(yNode);
+            } else {
+                transplant(yNode, yNode.getRight());
+                yNode.setRight(zNode.getRight());
+                zNode.getRight().setParent(yNode);
+            }
+            transplant(zNode, yNode);
+            yNode.setLeft(zNode.getLeft());
+            yNode.getLeft().setParent(yNode);
+            yNode.setColor(zNode.getColor());
+        }
+        if (yNodeOriginalColor == BLACK) {
+            deleteFixup(xNode);
+        }
+    }
+
+    private void deleteFixup(RedBlackSearchTreeNode<K> xNode) {
+        while (xNode != root && xNode.getColor() == BLACK) {
+            if (xNode.getParent().getLeft() == xNode) {
+                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getRight();
+
+                if (wNode.getColor() == RED) {
+                    // Case 1 (x's sibling w is red).
+                    xNode.getParent().setColor(RED);
+                    wNode.setColor(BLACK);
+                    rotateLeft(xNode.getParent());
+                    wNode = xNode.getParent().getRight();
+                }
+                // It is guaranteed here that x's sibling is black.
+                if (wNode.getLeft().getColor() == BLACK && wNode.getRight().getColor() == BLACK) {
+                    // Case 2 (x’s sibling w is black, and both of w’s children are black).
+                    wNode.setColor(RED);
+                    xNode = xNode.getParent();
+                } else {
+                    if (wNode.getRight().getColor() == BLACK) {
+                        // Case 3 (x’s sibling w is black, w’s left child is red, and w’s right child is black).
+                        wNode.getLeft().setColor(BLACK);
+                        wNode.setColor(RED);
+                        rotateRight(wNode);
+                        wNode = xNode.getParent().getRight();
+                    }
+                    // Case 4 (x’s sibling w is black, and w’s right child is red).
+                    wNode.setColor(xNode.getParent().getColor());
+                    xNode.getParent().setColor(BLACK);
+                    wNode.getRight().setColor(BLACK);
+                    rotateLeft(xNode.getParent());
+                    xNode = root;
+                }
+            } else {
+                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getLeft();
+
+                if (wNode.getColor() == RED) {
+                    // Case 1 (x's sibling w is red).
+                    xNode.getParent().setColor(RED);
+                    wNode.setColor(BLACK);
+                    rotateRight(xNode.getParent());
+                    wNode = xNode.getParent().getLeft();
+                }
+                // It is guaranteed here that x's sibling is black.
+                if (wNode.getLeft().getColor() == BLACK && wNode.getRight().getColor() == BLACK) {
+                    // Case 2 (x’s sibling w is black, and both of w’s children are black).
+                    wNode.setColor(RED);
+                    xNode = xNode.getParent();
+                } else {
+                    if (wNode.getLeft().getColor() == BLACK) {
+                        // Case 3 (x’s sibling w is black, w’s right child is red, and w’s left child is black).
+                        wNode.getRight().setColor(BLACK);
+                        wNode.setColor(RED);
+                        rotateLeft(wNode);
+                        wNode = xNode.getParent().getLeft();
+                    }
+                    // Case 4 (x’s sibling w is black, and w’s left child is red).
+                    wNode.setColor(xNode.getParent().getColor());
+                    xNode.getParent().setColor(BLACK);
+                    wNode.getLeft().setColor(BLACK);
+                    rotateRight(xNode.getParent());
+                    xNode = root;
+                }
+
+            }
+        }
+        xNode.setColor(BLACK);
     }
 
     private void inorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
