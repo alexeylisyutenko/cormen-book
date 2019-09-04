@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
-import ru.alexeylisyutenko.helper.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -368,6 +367,89 @@ class RedBlackBinaryTreeTest {
         for (Integer integer : integersToLeave) {
             assertTrue(tree.contains(integer));
         }
+    }
+
+    @Disabled
+    @Test
+    void findMaxBlackNodeDemo() {
+        tree.insert(15);
+        tree.insert(6);
+        tree.insert(18);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(21);
+        tree.insert(16);
+        tree.insert(2);
+        tree.insert(4);
+        tree.insert(13);
+        tree.insert(9);
+        tree.insert(17);
+
+        tree.print();
+        System.out.println("Black height: " + tree.getBlackHeight());
+
+        RedBlackSearchTreeNode<Integer> maxBlackNode = tree.findMaxBlackNode(2);
+        System.out.println("Max black node: " + maxBlackNode);
+    }
+
+    @Test
+    void findMaxBlackNodeShouldWorkProperly() {
+        tree.insert(15);
+        tree.insert(6);
+        tree.insert(18);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(21);
+        tree.insert(16);
+        tree.insert(2);
+        tree.insert(4);
+        tree.insert(13);
+        tree.insert(9);
+        tree.insert(17);
+
+        assertEquals(Integer.valueOf(15), tree.findMaxBlackNode(2).getKey());
+        assertEquals(Integer.valueOf(21), tree.findMaxBlackNode(1).getKey());
+
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMaxBlackNode(0));
+
+        tree.clear();
+
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMaxBlackNode(1));
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMaxBlackNode(0));
+
+        tree.insert(5);
+
+        assertEquals(Integer.valueOf(5), tree.findMaxBlackNode(1).getKey());
+    }
+
+    @Test
+    void findMinBlackNodeShouldWorkProperly() {
+        tree.insert(15);
+        tree.insert(6);
+        tree.insert(18);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(21);
+        tree.insert(16);
+        tree.insert(2);
+        tree.insert(4);
+        tree.insert(13);
+        tree.insert(9);
+        tree.insert(17);
+
+        assertEquals(Integer.valueOf(15), tree.findMinBlackNode(2).getKey());
+        assertEquals(Integer.valueOf(3), tree.findMinBlackNode(1).getKey());
+
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMinBlackNode(0));
+
+        tree.clear();
+
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMinBlackNode(1));
+        assertThrows(BinarySearchTreeException.class, () -> tree.findMinBlackNode(0));
+
+        tree.insert(5);
+
+        assertEquals(Integer.valueOf(5), tree.findMinBlackNode(1).getKey());
     }
 
 }

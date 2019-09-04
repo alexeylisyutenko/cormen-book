@@ -12,14 +12,18 @@ import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
 public class RedBlackBinarySearchTree<K extends Comparable<K>> implements BinarySearchTree<K> {
 
-    private final RedBlackSearchTreeNode<K> nil;
+    private final static RedBlackSearchTreeNode NIL;
+
+    static {
+        NIL = new DefaultRedBlackSearchTreeNode();
+        NIL.setColor(BLACK);
+    }
 
     private RedBlackSearchTreeNode<K> root;
     private int blackHeight;
 
     public RedBlackBinarySearchTree() {
-        this.nil = createSentinelNode();
-        this.root = nil;
+        this.root = NIL;
         this.blackHeight = 0;
     }
 
@@ -30,14 +34,14 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void rotateLeft(RedBlackSearchTreeNode<K> xNode) {
-        if (xNode.getRight() == nil) {
+        if (xNode.getRight() == NIL) {
             throw new IllegalStateException("Right child of a xNode must exist for left rotation");
         }
         RedBlackSearchTreeNode<K> yNode = xNode.getRight();
 
         // Put yNode's left to xNode's right.
         xNode.setRight(yNode.getLeft());
-        if (yNode.getLeft() != nil) {
+        if (yNode.getLeft() != NIL) {
             yNode.getLeft().setParent(xNode);
         }
 
@@ -45,7 +49,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         yNode.setParent(xNode.getParent());
 
         // Update xNode's parent to point to yNode instead of xNode.
-        if (xNode.getParent() == nil) {
+        if (xNode.getParent() == NIL) {
             root = yNode;
         } else {
             RedBlackSearchTreeNode<K> xParent = xNode.getParent();
@@ -62,14 +66,14 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void rotateRight(RedBlackSearchTreeNode<K> yNode) {
-        if (yNode.getLeft() == nil) {
+        if (yNode.getLeft() == NIL) {
             throw new IllegalStateException("Left child of a yNode must exist for right rotation");
         }
         RedBlackSearchTreeNode<K> xNode = yNode.getLeft();
 
         // Put xNode's right to yNode's left.
         yNode.setLeft(xNode.getRight());
-        if (xNode.getRight() != nil) {
+        if (xNode.getRight() != NIL) {
             xNode.getRight().setParent(yNode);
         }
 
@@ -78,7 +82,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
         // Update yNode's parent to point to xNode instead of yNode.
         RedBlackSearchTreeNode<K> yParent = yNode.getParent();
-        if (yParent == nil) {
+        if (yParent == NIL) {
             root = xNode;
         } else {
             if (yParent.getLeft() == yNode) {
@@ -93,7 +97,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         yNode.setParent(xNode);
     }
 
-    private void insertFixup(RedBlackSearchTreeNode<K> zNode) {
+    void insertFixup(RedBlackSearchTreeNode<K> zNode) {
         while (zNode.getParent().getColor() != BLACK) {
             RedBlackSearchTreeNode<K> parentNode = zNode.getParent();
             RedBlackSearchTreeNode<K> grandFatherNode = zNode.getParent().getParent();
@@ -144,10 +148,10 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     @Override
     public void insert(K key) {
-        RedBlackSearchTreeNode<K> parentNode = nil;
+        RedBlackSearchTreeNode<K> parentNode = NIL;
         RedBlackSearchTreeNode<K> currentNode = root;
 
-        while (currentNode != nil) {
+        while (currentNode != NIL) {
             parentNode = currentNode;
             int comparisonResult = key.compareTo(currentNode.getKey());
             if (comparisonResult < 0) {
@@ -158,13 +162,13 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         }
 
         DefaultRedBlackSearchTreeNode<K> nodeToInsert = new DefaultRedBlackSearchTreeNode<>();
-        nodeToInsert.setLeft(nil);
-        nodeToInsert.setRight(nil);
+        nodeToInsert.setLeft(NIL);
+        nodeToInsert.setRight(NIL);
         nodeToInsert.setKey(key);
         nodeToInsert.setColor(RED);
 
-        if (parentNode == nil) {
-            nodeToInsert.setParent(nil);
+        if (parentNode == NIL) {
+            nodeToInsert.setParent(NIL);
             root = nodeToInsert;
         } else {
             nodeToInsert.setParent(parentNode);
@@ -179,9 +183,9 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         insertFixup(nodeToInsert);
     }
 
-    private void transplant(RedBlackSearchTreeNode<K> uNode, RedBlackSearchTreeNode<K> vNode) {
+    void transplant(RedBlackSearchTreeNode<K> uNode, RedBlackSearchTreeNode<K> vNode) {
         RedBlackSearchTreeNode<K> uNodeParent = uNode.getParent();
-        if (uNodeParent == nil) {
+        if (uNodeParent == NIL) {
             root = vNode;
         } else if (uNodeParent.getLeft() == uNode) {
             uNodeParent.setLeft(vNode);
@@ -205,10 +209,10 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
         RedBlackSearchTreeNode<K> xNode;
 
-        if (zNode.getLeft() == nil) {
+        if (zNode.getLeft() == NIL) {
             xNode = zNode.getRight();
             transplant(zNode, zNode.getRight());
-        } else if (zNode.getRight() == nil) {
+        } else if (zNode.getRight() == NIL) {
             xNode = zNode.getLeft();
             transplant(zNode, zNode.getLeft());
         } else {
@@ -305,7 +309,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void inorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
-        if (node != nil) {
+        if (node != NIL) {
             inorderWalkRecursive(node.getLeft(), consumer);
             consumer.accept(node.getKey());
             inorderWalkRecursive(node.getRight(), consumer);
@@ -318,7 +322,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void preorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
-        if (node != nil) {
+        if (node != NIL) {
             consumer.accept(node.getKey());
             preorderWalkRecursive(node.getLeft(), consumer);
             preorderWalkRecursive(node.getRight(), consumer);
@@ -331,7 +335,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     private void postorderWalkRecursive(RedBlackSearchTreeNode<K> node, Consumer<K> consumer) {
-        if (node != nil) {
+        if (node != NIL) {
             postorderWalkRecursive(node.getLeft(), consumer);
             postorderWalkRecursive(node.getRight(), consumer);
             consumer.accept(node.getKey());
@@ -354,7 +358,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     private RedBlackSearchTreeNode<K> search(K key) {
         RedBlackSearchTreeNode<K> currentNode = root;
-        while (currentNode != nil && !currentNode.getKey().equals(key)) {
+        while (currentNode != NIL && !currentNode.getKey().equals(key)) {
             int comparisonResult = key.compareTo(currentNode.getKey());
             if (comparisonResult < 0) {
                 currentNode = currentNode.getLeft();
@@ -367,12 +371,12 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     @Override
     public boolean contains(K key) {
-        return search(key) != nil;
+        return search(key) != NIL;
     }
 
     private RedBlackSearchTreeNode<K> findMinimumNode(RedBlackSearchTreeNode<K> baseNode) {
         RedBlackSearchTreeNode<K> currentNode = baseNode;
-        while (currentNode.getLeft() != nil) {
+        while (currentNode.getLeft() != NIL) {
             currentNode = currentNode.getLeft();
         }
         return currentNode;
@@ -380,16 +384,16 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     @Override
     public K getMinimum() {
-        if (root == nil) {
+        if (root == NIL) {
             return null;
         }
         RedBlackSearchTreeNode<K> minimumNode = findMinimumNode(root);
-        return minimumNode != nil ? minimumNode.getKey() : null;
+        return minimumNode != NIL ? minimumNode.getKey() : null;
     }
 
     private RedBlackSearchTreeNode<K> findMaximumNode(RedBlackSearchTreeNode<K> baseNode) {
         RedBlackSearchTreeNode<K> currentNode = baseNode;
-        while (currentNode.getRight() != nil) {
+        while (currentNode.getRight() != NIL) {
             currentNode = currentNode.getRight();
         }
         return currentNode;
@@ -397,11 +401,11 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
 
     @Override
     public K getMaximum() {
-        if (root == nil) {
+        if (root == NIL) {
             return null;
         }
         RedBlackSearchTreeNode<K> maximumNode = findMaximumNode(root);
-        return maximumNode != nil ? maximumNode.getKey() : null;
+        return maximumNode != NIL ? maximumNode.getKey() : null;
     }
 
     @Override
@@ -409,19 +413,19 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         Objects.requireNonNull(key, "key cannot be null");
 
         RedBlackSearchTreeNode<K> node = search(key);
-        if (node == nil) {
+        if (node == NIL) {
             throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
-        if (node.getRight() != nil) {
+        if (node.getRight() != NIL) {
             return findMinimumNode(node.getRight()).getKey();
         } else {
             RedBlackSearchTreeNode<K> parentNode = node.getParent();
-            while (parentNode != nil && parentNode.getLeft() != node) {
+            while (parentNode != NIL && parentNode.getLeft() != node) {
                 node = parentNode;
                 parentNode = parentNode.getParent();
             }
-            return parentNode != nil ? parentNode.getKey() : null;
+            return parentNode != NIL ? parentNode.getKey() : null;
         }
     }
 
@@ -430,25 +434,25 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
         Objects.requireNonNull(key, "key cannot be null");
 
         RedBlackSearchTreeNode<K> node = search(key);
-        if (node == nil) {
+        if (node == NIL) {
             throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
-        if (node.getLeft() != nil) {
+        if (node.getLeft() != NIL) {
             return findMaximumNode(node.getLeft()).getKey();
         } else {
             RedBlackSearchTreeNode<K> parentNode = node.getParent();
-            while (parentNode != nil && parentNode.getRight() != node) {
+            while (parentNode != NIL && parentNode.getRight() != node) {
                 node = parentNode;
                 parentNode = parentNode.getParent();
             }
-            return parentNode != nil ? parentNode.getKey() : null;
+            return parentNode != NIL ? parentNode.getKey() : null;
         }
     }
 
     @Override
     public void clear() {
-        root = nil;
+        root = NIL;
         blackHeight = 0;
     }
 
@@ -461,7 +465,51 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     }
 
     void print() {
-        BinaryTreePrinter.printNode(root, nil);
+        BinaryTreePrinter.printNode(root, NIL);
+    }
+
+    /**
+     * Cormen. Part of a problem 13-2.
+     * Find a black node with maximum key and particular black height.
+     */
+    RedBlackSearchTreeNode<K> findMaxBlackNode(int blackHeight) {
+        if (blackHeight < 0) {
+            throw new IllegalArgumentException("blackHeight argument cannot be negative");
+        }
+        RedBlackSearchTreeNode<K> currentNode = root;
+        int currentBlackHeight = this.blackHeight;
+        while (currentNode != NIL) {
+            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
+                return currentNode;
+            }
+            currentNode = currentNode.getRight();
+            if (currentNode.getColor() == BLACK) {
+                currentBlackHeight--;
+            }
+        }
+        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
+    }
+
+    /**
+     * Cormen. Part of a problem 13-2.
+     * Find a black node with minimum key and particular black height.
+     */
+    RedBlackSearchTreeNode<K> findMinBlackNode(int blackHeight) {
+        if (blackHeight < 0) {
+            throw new IllegalArgumentException("blackHeight argument cannot be negative");
+        }
+        RedBlackSearchTreeNode<K> currentNode = root;
+        int currentBlackHeight = this.blackHeight;
+        while (currentNode != NIL) {
+            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
+                return currentNode;
+            }
+            currentNode = currentNode.getLeft();
+            if (currentNode.getColor() == BLACK) {
+                currentBlackHeight--;
+            }
+        }
+        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
     }
 
 }
