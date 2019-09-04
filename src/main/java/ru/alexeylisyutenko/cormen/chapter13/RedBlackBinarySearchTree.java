@@ -15,10 +15,12 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     private final RedBlackSearchTreeNode<K> nil;
 
     private RedBlackSearchTreeNode<K> root;
+    private int blackHeight;
 
     public RedBlackBinarySearchTree() {
         this.nil = createSentinelNode();
         this.root = nil;
+        this.blackHeight = 0;
     }
 
     private RedBlackSearchTreeNode<K> createSentinelNode() {
@@ -133,6 +135,9 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
                     rotateLeft(grandFatherNode);
                 }
             }
+        }
+        if (root.getColor() == RED) {
+            blackHeight++;
         }
         root.setColor(BLACK);
     }
@@ -258,7 +263,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
                     xNode.getParent().setColor(BLACK);
                     wNode.getRight().setColor(BLACK);
                     rotateLeft(xNode.getParent());
-                    xNode = root;
+                    break;
                 }
             } else {
                 RedBlackSearchTreeNode<K> wNode = xNode.getParent().getLeft();
@@ -288,10 +293,13 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
                     xNode.getParent().setColor(BLACK);
                     wNode.getLeft().setColor(BLACK);
                     rotateRight(xNode.getParent());
-                    xNode = root;
+                    break;
                 }
 
             }
+        }
+        if (xNode == root && xNode.getColor() == BLACK) {
+            blackHeight--;
         }
         xNode.setColor(BLACK);
     }
@@ -441,10 +449,15 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> implements Binary
     @Override
     public void clear() {
         root = nil;
+        blackHeight = 0;
     }
 
     RedBlackSearchTreeNode<K> getRoot() {
         return root;
+    }
+
+    int getBlackHeight() {
+        return blackHeight;
     }
 
     void print() {

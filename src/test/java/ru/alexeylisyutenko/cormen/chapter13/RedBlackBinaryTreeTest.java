@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.helper.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,66 @@ class RedBlackBinaryTreeTest {
 
         tree.delete(4);
         tree.print();
+    }
+
+    // Cormen exercise 13.4-3.
+    @Test
+    void insertionAndDeletionDemo() {
+        tree.insert(41);
+        tree.insert(38);
+        tree.insert(31);
+        tree.insert(12);
+        tree.insert(19);
+        tree.insert(8);
+
+        tree.delete(8);
+        tree.print();
+
+        tree.delete(12);
+        tree.print();
+
+        tree.delete(19);
+        tree.print();
+
+        tree.delete(31);
+        tree.print();
+
+        tree.delete(38);
+        tree.print();
+
+        tree.delete(41);
+        tree.print();
+    }
+
+    @Test
+    void oneMoreDemo() {
+        tree.insert(5);
+        tree.insert(4);
+        tree.insert(3);
+        tree.insert(2);
+//        tree.insert(1);
+//        tree.insert(0);
+        tree.print();
+        System.out.println("Black height: " + tree.getBlackHeight());
+
+        tree.delete(5);
+        tree.print();
+        System.out.println("Black height: " + tree.getBlackHeight());
+
+        tree.delete(4);
+        tree.print();
+        System.out.println("Black height: " + tree.getBlackHeight());
+    }
+
+    @Test
+    @RepeatedTest(1000)
+    void randomizedBlackHeightTest() {
+        int size = RandomUtils.nextInt(1, 1000);
+        List<Integer> integers = generateRandomDistinctIntegers(size);
+        integers.forEach(tree::insert);
+        integers.forEach(tree::delete);
+
+        assertEquals(0, tree.getBlackHeight());
     }
 
     @Test
