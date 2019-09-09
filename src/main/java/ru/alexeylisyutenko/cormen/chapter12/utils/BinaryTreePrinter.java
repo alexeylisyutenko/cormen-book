@@ -36,7 +36,7 @@ public final class BinaryTreePrinter<T> {
         }
 
         int floor = maxLevel - level;
-        int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
+        int edgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
         int firstSpaces = (int) Math.pow(2, (floor)) - 1;
         int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
 
@@ -65,11 +65,11 @@ public final class BinaryTreePrinter<T> {
         }
         System.out.println();
 
-        for (int i = 1; i <= endgeLines; i++) {
+        for (int i = 1; i <= edgeLines; i++) {
             for (int j = 0; j < nodes.size(); j++) {
                 printWhitespaces(firstSpaces - i);
                 if (isNull(nodes.get(j))) {
-                    printWhitespaces(endgeLines + endgeLines + i + 1);
+                    printWhitespaces(edgeLines + edgeLines + i + 1);
                     continue;
                 }
 
@@ -87,7 +87,7 @@ public final class BinaryTreePrinter<T> {
                     printWhitespaces(1);
                 }
 
-                printWhitespaces(endgeLines + endgeLines - i);
+                printWhitespaces(edgeLines + edgeLines - i);
             }
 
             System.out.println();
