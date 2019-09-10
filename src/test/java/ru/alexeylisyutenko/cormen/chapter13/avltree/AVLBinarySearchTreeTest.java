@@ -31,14 +31,20 @@ class AVLBinarySearchTreeTest {
 //        tree.insert(16);
 
         tree.print();
+
+        System.out.println(tree.size());
+        System.out.println(tree.contains(6));
     }
 
     @Test
     void randomizedInsertionDemo() {
-        List<Integer> integers = Helpers.generateRandomDistinctIntegers(20, 0, 20);
+        List<Integer> integers = Helpers.generateRandomDistinctIntegers(20, 0, 90);
         integers.forEach(tree::insert);
 
         tree.print();
+
+        System.out.println("Size:" + tree.size());
+        tree.inorderWalk(integer -> System.out.print(integer + " "));
     }
 
 }

@@ -1,17 +1,17 @@
 package ru.alexeylisyutenko.cormen.chapter12.base;
 
-public interface BinarySearchTreeNode<K, T extends BinarySearchTreeNode<K, T>> {
-    T getParent();
+public interface BinarySearchTreeNode<K, N extends BinarySearchTreeNode<K, N>> {
+    N getParent();
 
-    void setParent(T parent);
+    void setParent(N parent);
 
-    T getLeft();
+    N getLeft();
 
-    void setLeft(T left);
+    void setLeft(N left);
 
-    T getRight();
+    N getRight();
 
-    void setRight(T right);
+    void setRight(N right);
 
     K getKey();
 

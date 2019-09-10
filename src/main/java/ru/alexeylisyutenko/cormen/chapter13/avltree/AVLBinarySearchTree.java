@@ -1,12 +1,10 @@
 package ru.alexeylisyutenko.cormen.chapter13.avltree;
 
-import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTree;
-import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
+import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
-public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearchTree<K> {
+public class AVLBinarySearchTree<K extends Comparable<K>> extends AbstractBinarySearchTree<K, AVLBinarySearchTreeNode<K>> {
 
     private final static AVLBinarySearchTreeNode NIL;
 
@@ -15,76 +13,13 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
         NIL.setHeight(0);
     }
 
-    private AVLBinarySearchTreeNode<K> root;
-
     public AVLBinarySearchTree() {
         this.root = NIL;
     }
 
-    @SuppressWarnings("DuplicatedCode")
-    private void rotateRight(AVLBinarySearchTreeNode<K> yNode) {
-        if (yNode.getLeft() == NIL) {
-            throw new IllegalStateException("Left child of a yNode must exist for right rotation");
-        }
-        AVLBinarySearchTreeNode<K> xNode = yNode.getLeft();
-
-        // Put xNode's right to yNode's left.
-        yNode.setLeft(xNode.getRight());
-        if (xNode.getRight() != NIL) {
-            xNode.getRight().setParent(yNode);
-        }
-
-        // Update xNode parent.
-        xNode.setParent(yNode.getParent());
-
-        // Update yNode's parent to point to xNode instead of yNode.
-        AVLBinarySearchTreeNode<K> yParent = yNode.getParent();
-        if (yParent == NIL) {
-            root = xNode;
-        } else {
-            if (yParent.getLeft() == yNode) {
-                yParent.setLeft(xNode);
-            } else {
-                yParent.setRight(xNode);
-            }
-        }
-
-        // Put yNode on xNode's right.
-        xNode.setRight(yNode);
-        yNode.setParent(xNode);
-    }
-
-    @SuppressWarnings("DuplicatedCode")
-    private void rotateLeft(AVLBinarySearchTreeNode<K> xNode) {
-        if (xNode.getRight() == NIL) {
-            throw new IllegalStateException("Right child of a xNode must exist for left rotation");
-        }
-        AVLBinarySearchTreeNode<K> yNode = xNode.getRight();
-
-        // Put yNode's left to xNode's right.
-        xNode.setRight(yNode.getLeft());
-        if (yNode.getLeft() != NIL) {
-            yNode.getLeft().setParent(xNode);
-        }
-
-        // Update yNode parent.
-        yNode.setParent(xNode.getParent());
-
-        // Update xNode's parent to point to yNode instead of xNode.
-        if (xNode.getParent() == NIL) {
-            root = yNode;
-        } else {
-            AVLBinarySearchTreeNode<K> xParent = xNode.getParent();
-            if (xParent.getLeft() == xNode) {
-                xParent.setLeft(yNode);
-            } else {
-                xParent.setRight(yNode);
-            }
-        }
-
-        // Put xNode to yNode's left.
-        yNode.setLeft(xNode);
-        xNode.setParent(yNode);
+    @Override
+    protected AVLBinarySearchTreeNode<K> getNil() {
+        return NIL;
     }
 
     @Override
@@ -200,59 +135,5 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
     @Override
     public void delete(K key) {
         throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public void inorderWalk(Consumer<K> consumer) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public void preorderWalk(Consumer<K> consumer) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public void postorderWalk(Consumer<K> consumer) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public int size() {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public boolean contains(K key) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public K getMinimum() {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public K getMaximum() {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public K getSuccessorOf(K key) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public K getPredecessorOf(K key) {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    @Override
-    public void clear() {
-        throw new IllegalArgumentException("Not implemented yet");
-    }
-
-    void print() {
-        BinaryTreePrinter.printNode(root, NIL);
     }
 }
