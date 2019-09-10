@@ -8,19 +8,19 @@ import java.util.List;
 
 public final class BinaryTreePrinter<T> {
 
-    private final BinarySearchTreeNode<T> root;
-    private final BinarySearchTreeNode<T> nil;
+    private final BinarySearchTreeNode<T, ?> root;
+    private final BinarySearchTreeNode<T, ?> nil;
 
-    private BinaryTreePrinter(BinarySearchTreeNode<T> root, BinarySearchTreeNode<T> nil) {
+    private BinaryTreePrinter(BinarySearchTreeNode<T, ?> root, BinarySearchTreeNode<T, ?> nil) {
         this.root = root;
         this.nil = nil;
     }
 
-    public static <T extends Comparable<?>> void printNode(BinarySearchTreeNode<T> root) {
+    public static <T extends Comparable<?>> void printNode(BinarySearchTreeNode<T, ?> root) {
         printNode(root, null);
     }
 
-    public static <T extends Comparable<?>> void printNode(BinarySearchTreeNode<T> root, BinarySearchTreeNode<T> nil) {
+    public static <T extends Comparable<?>> void printNode(BinarySearchTreeNode<T, ?> root, BinarySearchTreeNode<T, ?> nil) {
         BinaryTreePrinter<T> treePrinter = new BinaryTreePrinter<>(root, nil);
         treePrinter.doPrint();
     }
@@ -30,7 +30,7 @@ public final class BinaryTreePrinter<T> {
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
-    private void printNodeInternal(List<BinarySearchTreeNode<T>> nodes, int level, int maxLevel) {
+    private void printNodeInternal(List<BinarySearchTreeNode<T, ?>> nodes, int level, int maxLevel) {
         if (nodes.isEmpty() || isAllElementsNull(nodes)) {
             return;
         }
@@ -42,8 +42,8 @@ public final class BinaryTreePrinter<T> {
 
         printWhitespaces(firstSpaces);
 
-        List<BinarySearchTreeNode<T>> newNodes = new ArrayList<>();
-        for (BinarySearchTreeNode<T> node : nodes) {
+        List<BinarySearchTreeNode<T, ?>> newNodes = new ArrayList<>();
+        for (BinarySearchTreeNode<T, ?> node : nodes) {
             if (!isNull(node)) {
                 System.out.print(node.toString());
                 newNodes.add(node.getLeft());
@@ -96,7 +96,7 @@ public final class BinaryTreePrinter<T> {
         printNodeInternal(newNodes, level + 1, maxLevel);
     }
 
-    private boolean isNull(BinarySearchTreeNode<T> node) {
+    private boolean isNull(BinarySearchTreeNode<T, ?> node) {
         return node == nil;
     }
 
@@ -106,15 +106,15 @@ public final class BinaryTreePrinter<T> {
         }
     }
 
-    private int maxLevel(BinarySearchTreeNode<T> node) {
+    private int maxLevel(BinarySearchTreeNode<T, ?> node) {
         if (isNull(node)) {
             return 0;
         }
         return Math.max(maxLevel(node.getLeft()), maxLevel(node.getRight())) + 1;
     }
 
-    private boolean isAllElementsNull(List<BinarySearchTreeNode<T>> list) {
-        for (BinarySearchTreeNode<T> node : list) {
+    private boolean isAllElementsNull(List<BinarySearchTreeNode<T, ?>> list) {
+        for (BinarySearchTreeNode<T, ?> node : list) {
             if (!isNull(node)) {
                 return false;
             }
