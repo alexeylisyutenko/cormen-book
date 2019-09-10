@@ -161,7 +161,7 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
             if (leftNode.getLeft().getHeight() < leftNode.getRight().getHeight()) {
                 int m = leftNode.getHeight();
                 leftNode.getRight().setHeight(m);
-                leftNode.getLeft().setHeight(m -2);
+                leftNode.getLeft().setHeight(m - 2);
                 leftNode.setHeight(m - 1);
 
                 rotateLeft(leftNode);
@@ -172,7 +172,7 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
 
             // Case 2.
             int m = leftNode.getHeight();
-            xNode.setHeight(m -1);
+            xNode.setHeight(m - 1);
             rotateRight(xNode);
         } else {
             AVLBinarySearchTreeNode<K> rightNode = xNode.getRight();
@@ -181,7 +181,7 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
             if (rightNode.getRight().getHeight() < rightNode.getLeft().getHeight()) {
                 int m = rightNode.getHeight();
                 rightNode.getLeft().setHeight(m);
-                rightNode.getRight().setHeight(m -2);
+                rightNode.getRight().setHeight(m - 2);
                 rightNode.setHeight(m - 1);
 
                 rotateRight(rightNode);
@@ -192,64 +192,64 @@ public class AVLBinarySearchTree<K extends Comparable<K>> implements BinarySearc
 
             // Case 2.
             int m = rightNode.getHeight();
-            xNode.setHeight(m -1);
+            xNode.setHeight(m - 1);
             rotateLeft(xNode);
         }
     }
 
     @Override
     public void delete(K key) {
-
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public void inorderWalk(Consumer<K> consumer) {
-
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public void preorderWalk(Consumer<K> consumer) {
-
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public void postorderWalk(Consumer<K> consumer) {
-
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public int size() {
-        return 0;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public boolean contains(K key) {
-        return false;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public K getMinimum() {
-        return null;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public K getMaximum() {
-        return null;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public K getSuccessorOf(K key) {
-        return null;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public K getPredecessorOf(K key) {
-        return null;
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     @Override
     public void clear() {
-
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     void print() {
