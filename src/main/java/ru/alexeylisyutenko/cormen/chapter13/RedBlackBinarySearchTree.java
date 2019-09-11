@@ -2,10 +2,8 @@ package ru.alexeylisyutenko.cormen.chapter13;
 
 import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
-import ru.alexeylisyutenko.cormen.chapter12.utils.BinaryTreePrinter;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;

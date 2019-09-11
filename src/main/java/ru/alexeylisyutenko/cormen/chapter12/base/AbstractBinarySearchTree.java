@@ -8,6 +8,10 @@ import java.util.function.Consumer;
 public abstract class AbstractBinarySearchTree<K extends Comparable<K>, N extends BinarySearchTreeNode<K, N>> implements BinarySearchTree<K> {
     protected N root;
 
+    public AbstractBinarySearchTree() {
+        this.root = getNil();
+    }
+
     protected abstract N getNil();
 
     protected void rotateLeft(N xNode) {
