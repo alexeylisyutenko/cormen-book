@@ -312,20 +312,25 @@ public class DefaultOrderStatisticTree<K extends Comparable<K>> extends Abstract
             return node;
         }
 
-        // If ith successor is in the right subtree, we just search for ith order statistic there.
-        if (node.getRight().getSize() <= successorIndex) {
+        if (successorIndex <= node.getRight().getSize()) {
+            // If ith successor is in the right subtree, we just search for ith order statistic there.
             return selectOrderStatisticNode(node.getRight(), successorIndex);
         } else {
-            successorIndex = successorIndex - node.getRight().getSize() - 1;
+            // Save new successor index.
+            int newSuccessorIndex = successorIndex - node.getRight().getSize() - 1;
+
+            // We go up the tree until we find a node whose left child is also current node's ancestor;
             OrderStatisticTreeNode<K> parent = node.getParent();
             while (parent != NIL && node == parent.getRight()) {
                 node = parent;
                 parent = node.getParent();
             }
-
+            if (parent == NIL) {
+                return NIL;
+            } else {
+                return findIthSuccessorNode(parent, newSuccessorIndex);
+            }
         }
-
-        return null;
     }
 
     @Override

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 
+import java.sql.SQLOutput;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultOrderStatisticTreeTest {
@@ -19,10 +21,10 @@ class DefaultOrderStatisticTreeTest {
     @Disabled
     @Test
     void insertionDemo() {
-        tree.insert(41);
-        tree.insert(38);
-        tree.insert(31);
-        tree.insert(12);
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
 
         tree.print();
     }
@@ -127,6 +129,43 @@ class DefaultOrderStatisticTreeTest {
         tree.insert(555);
 
         assertEquals(1, tree.findRank(555));
+    }
+
+    @Disabled
+    @Test
+    void findIthSuccessorNodeDemo() {
+        for (int i = 1; i <= 10; i ++) {
+            tree.insert(i);
+        }
+        tree.print();
+
+        System.out.println(tree.getIthSuccessorOf(2, 3));
+
+    }
+
+    @Test
+    void getIthSuccessorOfShouldWorkProperly() {
+        int testSize = 100;
+        for (int i = 1; i <= testSize; i ++) {
+            tree.insert(i);
+        }
+
+        for (int key = 1; key < testSize ; key++) {
+            for (int successorIndex = 1; successorIndex <= testSize - key; successorIndex++) {
+                int expectedValue = key + successorIndex;
+                assertEquals(Integer.valueOf(expectedValue), tree.getIthSuccessorOf(key, successorIndex));
+            }
+        }
+    }
+
+    @Test
+    void getIthSuccessorOfShouldThrowExceptionIfThereIsNoSuchNode() {
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+
+        BinarySearchTreeException exception = assertThrows(BinarySearchTreeException.class, () -> tree.getIthSuccessorOf(2, 2));
+        assertEquals("There is no such successor node. Key: '2', successorIndex: '2'.", exception.getMessage());
     }
 
 }
