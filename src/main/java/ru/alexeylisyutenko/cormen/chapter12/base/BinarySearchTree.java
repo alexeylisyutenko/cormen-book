@@ -97,4 +97,8 @@ public interface BinarySearchTree<K extends Comparable<K>> {
      */
     void clear();
 
+    /**
+     * Prints current tree to the "standard" output stream.
+     */
+    void print();
 }

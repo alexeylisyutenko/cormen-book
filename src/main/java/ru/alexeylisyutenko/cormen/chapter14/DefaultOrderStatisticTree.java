@@ -1,44 +1,53 @@
-package ru.alexeylisyutenko.cormen.chapter13;
+package ru.alexeylisyutenko.cormen.chapter14;
 
 import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor;
 
 import java.util.Objects;
 
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
-public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractBinarySearchTree<K, RedBlackSearchTreeNode<K>> {
-
-    private final static RedBlackSearchTreeNode NIL;
+public class DefaultOrderStatisticTree<K extends Comparable<K>> extends AbstractBinarySearchTree<K, OrderStatisticTreeNode<K>> implements OrderStatisticTree<K> {
+    /**
+     * Sentinel node which is used instead of null for convenience.
+     */
+    private final static OrderStatisticTreeNode NIL;
 
     static {
-        NIL = new DefaultRedBlackSearchTreeNode();
+        NIL = new DefaultOrderStatisticTreeNode();
         NIL.setColor(BLACK);
-    }
-
-    private int blackHeight;
-
-    public RedBlackBinarySearchTree() {
-        this.root = NIL;
-        this.blackHeight = 0;
-    }
-
-    private RedBlackSearchTreeNode<K> createSentinelNode() {
-        RedBlackSearchTreeNode<K> sentinel = new DefaultRedBlackSearchTreeNode<>();
-        sentinel.setColor(BLACK);
-        return sentinel;
+        NIL.setSize(0);
     }
 
     @Override
-    protected RedBlackSearchTreeNode<K> getNil() {
+    protected OrderStatisticTreeNode<K> getNil() {
         return NIL;
     }
 
-    void insertFixup(RedBlackSearchTreeNode<K> zNode) {
+    @Override
+    protected void rotateLeft(OrderStatisticTreeNode<K> xNode) {
+        OrderStatisticTreeNode<K> yNode = xNode.getRight();
+        super.rotateLeft(xNode);
+
+        yNode.setSize(xNode.getSize());
+        xNode.setSize(xNode.getLeft().getSize() + xNode.getRight().getSize() + 1);
+    }
+
+    @Override
+    protected void rotateRight(OrderStatisticTreeNode<K> yNode) {
+        OrderStatisticTreeNode<K> xNode = yNode.getLeft();
+        super.rotateRight(yNode);
+
+        xNode.setSize(yNode.getSize());
+        yNode.setSize(yNode.getLeft().getSize() + yNode.getRight().getSize() + 1);
+    }
+
+    protected void insertFixup(OrderStatisticTreeNode<K> zNode) {
         while (zNode.getParent().getColor() != BLACK) {
-            RedBlackSearchTreeNode<K> parentNode = zNode.getParent();
-            RedBlackSearchTreeNode<K> grandFatherNode = zNode.getParent().getParent();
+            OrderStatisticTreeNode<K> parentNode = zNode.getParent();
+            OrderStatisticTreeNode<K> grandFatherNode = zNode.getParent().getParent();
 
             // Case 1.
             if (grandFatherNode.getLeft().getColor() == RED && grandFatherNode.getRight().getColor() == RED) {
@@ -78,16 +87,13 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
                 }
             }
         }
-        if (root.getColor() == RED) {
-            blackHeight++;
-        }
         root.setColor(BLACK);
     }
 
     @Override
     public void insert(K key) {
-        RedBlackSearchTreeNode<K> parentNode = NIL;
-        RedBlackSearchTreeNode<K> currentNode = root;
+        OrderStatisticTreeNode<K> parentNode = NIL;
+        OrderStatisticTreeNode<K> currentNode = root;
 
         while (currentNode != NIL) {
             parentNode = currentNode;
@@ -99,7 +105,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
             }
         }
 
-        DefaultRedBlackSearchTreeNode<K> nodeToInsert = new DefaultRedBlackSearchTreeNode<>();
+        OrderStatisticTreeNode<K> nodeToInsert = new DefaultOrderStatisticTreeNode<>();
         nodeToInsert.setLeft(NIL);
         nodeToInsert.setRight(NIL);
         nodeToInsert.setKey(key);
@@ -118,11 +124,12 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
             }
         }
 
+        updateNodeSizes(nodeToInsert);
         insertFixup(nodeToInsert);
     }
 
-    void transplant(RedBlackSearchTreeNode<K> uNode, RedBlackSearchTreeNode<K> vNode) {
-        RedBlackSearchTreeNode<K> uNodeParent = uNode.getParent();
+    void transplant(OrderStatisticTreeNode<K> uNode, OrderStatisticTreeNode<K> vNode) {
+        OrderStatisticTreeNode<K> uNodeParent = uNode.getParent();
         if (uNodeParent == NIL) {
             root = vNode;
         } else if (uNodeParent.getLeft() == uNode) {
@@ -137,15 +144,15 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
     public void delete(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        RedBlackSearchTreeNode<K> zNode = search(key);
+        OrderStatisticTreeNode<K> zNode = search(key);
         if (zNode == NIL) {
             throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
-        RedBlackSearchTreeNode<K> yNode = zNode;
+        OrderStatisticTreeNode<K> yNode = zNode;
         RedBlackTreeNodeColor yNodeOriginalColor = yNode.getColor();
 
-        RedBlackSearchTreeNode<K> xNode;
+        OrderStatisticTreeNode<K> xNode;
 
         if (zNode.getLeft() == NIL) {
             xNode = zNode.getRight();
@@ -170,15 +177,23 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
             yNode.getLeft().setParent(yNode);
             yNode.setColor(zNode.getColor());
         }
+        updateNodeSizes(xNode.getParent());
         if (yNodeOriginalColor == BLACK) {
             deleteFixup(xNode);
         }
     }
 
-    private void deleteFixup(RedBlackSearchTreeNode<K> xNode) {
+    protected void updateNodeSizes(OrderStatisticTreeNode<K> currentNode) {
+        while (currentNode != NIL) {
+            currentNode.setSize(currentNode.getLeft().getSize() + currentNode.getRight().getSize() + 1);
+            currentNode = currentNode.getParent();
+        }
+    }
+
+    private void deleteFixup(OrderStatisticTreeNode<K> xNode) {
         while (xNode != root && xNode.getColor() == BLACK) {
             if (xNode.getParent().getLeft() == xNode) {
-                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getRight();
+                OrderStatisticTreeNode<K> wNode = xNode.getParent().getRight();
 
                 if (wNode.getColor() == RED) {
                     // Case 1 (x's sibling w is red).
@@ -208,7 +223,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
                     break;
                 }
             } else {
-                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getLeft();
+                OrderStatisticTreeNode<K> wNode = xNode.getParent().getLeft();
 
                 if (wNode.getColor() == RED) {
                     // Case 1 (x's sibling w is red).
@@ -240,64 +255,97 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
 
             }
         }
-        if (xNode == root && xNode.getColor() == BLACK) {
-            blackHeight--;
-        }
         xNode.setColor(BLACK);
     }
 
+    protected OrderStatisticTreeNode<K> selectOrderStatisticNode(OrderStatisticTreeNode<K> currentNode, int rank) {
+        while (true) {
+            if (currentNode == NIL) {
+                return NIL;
+            }
+
+            int currentNodeRank = currentNode.getLeft().getSize() + 1;
+            if (currentNodeRank == rank) {
+                return currentNode;
+            } else if (rank < currentNodeRank) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+                rank = rank - currentNodeRank;
+            }
+        }
+    }
+
     @Override
-    public void clear() {
-        super.clear();
-        blackHeight = 0;
+    public K selectOrderStatistic(int rank) {
+        if (rank < 1) {
+            throw new IllegalArgumentException("rank cannot be less than 1");
+        }
+
+        if (rank > size()) {
+            throw new BinarySearchTreeException(String.format("There is no node with rank '%d' in the tree", rank));
+        }
+        return selectOrderStatisticNode(root, rank).getKey();
     }
 
-    int getBlackHeight() {
-        return blackHeight;
+    @Override
+    public int findRank(K key) {
+        Objects.requireNonNull(key, "key cannot be null");
+
+        OrderStatisticTreeNode<K> currentNode = search(key);
+        if (currentNode == NIL) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
+        }
+
+        int rank = currentNode.getLeft().getSize() + 1;
+        while (currentNode != root) {
+            if (currentNode.getParent().getRight() == currentNode) {
+                rank += currentNode.getParent().getLeft().getSize() + 1;
+            }
+            currentNode = currentNode.getParent();
+        }
+        return rank;
     }
 
-    /**
-     * Cormen. Part of a problem 13-2.
-     * Find a black node with maximum key and particular black height.
-     */
-    RedBlackSearchTreeNode<K> findMaxBlackNode(int blackHeight) {
-        if (blackHeight < 0) {
-            throw new IllegalArgumentException("blackHeight argument cannot be negative");
+    protected OrderStatisticTreeNode<K> findIthSuccessorNode(OrderStatisticTreeNode<K> node, int successorIndex) {
+        if (successorIndex == 0) {
+            return node;
         }
-        RedBlackSearchTreeNode<K> currentNode = root;
-        int currentBlackHeight = this.blackHeight;
-        while (currentNode != NIL) {
-            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
-                return currentNode;
+
+        // If ith successor is in the right subtree, we just search for ith order statistic there.
+        if (node.getRight().getSize() <= successorIndex) {
+            return selectOrderStatisticNode(node.getRight(), successorIndex);
+        } else {
+            successorIndex = successorIndex - node.getRight().getSize() - 1;
+            OrderStatisticTreeNode<K> parent = node.getParent();
+            while (parent != NIL && node == parent.getRight()) {
+                node = parent;
+                parent = node.getParent();
             }
-            currentNode = currentNode.getRight();
-            if (currentNode.getColor() == BLACK) {
-                currentBlackHeight--;
-            }
+
         }
-        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
+
+        return null;
     }
 
-    /**
-     * Cormen. Part of a problem 13-2.
-     * Find a black node with minimum key and particular black height.
-     */
-    RedBlackSearchTreeNode<K> findMinBlackNode(int blackHeight) {
-        if (blackHeight < 0) {
-            throw new IllegalArgumentException("blackHeight argument cannot be negative");
+    @Override
+    public K getIthSuccessorOf(K key, int successorIndex) {
+        Objects.requireNonNull(key, "key cannot be null");
+
+        OrderStatisticTreeNode<K> node = search(key);
+        if (node == NIL) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
-        RedBlackSearchTreeNode<K> currentNode = root;
-        int currentBlackHeight = this.blackHeight;
-        while (currentNode != NIL) {
-            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
-                return currentNode;
-            }
-            currentNode = currentNode.getLeft();
-            if (currentNode.getColor() == BLACK) {
-                currentBlackHeight--;
-            }
+
+        OrderStatisticTreeNode<K> successorNode = findIthSuccessorNode(node, successorIndex);
+        if (successorNode == NIL) {
+            throw new BinarySearchTreeException(String.format("There is no such successor node. Key: '%s', successorIndex: '%d'.", key.toString(), successorIndex));
         }
-        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
+        return successorNode.getKey();
     }
 
+    @Override
+    public int size() {
+        return root.getSize();
+    }
 }

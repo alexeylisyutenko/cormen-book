@@ -109,24 +109,17 @@ class RedBlackBinaryTreeTest {
         tree.print();
     }
 
+    @Disabled
     @Test
     void oneMoreDemo() {
-        tree.insert(5);
         tree.insert(4);
+        tree.print();
         tree.insert(3);
+        tree.print();
         tree.insert(2);
-//        tree.insert(1);
-//        tree.insert(0);
         tree.print();
-        System.out.println("Black height: " + tree.getBlackHeight());
-
-        tree.delete(5);
+        tree.insert(1);
         tree.print();
-        System.out.println("Black height: " + tree.getBlackHeight());
-
-        tree.delete(4);
-        tree.print();
-        System.out.println("Black height: " + tree.getBlackHeight());
     }
 
     @Test
