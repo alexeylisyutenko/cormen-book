@@ -353,4 +353,23 @@ public class DefaultOrderStatisticTree<K extends Comparable<K>> extends Abstract
     public int size() {
         return root.getSize();
     }
+
+    @Override
+    public int countGreaterKeys(K key) {
+        Objects.requireNonNull(key, "key cannot be null");
+
+        OrderStatisticTreeNode<K> node = search(key);
+        if (node == NIL) {
+            throw new BinarySearchTreeException("There is no such key in the tree: " + key);
+        }
+
+        int greaterKeysCount = node.getRight().getSize();
+        while (node.getParent() != NIL) {
+            if (node.getParent().getLeft() == node) {
+                greaterKeysCount += node.getParent().getRight().getSize() + 1;
+            }
+            node = node.getParent();
+        }
+        return greaterKeysCount;
+    }
 }

@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 
-import java.sql.SQLOutput;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DefaultOrderStatisticTreeTest {
 
@@ -22,17 +21,32 @@ class DefaultOrderStatisticTreeTest {
     @Test
     void insertionDemo() {
         tree.insert(1);
-        tree.insert(2);
-        tree.insert(3);
-        tree.insert(4);
+        tree.print();
 
+        tree.insert(2);
+        tree.print();
+
+        tree.insert(3);
+        tree.print();
+
+        System.out.println();
+        tree.clear();
+        System.out.println();
+
+        tree.insert(3);
+        tree.print();
+
+        tree.insert(2);
+        tree.print();
+
+        tree.insert(1);
         tree.print();
     }
 
     @Disabled
     @Test
     void deletionDemo() {
-        for (int i = 1; i <= 10; i ++) {
+        for (int i = 1; i <= 10; i++) {
             tree.insert(i);
         }
         tree.print();
@@ -55,7 +69,7 @@ class DefaultOrderStatisticTreeTest {
 
     @Test
     void selectOrderStatisticShouldWorkProperly() {
-        for (int i = 1; i <= 5; i ++) {
+        for (int i = 1; i <= 5; i++) {
             tree.insert(i);
         }
 
@@ -68,7 +82,7 @@ class DefaultOrderStatisticTreeTest {
 
     @Test
     void selectOrderStatisticShouldThrowExceptionWhenRankIsLessThanOne() {
-        for (int i = 1; i <= 5; i ++) {
+        for (int i = 1; i <= 5; i++) {
             tree.insert(i);
         }
 
@@ -78,7 +92,7 @@ class DefaultOrderStatisticTreeTest {
 
     @Test
     void selectOrderStatisticShouldThrowExceptionWhenThereIsNoSuchRank() {
-        for (int i = 1; i <= 5; i ++) {
+        for (int i = 1; i <= 5; i++) {
             tree.insert(i);
         }
         BinarySearchTreeException exception = assertThrows(BinarySearchTreeException.class, () -> tree.selectOrderStatistic(6));
@@ -103,7 +117,7 @@ class DefaultOrderStatisticTreeTest {
 
     @Test
     void findRankShouldWorkProperly() {
-        for (int i = 1; i <= 5; i ++) {
+        for (int i = 1; i <= 5; i++) {
             tree.insert(i);
         }
 
@@ -116,7 +130,7 @@ class DefaultOrderStatisticTreeTest {
 
     @Test
     void findRankShouldThrowExceptionWhenThereIsNoSuchKey() {
-        for (int i = 1; i <= 5; i ++) {
+        for (int i = 1; i <= 5; i++) {
             tree.insert(i);
         }
 
@@ -134,7 +148,7 @@ class DefaultOrderStatisticTreeTest {
     @Disabled
     @Test
     void findIthSuccessorNodeDemo() {
-        for (int i = 1; i <= 10; i ++) {
+        for (int i = 1; i <= 10; i++) {
             tree.insert(i);
         }
         tree.print();
@@ -146,11 +160,11 @@ class DefaultOrderStatisticTreeTest {
     @Test
     void getIthSuccessorOfShouldWorkProperly() {
         int testSize = 100;
-        for (int i = 1; i <= testSize; i ++) {
+        for (int i = 1; i <= testSize; i++) {
             tree.insert(i);
         }
 
-        for (int key = 1; key < testSize ; key++) {
+        for (int key = 1; key < testSize; key++) {
             for (int successorIndex = 1; successorIndex <= testSize - key; successorIndex++) {
                 int expectedValue = key + successorIndex;
                 assertEquals(Integer.valueOf(expectedValue), tree.getIthSuccessorOf(key, successorIndex));
@@ -166,6 +180,18 @@ class DefaultOrderStatisticTreeTest {
 
         BinarySearchTreeException exception = assertThrows(BinarySearchTreeException.class, () -> tree.getIthSuccessorOf(2, 2));
         assertEquals("There is no such successor node. Key: '2', successorIndex: '2'.", exception.getMessage());
+    }
+
+    @Test
+    void countGreaterKeysShouldWorkProperly() {
+        int testSize = 10000;
+        for (int i = 1; i <= testSize; i++) {
+            tree.insert(i);
+        }
+
+        for (int i = 1; i <= testSize ; i++) {
+            assertEquals(testSize - i, tree.countGreaterKeys(i));
+        }
     }
 
 }
