@@ -1,21 +1,9 @@
 package ru.alexeylisyutenko.cormen.chapter14;
 
-import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTreeNode;
-import ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor;
+import ru.alexeylisyutenko.cormen.chapter14.base.AbstractRedBlackBasedSearchTreeNode;
 
-public class DefaultOrderStatisticTreeNode<K> extends AbstractBinarySearchTreeNode<K, OrderStatisticTreeNode<K>> implements OrderStatisticTreeNode<K> {
-    private RedBlackTreeNodeColor color;
+public class DefaultOrderStatisticTreeNode<K> extends AbstractRedBlackBasedSearchTreeNode<K, OrderStatisticTreeNode<K>> implements OrderStatisticTreeNode<K> {
     private int size;
-
-    @Override
-    public RedBlackTreeNodeColor getColor() {
-        return color;
-    }
-
-    @Override
-    public void setColor(RedBlackTreeNodeColor color) {
-        this.color = color;
-    }
 
     @Override
     public int getSize() {

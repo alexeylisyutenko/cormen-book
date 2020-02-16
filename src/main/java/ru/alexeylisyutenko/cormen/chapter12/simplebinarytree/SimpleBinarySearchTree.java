@@ -54,23 +54,6 @@ public class SimpleBinarySearchTree<K extends Comparable<K>> extends AbstractBin
         }
     }
 
-    /**
-     * Replaces one subtree as a child of its parent with another subtree.
-     */
-    private void transplant(SimpleBinarySearchTreeNode<K> originalNode, SimpleBinarySearchTreeNode<K> replacementNode) {
-        SimpleBinarySearchTreeNode<K> parentNode = originalNode.getParent();
-        if (parentNode == null) {
-            root = replacementNode;
-        } else if (parentNode.getLeft() == originalNode) {
-            parentNode.setLeft(replacementNode);
-        } else {
-            parentNode.setRight(replacementNode);
-        }
-        if (replacementNode != null) {
-            replacementNode.setParent(parentNode);
-        }
-    }
-
     @Override
     protected SimpleBinarySearchTreeNode<K> getNil() {
         return null;

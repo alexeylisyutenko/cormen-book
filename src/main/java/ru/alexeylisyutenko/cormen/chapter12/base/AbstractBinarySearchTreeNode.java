@@ -1,38 +1,38 @@
 package ru.alexeylisyutenko.cormen.chapter12.base;
 
-public abstract class AbstractBinarySearchTreeNode<K, T extends BinarySearchTreeNode<K, T>> implements BinarySearchTreeNode<K, T> {
-    protected T parent;
-    protected T left;
-    protected T right;
+public abstract class AbstractBinarySearchTreeNode<K, N extends BinarySearchTreeNode<K, N>> implements BinarySearchTreeNode<K, N> {
+    protected N parent;
+    protected N left;
+    protected N right;
     protected K key;
 
     @Override
-    public T getParent() {
+    public N getParent() {
         return parent;
     }
 
     @Override
-    public void setParent(T parent) {
+    public void setParent(N parent) {
         this.parent = parent;
     }
 
     @Override
-    public T getLeft() {
+    public N getLeft() {
         return left;
     }
 
     @Override
-    public void setLeft(T left) {
+    public void setLeft(N left) {
         this.left = left;
     }
 
     @Override
-    public T getRight() {
+    public N getRight() {
         return right;
     }
 
     @Override
-    public void setRight(T right) {
+    public void setRight(N right) {
         this.right = right;
     }
 

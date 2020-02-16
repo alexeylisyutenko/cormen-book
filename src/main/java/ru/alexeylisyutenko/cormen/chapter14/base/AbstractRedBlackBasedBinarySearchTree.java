@@ -1,44 +1,64 @@
-package ru.alexeylisyutenko.cormen.chapter13;
+package ru.alexeylisyutenko.cormen.chapter14.base;
 
 import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor;
 
 import java.util.Objects;
 
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
-public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractBinarySearchTree<K, RedBlackSearchTreeNode<K>> {
-
-    private final static RedBlackSearchTreeNode NIL;
-
-    static {
-        NIL = new DefaultRedBlackSearchTreeNode();
-        NIL.setColor(BLACK);
-    }
-
-    private int blackHeight;
-
-    public RedBlackBinarySearchTree() {
-        this.root = NIL;
-        this.blackHeight = 0;
-    }
-
-    private RedBlackSearchTreeNode<K> createSentinelNode() {
-        RedBlackSearchTreeNode<K> sentinel = new DefaultRedBlackSearchTreeNode<>();
-        sentinel.setColor(BLACK);
-        return sentinel;
-    }
+public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable<K>, N extends RedBlackBasedSearchTreeNode<K, N>> extends AbstractBinarySearchTree<K, N> {
 
     @Override
-    protected RedBlackSearchTreeNode<K> getNil() {
-        return NIL;
+    public void insert(K key) {
+        N parentNode = getNil();
+        N currentNode = root;
+
+        while (currentNode != getNil()) {
+            parentNode = currentNode;
+            int comparisonResult = key.compareTo(currentNode.getKey());
+            if (comparisonResult < 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+
+        N nodeToInsert = createNodeToInsert(key);
+        nodeToInsert.setLeft(getNil());
+        nodeToInsert.setRight(getNil());
+        nodeToInsert.setKey(key);
+        nodeToInsert.setColor(RED);
+
+        if (parentNode == getNil()) {
+            nodeToInsert.setParent(getNil());
+            root = nodeToInsert;
+        } else {
+            nodeToInsert.setParent(parentNode);
+            int comparisonResult = key.compareTo(parentNode.getKey());
+            if (comparisonResult < 0) {
+                parentNode.setLeft(nodeToInsert);
+            } else {
+                parentNode.setRight(nodeToInsert);
+            }
+        }
+
+        beforeInsertFixup(nodeToInsert);
+
+        insertFixup(nodeToInsert);
     }
 
-    void insertFixup(RedBlackSearchTreeNode<K> zNode) {
+    protected abstract N createNodeToInsert(K key);
+
+    protected void beforeInsertFixup(N nodeToInsert) {
+    }
+
+    protected void insertFixup(N zNode) {
         while (zNode.getParent().getColor() != BLACK) {
-            RedBlackSearchTreeNode<K> parentNode = zNode.getParent();
-            RedBlackSearchTreeNode<K> grandFatherNode = zNode.getParent().getParent();
+            N parentNode = zNode.getParent();
+            N grandFatherNode = zNode.getParent().getParent();
 
             // Case 1.
             if (grandFatherNode.getLeft().getColor() == RED && grandFatherNode.getRight().getColor() == RED) {
@@ -78,67 +98,27 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
                 }
             }
         }
-        if (root.getColor() == RED) {
-            blackHeight++;
-        }
         root.setColor(BLACK);
-    }
-
-    @Override
-    public void insert(K key) {
-        RedBlackSearchTreeNode<K> parentNode = NIL;
-        RedBlackSearchTreeNode<K> currentNode = root;
-
-        while (currentNode != NIL) {
-            parentNode = currentNode;
-            int comparisonResult = key.compareTo(currentNode.getKey());
-            if (comparisonResult < 0) {
-                currentNode = currentNode.getLeft();
-            } else {
-                currentNode = currentNode.getRight();
-            }
-        }
-
-        DefaultRedBlackSearchTreeNode<K> nodeToInsert = new DefaultRedBlackSearchTreeNode<>();
-        nodeToInsert.setLeft(NIL);
-        nodeToInsert.setRight(NIL);
-        nodeToInsert.setKey(key);
-        nodeToInsert.setColor(RED);
-
-        if (parentNode == NIL) {
-            nodeToInsert.setParent(NIL);
-            root = nodeToInsert;
-        } else {
-            nodeToInsert.setParent(parentNode);
-            int comparisonResult = key.compareTo(parentNode.getKey());
-            if (comparisonResult < 0) {
-                parentNode.setLeft(nodeToInsert);
-            } else {
-                parentNode.setRight(nodeToInsert);
-            }
-        }
-
-        insertFixup(nodeToInsert);
     }
 
     @Override
     public void delete(K key) {
         Objects.requireNonNull(key, "key cannot be null");
 
-        RedBlackSearchTreeNode<K> zNode = search(key);
-        if (zNode == NIL) {
+        N zNode = search(key);
+        if (zNode == getNil()) {
             throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
-        RedBlackSearchTreeNode<K> yNode = zNode;
+        N yNode = zNode;
         RedBlackTreeNodeColor yNodeOriginalColor = yNode.getColor();
 
-        RedBlackSearchTreeNode<K> xNode;
+        N xNode;
 
-        if (zNode.getLeft() == NIL) {
+        if (zNode.getLeft() == getNil()) {
             xNode = zNode.getRight();
             transplant(zNode, zNode.getRight());
-        } else if (zNode.getRight() == NIL) {
+        } else if (zNode.getRight() == getNil()) {
             xNode = zNode.getLeft();
             transplant(zNode, zNode.getLeft());
         } else {
@@ -158,15 +138,21 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
             yNode.getLeft().setParent(yNode);
             yNode.setColor(zNode.getColor());
         }
+
+        beforeDeleteFixup(xNode.getParent());
+
         if (yNodeOriginalColor == BLACK) {
             deleteFixup(xNode);
         }
     }
 
-    private void deleteFixup(RedBlackSearchTreeNode<K> xNode) {
+    protected void beforeDeleteFixup(N xNode) {
+    }
+
+    protected void deleteFixup(N xNode) {
         while (xNode != root && xNode.getColor() == BLACK) {
             if (xNode.getParent().getLeft() == xNode) {
-                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getRight();
+                N wNode = xNode.getParent().getRight();
 
                 if (wNode.getColor() == RED) {
                     // Case 1 (x's sibling w is red).
@@ -196,7 +182,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
                     break;
                 }
             } else {
-                RedBlackSearchTreeNode<K> wNode = xNode.getParent().getLeft();
+                N wNode = xNode.getParent().getLeft();
 
                 if (wNode.getColor() == RED) {
                     // Case 1 (x's sibling w is red).
@@ -228,64 +214,7 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
 
             }
         }
-        if (xNode == root && xNode.getColor() == BLACK) {
-            blackHeight--;
-        }
         xNode.setColor(BLACK);
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-        blackHeight = 0;
-    }
-
-    int getBlackHeight() {
-        return blackHeight;
-    }
-
-    /**
-     * Cormen. Part of a problem 13-2.
-     * Find a black node with maximum key and particular black height.
-     */
-    RedBlackSearchTreeNode<K> findMaxBlackNode(int blackHeight) {
-        if (blackHeight < 0) {
-            throw new IllegalArgumentException("blackHeight argument cannot be negative");
-        }
-        RedBlackSearchTreeNode<K> currentNode = root;
-        int currentBlackHeight = this.blackHeight;
-        while (currentNode != NIL) {
-            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
-                return currentNode;
-            }
-            currentNode = currentNode.getRight();
-            if (currentNode.getColor() == BLACK) {
-                currentBlackHeight--;
-            }
-        }
-        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
-    }
-
-    /**
-     * Cormen. Part of a problem 13-2.
-     * Find a black node with minimum key and particular black height.
-     */
-    RedBlackSearchTreeNode<K> findMinBlackNode(int blackHeight) {
-        if (blackHeight < 0) {
-            throw new IllegalArgumentException("blackHeight argument cannot be negative");
-        }
-        RedBlackSearchTreeNode<K> currentNode = root;
-        int currentBlackHeight = this.blackHeight;
-        while (currentNode != NIL) {
-            if (currentNode.getColor() == BLACK && currentBlackHeight == blackHeight) {
-                return currentNode;
-            }
-            currentNode = currentNode.getLeft();
-            if (currentNode.getColor() == BLACK) {
-                currentBlackHeight--;
-            }
-        }
-        throw new BinarySearchTreeException(String.format("There is no node in the tree with black height: %d", blackHeight));
     }
 
 }

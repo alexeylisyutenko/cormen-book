@@ -78,6 +78,18 @@ public abstract class AbstractBinarySearchTree<K extends Comparable<K>, N extend
         yNode.setParent(xNode);
     }
 
+    public void transplant(N uNode, N vNode) {
+        N uNodeParent = uNode.getParent();
+        if (uNodeParent == getNil()) {
+            root = vNode;
+        } else if (uNodeParent.getLeft() == uNode) {
+            uNodeParent.setLeft(vNode);
+        } else {
+            uNodeParent.setRight(vNode);
+        }
+        vNode.setParent(uNodeParent);
+    }
+
     protected void inorderWalkRecursive(N node, Consumer<K> consumer) {
         if (node != getNil()) {
             inorderWalkRecursive(node.getLeft(), consumer);
@@ -138,7 +150,6 @@ public abstract class AbstractBinarySearchTree<K extends Comparable<K>, N extend
         }
         return currentNode;
     }
-
 
     @Override
     public boolean contains(K key) {
