@@ -13,6 +13,18 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
 
     @Override
     public void insert(K key) {
+        N nodeToInsert = createNodeToInsert(key);
+        nodeToInsert.setLeft(getNil());
+        nodeToInsert.setRight(getNil());
+        nodeToInsert.setKey(key);
+        nodeToInsert.setColor(RED);
+
+        insertNode(nodeToInsert);
+    }
+
+    void insertNode(N nodeToInsert) {
+        K key = nodeToInsert.getKey();
+
         N parentNode = getNil();
         N currentNode = root;
 
@@ -25,12 +37,6 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
                 currentNode = currentNode.getRight();
             }
         }
-
-        N nodeToInsert = createNodeToInsert(key);
-        nodeToInsert.setLeft(getNil());
-        nodeToInsert.setRight(getNil());
-        nodeToInsert.setKey(key);
-        nodeToInsert.setColor(RED);
 
         if (parentNode == getNil()) {
             nodeToInsert.setParent(getNil());
@@ -110,6 +116,10 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
             throw new BinarySearchTreeException("There is no such key in the tree: " + key);
         }
 
+        deleteNode(zNode);
+    }
+
+    protected void deleteNode(N zNode) {
         N yNode = zNode;
         RedBlackTreeNodeColor yNodeOriginalColor = yNode.getColor();
 
