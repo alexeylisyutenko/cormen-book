@@ -44,6 +44,7 @@ public final class OverlappedRectanglesAlgorithm {
             int currentLow = lowXCoordinates.get(lowIndex).getLeft();
             int currentHigh = highXCoordinates.get(highIndex).getLeft();
 
+            // TODO: Think about this comparison. Is it correct here?
             if (currentLow <= currentHigh) {
 
                 Interval lowVerticalInterval = lowXCoordinates.get(lowIndex).getRight();
