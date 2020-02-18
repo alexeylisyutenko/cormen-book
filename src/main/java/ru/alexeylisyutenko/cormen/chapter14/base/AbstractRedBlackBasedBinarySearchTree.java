@@ -156,6 +156,18 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
         }
     }
 
+    protected void transplant(N uNode, N vNode) {
+        N uNodeParent = uNode.getParent();
+        if (uNodeParent == getNil()) {
+            root = vNode;
+        } else if (uNodeParent.getLeft() == uNode) {
+            uNodeParent.setLeft(vNode);
+        } else {
+            uNodeParent.setRight(vNode);
+        }
+        vNode.setParent(uNodeParent);
+    }
+
     protected void beforeDeleteFixup(N xNode) {
     }
 

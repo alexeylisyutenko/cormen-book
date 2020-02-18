@@ -3,6 +3,7 @@ package ru.alexeylisyutenko.cormen.chapter12.simplebinarytree;
 import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
+import ru.alexeylisyutenko.cormen.chapter13.RedBlackSearchTreeNode;
 
 import java.util.Objects;
 
@@ -53,6 +54,21 @@ public class SimpleBinarySearchTree<K extends Comparable<K>> extends AbstractBin
             successorNode.setLeft(node.getLeft());
         }
     }
+
+    public void transplant(SimpleBinarySearchTreeNode<K> uNode, SimpleBinarySearchTreeNode<K> vNode) {
+        SimpleBinarySearchTreeNode<K> uNodeParent = uNode.getParent();
+        if (uNodeParent == getNil()) {
+            root = vNode;
+        } else if (uNodeParent.getLeft() == uNode) {
+            uNodeParent.setLeft(vNode);
+        } else {
+            uNodeParent.setRight(vNode);
+        }
+        if (vNode != getNil()) {
+            vNode.setParent(uNodeParent);
+        }
+    }
+
 
     @Override
     protected SimpleBinarySearchTreeNode<K> getNil() {

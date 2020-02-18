@@ -14,4 +14,9 @@ public class DefaultIntervalTreeNode extends AbstractRedBlackBasedSearchTreeNode
     public void setMax(int max) {
         this.max = max;
     }
+
+    @Override
+    public String toString() {
+        return key.toString() + ":" + max;
+    }
 }

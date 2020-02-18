@@ -26,7 +26,17 @@ public interface IntervalTree {
      * @param interval interval that is used to search an interval in the tree
      * @return optional with an interval which overlaps a given interval, or empty optional if there is no such interval
      */
-    Optional<Interval> intervalSearch(Interval interval);
+    Optional<Interval> intervalSearchOverlapping(Interval interval);
+
+    /**
+     * Returns true if a given interval exists in the tree.
+     * <br><br>
+     * This method checks if an exact interval exists in the tree, no just an interval which overlaps the given interval.
+     *
+     * @param interval interval to check
+     * @return true - such interval exists in the tree, false - th
+     */
+    boolean intervalContains(Interval interval);
 
     /**
      * Prints current tree to the "standard" output stream.

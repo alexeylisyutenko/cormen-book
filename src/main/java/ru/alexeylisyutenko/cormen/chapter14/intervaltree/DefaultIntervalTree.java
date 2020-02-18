@@ -1,7 +1,9 @@
 package ru.alexeylisyutenko.cormen.chapter14.intervaltree;
 
+import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 import ru.alexeylisyutenko.cormen.chapter14.base.AbstractRedBlackBasedBinarySearchTree;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.math.NumberUtils.max;
@@ -74,11 +76,62 @@ public class DefaultIntervalTree extends AbstractRedBlackBasedBinarySearchTree<I
 
     @Override
     public void intervalDelete(Interval interval) {
-        throw new IllegalStateException("Not implemented yet");
+        Objects.requireNonNull(interval, "interval cannot be null");
+
+        IntervalTreeNode nodeToDelete = intervalSearchExactly(interval)
+                .orElseThrow(() -> new BinarySearchTreeException("There is no such interval in the tree"));
+        deleteNode(nodeToDelete);
     }
 
     @Override
-    public Optional<Interval> intervalSearch(Interval interval) {
-        throw new IllegalStateException("Not implemented yet");
+    public Optional<Interval> intervalSearchOverlapping(Interval interval) {
+        Objects.requireNonNull(interval, "interval cannot be null");
+
+        IntervalTreeNode currentNode = root;
+        while (currentNode != NIL && !intervalsOverlap(currentNode.getKey(), interval)) {
+            if (currentNode.getLeft() != NIL && currentNode.getLeft().getMax() >= interval.getLow()) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+
+        if (currentNode == NIL) {
+            return Optional.empty();
+        } else {
+            return Optional.of(currentNode.getKey());
+        }
+    }
+
+    private boolean intervalsOverlap(Interval interval1, Interval interval2) {
+        return interval1.getLow() <= interval2.getHigh() && interval2.getLow() <= interval1.getHigh();
+    }
+
+    private boolean intervalsEqual(Interval interval1, Interval interval2) {
+        return interval1.getLow() == interval2.getLow() && interval1.getHigh() == interval2.getHigh();
+    }
+
+    @Override
+    public boolean intervalContains(Interval interval) {
+        Objects.requireNonNull(interval, "interval cannot be null");
+        return intervalSearchExactly(interval).isPresent();
+    }
+
+    private Optional<IntervalTreeNode> intervalSearchExactly(Interval interval) {
+        IntervalTreeNode currentNode = root;
+        while (currentNode != NIL && !intervalsEqual(currentNode.getKey(), interval)) {
+            if (interval.getHigh() > currentNode.getMax()) {
+                currentNode = NIL;
+            } else if (interval.getLow() < currentNode.getKey().getLow()) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
+            }
+        }
+        if (currentNode == NIL) {
+            return Optional.empty();
+        } else {
+            return Optional.of(currentNode);
+        }
     }
 }

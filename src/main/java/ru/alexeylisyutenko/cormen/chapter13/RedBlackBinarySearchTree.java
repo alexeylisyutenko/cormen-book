@@ -234,6 +234,18 @@ public class RedBlackBinarySearchTree<K extends Comparable<K>> extends AbstractB
         xNode.setColor(BLACK);
     }
 
+    public void transplant(RedBlackSearchTreeNode<K> uNode, RedBlackSearchTreeNode<K> vNode) {
+        RedBlackSearchTreeNode<K> uNodeParent = uNode.getParent();
+        if (uNodeParent == getNil()) {
+            root = vNode;
+        } else if (uNodeParent.getLeft() == uNode) {
+            uNodeParent.setLeft(vNode);
+        } else {
+            uNodeParent.setRight(vNode);
+        }
+        vNode.setParent(uNodeParent);
+    }
+
     @Override
     public void clear() {
         super.clear();

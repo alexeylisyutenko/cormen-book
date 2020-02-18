@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter14.exercise14_3_7;
+package ru.alexeylisyutenko.cormen.chapter14.overlappedrectangles;
 
 import ru.alexeylisyutenko.cormen.chapter14.intervaltree.Interval;
 
@@ -43,5 +43,15 @@ public final class Rectangle {
 
     public Interval getVerticalInterval() {
         return new Interval(yLow, yHigh);
+    }
+
+    @Override
+    public String toString() {
+        return "Rectangle{" +
+                "xLow=" + xLow +
+                ", xHigh=" + xHigh +
+                ", yLow=" + yLow +
+                ", yHigh=" + yHigh +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package ru.alexeylisyutenko.cormen.chapter14.exercise14_3_7;
+package ru.alexeylisyutenko.cormen.chapter14.overlappedrectangles;
 
 import org.apache.commons.lang3.tuple.Pair;
 import ru.alexeylisyutenko.cormen.chapter14.intervaltree.DefaultIntervalTree;
@@ -44,11 +44,10 @@ public final class OverlappedRectanglesAlgorithm {
             int currentLow = lowXCoordinates.get(lowIndex).getLeft();
             int currentHigh = highXCoordinates.get(highIndex).getLeft();
 
-            // TODO: Think about this comparison. Is it correct here?
             if (currentLow <= currentHigh) {
 
                 Interval lowVerticalInterval = lowXCoordinates.get(lowIndex).getRight();
-                boolean overlapFound = intervalTree.intervalSearch(lowVerticalInterval).isPresent();
+                boolean overlapFound = intervalTree.intervalSearchOverlapping(lowVerticalInterval).isPresent();
                 if (overlapFound) {
                     return true;
                 } else {
@@ -65,17 +64,4 @@ public final class OverlappedRectanglesAlgorithm {
 
         return false;
     }
-
-    public static void main(String[] args) {
-        Set<Rectangle> rectangles = Set.of(
-                new Rectangle(0, 5, 0, 5),
-                new Rectangle(10, 15, 4, 10),
-                new Rectangle(13, 30, 20, 30),
-                new Rectangle(20, 25, 8, 25),
-                new Rectangle(35, 40, 4, 15)
-        );
-
-        System.out.println(containsOverlappedRectangles(rectangles));
-    }
-
 }
