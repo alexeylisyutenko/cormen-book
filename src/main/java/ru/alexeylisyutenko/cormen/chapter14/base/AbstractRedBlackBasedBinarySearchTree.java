@@ -3,9 +3,12 @@ package ru.alexeylisyutenko.cormen.chapter14.base;
 import ru.alexeylisyutenko.cormen.chapter12.base.AbstractBinarySearchTree;
 import ru.alexeylisyutenko.cormen.chapter12.base.BinarySearchTreeException;
 import ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor;
+import ru.alexeylisyutenko.cormen.chapter14.intervaltree.IntervalTreeNode;
+import ru.alexeylisyutenko.cormen.chapter14.mingaptree.MinGapTreeNode;
 
 import java.util.Objects;
 
+import static org.apache.commons.lang3.math.NumberUtils.max;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
@@ -22,7 +25,7 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
         insertNode(nodeToInsert);
     }
 
-    void insertNode(N nodeToInsert) {
+    protected void insertNode(N nodeToInsert) {
         K key = nodeToInsert.getKey();
 
         N parentNode = getNil();
@@ -56,9 +59,12 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
         insertFixup(nodeToInsert);
     }
 
-    protected abstract N createNodeToInsert(K key);
+    protected N createNodeToInsert(K key) {
+        return null;
+    }
 
     protected void beforeInsertFixup(N nodeToInsert) {
+        updateNodesAttributesOnPathToRoot(nodeToInsert);
     }
 
     protected void insertFixup(N zNode) {
@@ -169,6 +175,7 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
     }
 
     protected void beforeDeleteFixup(N xNode) {
+        updateNodesAttributesOnPathToRoot(xNode);
     }
 
     protected void deleteFixup(N xNode) {
@@ -239,4 +246,30 @@ public abstract class AbstractRedBlackBasedBinarySearchTree<K extends Comparable
         xNode.setColor(BLACK);
     }
 
+    protected void updateNodesAttributesOnPathToRoot(N currentNode) {
+        while (currentNode != getNil()) {
+            updateSingleNodeAttributes(currentNode);
+            currentNode = currentNode.getParent();
+        }
+    }
+
+    protected void updateSingleNodeAttributes(N node) {
+        // Do nothing.
+    }
+
+    @Override
+    protected void rotateLeft(N xNode) {
+        N yNode = xNode.getRight();
+        super.rotateLeft(xNode);
+        updateSingleNodeAttributes(xNode);
+        updateSingleNodeAttributes(yNode);
+    }
+
+    @Override
+    protected void rotateRight(N yNode) {
+        N xNode = yNode.getLeft();
+        super.rotateRight(yNode);
+        updateSingleNodeAttributes(yNode);
+        updateSingleNodeAttributes(xNode);
+    }
 }

@@ -44,23 +44,7 @@ public class DefaultMinGapTree extends AbstractRedBlackBasedBinarySearchTree<Int
     }
 
     @Override
-    protected void beforeInsertFixup(MinGapTreeNode nodeToInsert) {
-        updateNodesAttributesOnPathToRoot(nodeToInsert);
-    }
-
-    @Override
-    protected void beforeDeleteFixup(MinGapTreeNode xNode) {
-        updateNodesAttributesOnPathToRoot(xNode);
-    }
-
-    protected void updateNodesAttributesOnPathToRoot(MinGapTreeNode currentNode) {
-        while (currentNode != NIL) {
-            updateSingleNodeAttributes(currentNode);
-            currentNode = currentNode.getParent();
-        }
-    }
-
-    private void updateSingleNodeAttributes(MinGapTreeNode node) {
+    protected void updateSingleNodeAttributes(MinGapTreeNode node) {
         // Minimum attribute.
         int minimum = min(node.getLeft().getMinimum(), node.getRight().getMinimum(), node.getKey());
         node.setMinimum(minimum);

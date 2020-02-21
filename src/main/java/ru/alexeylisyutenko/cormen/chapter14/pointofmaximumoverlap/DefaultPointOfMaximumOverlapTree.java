@@ -4,6 +4,7 @@ import ru.alexeylisyutenko.cormen.chapter14.base.AbstractRedBlackBasedBinarySear
 import ru.alexeylisyutenko.cormen.chapter14.intervaltree.Interval;
 
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
+import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
 public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinarySearchTree<Integer, PointOfMaximumOverlapTreeNode> implements PointOfMaximumOverlapTree {
     private final static PointOfMaximumOverlapTreeNode NIL;
@@ -15,8 +16,20 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
 
     @Override
     public void intervalInsert(Interval interval) {
-        insert(interval.getLow());
-        insert(interval.getHigh());
+        insertNode(createNodeToInsert(interval.getLow(), +1));
+        insertNode(createNodeToInsert(interval.getHigh(), -1));
+    }
+
+    private PointOfMaximumOverlapTreeNode createNodeToInsert(int intervalLow, int value) {
+        PointOfMaximumOverlapTreeNode lowNodeToInsert = new DefaultPointOfMaximumOverlapTreeNode();
+        lowNodeToInsert.setLeft(getNil());
+        lowNodeToInsert.setRight(getNil());
+        lowNodeToInsert.setKey(intervalLow);
+        lowNodeToInsert.setColor(RED);
+        lowNodeToInsert.setValue(value);
+        lowNodeToInsert.setSum(0);
+        lowNodeToInsert.setLowerChainSum(0);
+        return lowNodeToInsert;
     }
 
     @Override
@@ -31,12 +44,20 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
     }
 
     @Override
-    protected PointOfMaximumOverlapTreeNode createNodeToInsert(Integer key) {
-        return null;
+    protected PointOfMaximumOverlapTreeNode getNil() {
+        return NIL;
     }
 
     @Override
-    protected PointOfMaximumOverlapTreeNode getNil() {
-        return NIL;
+    protected void updateSingleNodeAttributes(PointOfMaximumOverlapTreeNode node) {
+        // Update sum attribute.
+        int sum = node.getValue();
+        if (node.getLeft() != NIL) {
+            sum += node.getLeft().getSum();
+        }
+        if (node.getRight() != NIL) {
+            sum += node.getRight().getSum();
+        }
+        node.setSum(sum);
     }
 }

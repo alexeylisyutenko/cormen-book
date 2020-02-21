@@ -46,23 +46,7 @@ public class DefaultIntervalTree extends AbstractRedBlackBasedBinarySearchTree<I
     }
 
     @Override
-    protected void beforeInsertFixup(IntervalTreeNode nodeToInsert) {
-        updateNodesAttributesOnPathToRoot(nodeToInsert);
-    }
-
-    @Override
-    protected void beforeDeleteFixup(IntervalTreeNode xNode) {
-        updateNodesAttributesOnPathToRoot(xNode);
-    }
-
-    protected void updateNodesAttributesOnPathToRoot(IntervalTreeNode currentNode) {
-        while (currentNode != NIL) {
-            updateSingleNodeAttributes(currentNode);
-            currentNode = currentNode.getParent();
-        }
-    }
-
-    private void updateSingleNodeAttributes(IntervalTreeNode node) {
+    protected void updateSingleNodeAttributes(IntervalTreeNode node) {
         int maximum = max(node.getLeft() == NIL ? Integer.MIN_VALUE : node.getLeft().getMax(),
                 node.getRight() == NIL ? Integer.MIN_VALUE : node.getRight().getMax(),
                 node.getKey().getHigh());

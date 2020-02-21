@@ -8,4 +8,6 @@ public interface PointOfMaximumOverlapTree {
     void intervalDelete(Interval interval);
 
     int findPom();
+
+    void print();
 }

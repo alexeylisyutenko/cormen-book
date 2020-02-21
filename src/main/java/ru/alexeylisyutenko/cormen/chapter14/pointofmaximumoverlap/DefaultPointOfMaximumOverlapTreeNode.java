@@ -25,7 +25,7 @@ public class DefaultPointOfMaximumOverlapTreeNode extends AbstractRedBlackBasedS
 
     @Override
     public void setSum(int sum) {
-        this.sum = sum
+        this.sum = sum;
     }
 
     @Override
@@ -40,6 +40,6 @@ public class DefaultPointOfMaximumOverlapTreeNode extends AbstractRedBlackBasedS
 
     @Override
     public String toString() {
-        return String.format("%d:%d:%d ", key, value, sum);
+        return String.format("%d:%s:%d ", key, value == 1 ? "+1" : "-1", sum);
     }
 }
