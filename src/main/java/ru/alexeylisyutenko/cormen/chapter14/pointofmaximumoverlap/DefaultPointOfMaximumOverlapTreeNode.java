@@ -2,16 +2,11 @@ package ru.alexeylisyutenko.cormen.chapter14.pointofmaximumoverlap;
 
 import ru.alexeylisyutenko.cormen.chapter14.base.AbstractRedBlackBasedSearchTreeNode;
 
-public class DefaultPointOfMaximumOverlapTreeNode extends AbstractRedBlackBasedSearchTreeNode<Integer, PointOfMaximumOverlapTreeNode> implements PointOfMaximumOverlapTreeNode {
+public class DefaultPointOfMaximumOverlapTreeNode extends AbstractRedBlackBasedSearchTreeNode<PointOfMaximumOverlapTreeKey, PointOfMaximumOverlapTreeNode> implements PointOfMaximumOverlapTreeNode {
     private int value;
     private int sum;
-    private int pointOfMaximumOverlap;
-    private int maximumOverlappingIntervals;
-
-
-    private int leftNegativeChain;
-    private int positiveValueSum;
-    private int negativeValueSum;
+    private int maximumSum;
+    private int pointOfMaximumSum;
 
     @Override
     public int getValue() {
@@ -34,59 +29,27 @@ public class DefaultPointOfMaximumOverlapTreeNode extends AbstractRedBlackBasedS
     }
 
     @Override
-    public int getPointOfMaximumOverlap() {
-        return pointOfMaximumOverlap;
+    public int getMaximumSum() {
+        return maximumSum;
     }
 
     @Override
-    public void setPointOfMaximumOverlap(int pointOfMaximumOverlap) {
-        this.pointOfMaximumOverlap = pointOfMaximumOverlap;
+    public void setMaximumSum(int maximumSum) {
+        this.maximumSum = maximumSum;
     }
 
     @Override
-    public int getMaximumOverlappingIntervals() {
-        return maximumOverlappingIntervals;
+    public int getPointOfMaximumSum() {
+        return pointOfMaximumSum;
     }
 
     @Override
-    public void setMaximumOverlappingIntervals(int maximumOverlappingIntervals) {
-        this.maximumOverlappingIntervals = maximumOverlappingIntervals;
-    }
-
-    @Override
-    public int getLeftNegativeChain() {
-        return leftNegativeChain;
-    }
-
-    @Override
-    public void setLeftNegativeChain(int leftNegativeChain) {
-        this.leftNegativeChain = leftNegativeChain;
-    }
-
-    @Override
-    public int getPositiveValueSum() {
-        return positiveValueSum;
-    }
-
-    @Override
-    public void setPositiveValueSum(int positiveValueSum) {
-        this.positiveValueSum = positiveValueSum;
-    }
-
-    @Override
-    public int getNegativeValueSum() {
-        return negativeValueSum;
-    }
-
-    @Override
-    public void setNegativeValueSum(int negativeValueSum) {
-        this.negativeValueSum = negativeValueSum;
+    public void setPointOfMaximumSum(int pointOfMaximumSum) {
+        this.pointOfMaximumSum = pointOfMaximumSum;
     }
 
     @Override
     public String toString() {
-        String maximumOverlappingIntervalsString = maximumOverlappingIntervals == Integer.MIN_VALUE ? "U" : maximumOverlappingIntervals + "";
-        String pointOfMaximumOverlapString = pointOfMaximumOverlap == Integer.MIN_VALUE ? "U" : pointOfMaximumOverlap + "";
-        return String.format("%d:%s:%d:%s:%s:%d ", key, value == 1 ? "+" : "-", sum, maximumOverlappingIntervalsString, pointOfMaximumOverlapString, leftNegativeChain);
+        return String.format("%d:%s:%d:%d:%d ", key.getEndpoint(), value == 1 ? "+" : "-", sum, maximumSum, pointOfMaximumSum);
     }
 }

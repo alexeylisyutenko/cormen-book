@@ -2,7 +2,7 @@ package ru.alexeylisyutenko.cormen.chapter14.pointofmaximumoverlap;
 
 import ru.alexeylisyutenko.cormen.chapter14.base.RedBlackBasedSearchTreeNode;
 
-public interface PointOfMaximumOverlapTreeNode extends RedBlackBasedSearchTreeNode<Integer, PointOfMaximumOverlapTreeNode> {
+public interface PointOfMaximumOverlapTreeNode extends RedBlackBasedSearchTreeNode<PointOfMaximumOverlapTreeKey, PointOfMaximumOverlapTreeNode> {
     int getValue();
 
     void setValue(int value);
@@ -11,23 +11,11 @@ public interface PointOfMaximumOverlapTreeNode extends RedBlackBasedSearchTreeNo
 
     void setSum(int sum);
 
-    int getPointOfMaximumOverlap();
+    int getMaximumSum();
 
-    void setPointOfMaximumOverlap(int pointOfMaximumOverlap);
+    void setMaximumSum(int maximumSum);
 
-    int getMaximumOverlappingIntervals();
+    int getPointOfMaximumSum();
 
-    void setMaximumOverlappingIntervals(int maximumOverlappingIntervals);
-
-    int getLeftNegativeChain();
-
-    void setLeftNegativeChain(int leftNegativeChain);
-
-    int getPositiveValueSum();
-
-    void setPositiveValueSum(int positiveValueSum);
-
-    int getNegativeValueSum();
-
-    void setNegativeValueSum(int negativeValueSum);
+    void setPointOfMaximumSum(int pointOfMaximumSum);
 }

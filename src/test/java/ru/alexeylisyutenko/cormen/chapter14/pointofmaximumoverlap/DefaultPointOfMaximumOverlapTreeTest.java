@@ -43,7 +43,7 @@ class DefaultPointOfMaximumOverlapTreeTest {
         int intervalsNumber = 2;
 
         List<Interval> intervals = generateIntervalsWithAtLeastOneOverlap(maximumX, intervalsNumber);
-        intervals = List.of(new Interval(34, 35), new Interval(35, 39), new Interval(42, 42));
+//        intervals = List.of(new Interval(34, 35), new Interval(35, 39), new Interval(42, 42));
         printIntervals(maximumX, intervals);
 
         List<Interval> allMaximumOverlapsSimple = findAllMaximumOverlapsSimple(intervals);
@@ -91,7 +91,7 @@ class DefaultPointOfMaximumOverlapTreeTest {
         assertPointOfMaximumOverlapIsValid(intervals, findPointOfMaximumOverlap(intervals));
     }
 
-    @RepeatedTest(1000)
+    @RepeatedTest(10000)
     void randomizedTest() {
         int maximumX = 50;
         int intervalsNumber = RandomUtils.nextInt(2, 10);

@@ -7,12 +7,14 @@ import ru.alexeylisyutenko.cormen.chapter14.intervaltree.Interval;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.BLACK;
 import static ru.alexeylisyutenko.cormen.chapter13.RedBlackTreeNodeColor.RED;
 
-public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinarySearchTree<Integer, PointOfMaximumOverlapTreeNode> implements PointOfMaximumOverlapTree {
+public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinarySearchTree<PointOfMaximumOverlapTreeKey, PointOfMaximumOverlapTreeNode> implements PointOfMaximumOverlapTree {
     private final static PointOfMaximumOverlapTreeNode NIL;
 
     static {
         NIL = new DefaultPointOfMaximumOverlapTreeNode();
         NIL.setColor(BLACK);
+        NIL.setSum(0);
+        NIL.setMaximumSum(0);
     }
 
     @Override
@@ -25,21 +27,19 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
         PointOfMaximumOverlapTreeNode lowNodeToInsert = new DefaultPointOfMaximumOverlapTreeNode();
         lowNodeToInsert.setLeft(getNil());
         lowNodeToInsert.setRight(getNil());
-        lowNodeToInsert.setKey(key);
+        lowNodeToInsert.setKey(new PointOfMaximumOverlapTreeKey(key, value));
         lowNodeToInsert.setColor(RED);
         lowNodeToInsert.setValue(value);
         lowNodeToInsert.setSum(0);
-        lowNodeToInsert.setPointOfMaximumOverlap(0);
-        lowNodeToInsert.setMaximumOverlappingIntervals(0);
-        lowNodeToInsert.setPositiveValueSum(0);
-        lowNodeToInsert.setNegativeValueSum(0);
+        lowNodeToInsert.setMaximumSum(0);
+        lowNodeToInsert.setPointOfMaximumSum(0);
         return lowNodeToInsert;
     }
 
     @Override
     public void intervalDelete(Interval interval) {
-        delete(interval.getHigh());
-        delete(interval.getLow());
+        delete(new PointOfMaximumOverlapTreeKey(interval.getHigh(), +1));
+        delete(new PointOfMaximumOverlapTreeKey(interval.getLow(), -1));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
         if (root == NIL) {
             throw new BinarySearchTreeException("Tree is empty");
         }
-        return root.getPointOfMaximumOverlap();
+        return root.getPointOfMaximumSum();
     }
 
     @Override
@@ -55,115 +55,26 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
         return NIL;
     }
 
-    // TODO: Refactor
     @Override
     protected void updateSingleNodeAttributes(PointOfMaximumOverlapTreeNode node) {
         // Sum.
-        updateNodeSum(node);
+        node.setSum(node.getLeft().getSum() + node.getValue() + node.getRight().getSum());
 
-        // Positive value sum.
-        int positiveValueSum = node.getValue() == +1 ? 1 : 0;
-        if (node.getLeft() != NIL) {
-            positiveValueSum += node.getLeft().getPositiveValueSum();
-        }
-        if (node.getRight() != NIL) {
-            positiveValueSum += node.getRight().getPositiveValueSum();
-        }
-        node.setPositiveValueSum(positiveValueSum);
+        // Maximum sum and point of maximum sum.
+        int left = node.getLeft().getMaximumSum();
+        int leftCurrent = node.getLeft().getSum() + node.getValue();
+        int leftCurrentRight = node.getLeft().getSum() + node.getValue() + node.getRight().getMaximumSum();
 
-        // Negative value sum.
-        int negativeValueSum = node.getValue() == -1 ? 1 : 0;
-        if (node.getLeft() != NIL) {
-            negativeValueSum += node.getLeft().getNegativeValueSum();
-        }
-        if (node.getRight() != NIL) {
-            negativeValueSum += node.getRight().getNegativeValueSum();
-        }
-        node.setNegativeValueSum(negativeValueSum);
-
-        // Left negative chain.
-        int leftNegativeChain = 0;
-        if (node.getLeft() != NIL) {
-            leftNegativeChain = node.getLeft().getLeftNegativeChain();
-        }
-        if (node.getLeft() == NIL && node.getValue() == -1) {
-            leftNegativeChain++;
-        } else if (node.getLeft() != NIL && node.getLeft().getPositiveValueSum() == 0 && node.getValue() == -1) {
-            leftNegativeChain++;
-        }
-        if ((node.getLeft() == NIL || node.getLeft() != NIL && node.getLeft().getPositiveValueSum() == 0)
-                && node.getValue() == -1
-                && node.getRight() != NIL) {
-
-            leftNegativeChain += node.getRight().getLeftNegativeChain();
-        }
-        node.setLeftNegativeChain(leftNegativeChain);
-
-        // Initial.
-        if (node.getValue() == +1) {
-            node.setPointOfMaximumOverlap(node.getKey());
-            node.setMaximumOverlappingIntervals(1);
+        if (left >= leftCurrent && left >= leftCurrentRight) {
+            node.setMaximumSum(left);
+            node.setPointOfMaximumSum(node.getLeft().getPointOfMaximumSum());
+        } else if (leftCurrent >= left && leftCurrent >= leftCurrentRight) {
+            node.setMaximumSum(leftCurrent);
+            node.setPointOfMaximumSum(node.getKey().getEndpoint());
         } else {
-            node.setPointOfMaximumOverlap(Integer.MIN_VALUE);
-            node.setMaximumOverlappingIntervals(Integer.MIN_VALUE);
+            node.setMaximumSum(leftCurrentRight);
+            node.setPointOfMaximumSum(node.getRight().getPointOfMaximumSum());
         }
-
-        // Left.
-        if (node.getLeft() != NIL) {
-            if (node.getValue() == +1) {
-                if (node.getLeft().getSum() > 0) {
-                    int currentNodeOverlappingIntervals = node.getLeft().getSum() + 1;
-                    if (currentNodeOverlappingIntervals > node.getLeft().getMaximumOverlappingIntervals()) {
-                        node.setPointOfMaximumOverlap(node.getKey());
-                        node.setMaximumOverlappingIntervals(currentNodeOverlappingIntervals);
-                    }
-                } else {
-                    if (node.getLeft().getMaximumOverlappingIntervals() > node.getMaximumOverlappingIntervals()) {
-                        node.setMaximumOverlappingIntervals(node.getLeft().getMaximumOverlappingIntervals());
-                        node.setPointOfMaximumOverlap(node.getLeft().getPointOfMaximumOverlap());
-                    }
-                }
-            } else {
-                // What to do here? Nothing. Just copy from the left.
-                if (node.getLeft().getMaximumOverlappingIntervals() > node.getMaximumOverlappingIntervals()) {
-                    node.setMaximumOverlappingIntervals(node.getLeft().getMaximumOverlappingIntervals());
-                    node.setPointOfMaximumOverlap(node.getLeft().getPointOfMaximumOverlap());
-                }
-            }
-        }
-
-        // Right.
-        if (node.getRight() != NIL) {
-            int currentNodeLeftToRightSum = (node.getLeft() != NIL ? node.getLeft().getSum() : 0) + node.getValue();
-
-            if (currentNodeLeftToRightSum > 0) {
-                if (currentNodeLeftToRightSum > node.getRight().getLeftNegativeChain()) {
-                    currentNodeLeftToRightSum = currentNodeLeftToRightSum - node.getRight().getLeftNegativeChain();
-                    if (node.getRight().getMaximumOverlappingIntervals() + currentNodeLeftToRightSum  >= node.getMaximumOverlappingIntervals()) {
-                        node.setPointOfMaximumOverlap(node.getRight().getPointOfMaximumOverlap());
-                        node.setMaximumOverlappingIntervals(node.getRight().getMaximumOverlappingIntervals() + currentNodeLeftToRightSum);
-                    }
-                }
-
-            } else {
-                // Right subtree can improve the result only in one way.
-                if (node.getRight().getMaximumOverlappingIntervals() >= node.getMaximumOverlappingIntervals()) {
-                    node.setPointOfMaximumOverlap(node.getRight().getPointOfMaximumOverlap());
-                    node.setMaximumOverlappingIntervals(node.getRight().getMaximumOverlappingIntervals());
-                }
-            }
-        }
-
     }
 
-    private void updateNodeSum(PointOfMaximumOverlapTreeNode node) {
-        int sum = node.getValue();
-        if (node.getLeft() != NIL) {
-            sum += node.getLeft().getSum();
-        }
-        if (node.getRight() != NIL) {
-            sum += node.getRight().getSum();
-        }
-        node.setSum(sum);
-    }
 }
