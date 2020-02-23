@@ -38,8 +38,8 @@ public class DefaultPointOfMaximumOverlapTree extends AbstractRedBlackBasedBinar
 
     @Override
     public void intervalDelete(Interval interval) {
-        delete(new PointOfMaximumOverlapTreeKey(interval.getHigh(), +1));
-        delete(new PointOfMaximumOverlapTreeKey(interval.getLow(), -1));
+        delete(new PointOfMaximumOverlapTreeKey(interval.getHigh(), -1));
+        delete(new PointOfMaximumOverlapTreeKey(interval.getLow(), +1));
     }
 
     @Override

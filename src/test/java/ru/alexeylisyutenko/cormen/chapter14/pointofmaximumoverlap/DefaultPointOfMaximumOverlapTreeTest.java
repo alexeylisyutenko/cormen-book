@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static ru.alexeylisyutenko.cormen.chapter14.pointofmaximumoverlap.DefaultPointOfMaximumOverlapTreeTest.IntervalHelper.*;
 
@@ -43,7 +44,6 @@ class DefaultPointOfMaximumOverlapTreeTest {
         int intervalsNumber = 2;
 
         List<Interval> intervals = generateIntervalsWithAtLeastOneOverlap(maximumX, intervalsNumber);
-//        intervals = List.of(new Interval(34, 35), new Interval(35, 39), new Interval(42, 42));
         printIntervals(maximumX, intervals);
 
         List<Interval> allMaximumOverlapsSimple = findAllMaximumOverlapsSimple(intervals);
@@ -77,6 +77,36 @@ class DefaultPointOfMaximumOverlapTreeTest {
     }
 
     @Test
+    void mainOperationsTest() {
+        tree.intervalInsert(new Interval(5, 20));
+        assertEquals(5, tree.findPom());
+
+        tree.intervalInsert(new Interval(10, 15));
+        assertEquals(10, tree.findPom());
+
+        tree.intervalInsert(new Interval(25, 30));
+        assertEquals(10, tree.findPom());
+
+        tree.intervalInsert(new Interval(12, 17));
+        assertEquals(12, tree.findPom());
+
+        tree.intervalInsert(new Interval(13, 13));
+        assertEquals(13, tree.findPom());
+
+        tree.intervalDelete(new Interval(12, 17));
+        assertEquals(13, tree.findPom());
+
+        tree.intervalDelete(new Interval(13, 13));
+        assertEquals(10, tree.findPom());
+
+        tree.intervalDelete(new Interval(25, 30));
+        assertEquals(10, tree.findPom());
+
+        tree.intervalDelete(new Interval(10, 15));
+        assertEquals(5, tree.findPom());
+    }
+
+    @Test
     void someIntervalTests() {
         List<Interval> intervals = List.of(new Interval(12, 13), new Interval(27, 28), new Interval(5, 15));
         assertPointOfMaximumOverlapIsValid(intervals, findPointOfMaximumOverlap(intervals));
@@ -91,7 +121,7 @@ class DefaultPointOfMaximumOverlapTreeTest {
         assertPointOfMaximumOverlapIsValid(intervals, findPointOfMaximumOverlap(intervals));
     }
 
-    @RepeatedTest(10000)
+    @RepeatedTest(100000)
     void randomizedTest() {
         int maximumX = 50;
         int intervalsNumber = RandomUtils.nextInt(2, 10);
@@ -105,7 +135,7 @@ class DefaultPointOfMaximumOverlapTreeTest {
 
         boolean pointOfMaximumOverlapIsCorrect = false;
         for (Interval interval : allMaximumOverlaps) {
-            if (interval.getLow() >= actualPointOfMaximumOverlap && actualPointOfMaximumOverlap <= interval.getHigh()) {
+            if (interval.getLow() <= actualPointOfMaximumOverlap && actualPointOfMaximumOverlap <= interval.getHigh()) {
                 pointOfMaximumOverlapIsCorrect = true;
                 break;
             }
