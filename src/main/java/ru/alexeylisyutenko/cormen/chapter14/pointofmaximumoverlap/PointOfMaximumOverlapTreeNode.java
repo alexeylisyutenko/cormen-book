@@ -11,7 +11,23 @@ public interface PointOfMaximumOverlapTreeNode extends RedBlackBasedSearchTreeNo
 
     void setSum(int sum);
 
-    int getLowerChainSum();
+    int getPointOfMaximumOverlap();
 
-    void setLowerChainSum(int lowerChainSum);
+    void setPointOfMaximumOverlap(int pointOfMaximumOverlap);
+
+    int getMaximumOverlappingIntervals();
+
+    void setMaximumOverlappingIntervals(int maximumOverlappingIntervals);
+
+    int getLeftNegativeChain();
+
+    void setLeftNegativeChain(int leftNegativeChain);
+
+    int getPositiveValueSum();
+
+    void setPositiveValueSum(int positiveValueSum);
+
+    int getNegativeValueSum();
+
+    void setNegativeValueSum(int negativeValueSum);
 }
