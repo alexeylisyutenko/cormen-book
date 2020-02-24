@@ -53,7 +53,6 @@ class DefaultMinGapTreeTest {
         System.out.println();
     }
 
-    @Test
     @RepeatedTest(5000)
     void randomizedTest() {
         int elementsNumber = RandomUtils.nextInt(2, 1000);

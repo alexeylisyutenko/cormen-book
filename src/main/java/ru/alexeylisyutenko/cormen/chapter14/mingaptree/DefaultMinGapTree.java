@@ -73,28 +73,4 @@ public class DefaultMinGapTree extends AbstractRedBlackBasedBinarySearchTree<Int
         }
         node.setMinimumGap(minimumGap);
     }
-
-    @Override
-    protected void rotateLeft(MinGapTreeNode xNode) {
-        MinGapTreeNode yNode = xNode.getRight();
-        super.rotateLeft(xNode);
-
-        yNode.setMinimum(xNode.getMinimum());
-        yNode.setMaximum(xNode.getMaximum());
-        yNode.setMinimumGap(xNode.getMinimumGap());
-
-        updateSingleNodeAttributes(xNode);
-    }
-
-    @Override
-    protected void rotateRight(MinGapTreeNode yNode) {
-        MinGapTreeNode xNode = yNode.getLeft();
-        super.rotateRight(yNode);
-
-        xNode.setMinimum(yNode.getMinimum());
-        xNode.setMaximum(yNode.getMaximum());
-        xNode.setMinimumGap(yNode.getMinimumGap());
-
-        updateSingleNodeAttributes(yNode);
-    }
 }

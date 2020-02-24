@@ -18,22 +18,6 @@ public class DefaultIntervalTree extends AbstractRedBlackBasedBinarySearchTree<I
     }
 
     @Override
-    protected void rotateLeft(IntervalTreeNode xNode) {
-        IntervalTreeNode yNode = xNode.getRight();
-        super.rotateLeft(xNode);
-        yNode.setMax(xNode.getMax());
-        updateSingleNodeAttributes(xNode);
-    }
-
-    @Override
-    protected void rotateRight(IntervalTreeNode yNode) {
-        IntervalTreeNode xNode = yNode.getLeft();
-        super.rotateRight(yNode);
-        xNode.setMax(yNode.getMax());
-        updateSingleNodeAttributes(yNode);
-    }
-
-    @Override
     protected IntervalTreeNode createNodeToInsert(Interval key) {
         DefaultIntervalTreeNode nodeToInsert = new DefaultIntervalTreeNode();
         nodeToInsert.setMax(key.getHigh());
