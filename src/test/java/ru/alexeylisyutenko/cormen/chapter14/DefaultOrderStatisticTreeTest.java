@@ -193,14 +193,28 @@ class DefaultOrderStatisticTreeTest {
         }
     }
 
+    @Disabled
     @Test
     void getIthSuccessorCircularOfDemo() {
         for (int i = 1; i <= 10; i++) {
             tree.insert(i);
         }
         tree.print();
+        System.out.println(tree.getIthSuccessorCircularOf(1, 1));
+    }
 
-        System.out.println(tree.getIthSuccessorCircularOf(1, 11));
+    @Test
+    void getIthSuccessorCircularOf() {
+        for (int i = 1; i <= 10; i++) {
+            tree.insert(i);
+        }
+        assertEquals(Integer.valueOf(1), tree.getIthSuccessorCircularOf(1, 0));
+        assertEquals(Integer.valueOf(2), tree.getIthSuccessorCircularOf(1, 1));
+        assertEquals(Integer.valueOf(6), tree.getIthSuccessorCircularOf(1, 5));
+        assertEquals(Integer.valueOf(10), tree.getIthSuccessorCircularOf(1, 9));
+        assertEquals(Integer.valueOf(1), tree.getIthSuccessorCircularOf(1, 10));
+        assertEquals(Integer.valueOf(2), tree.getIthSuccessorCircularOf(1, 11));
+        assertEquals(Integer.valueOf(10), tree.getIthSuccessorCircularOf(1, 19));
     }
 
 }

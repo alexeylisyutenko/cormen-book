@@ -40,6 +40,15 @@ public interface OrderStatisticTree<K extends Comparable<K>> extends BinarySearc
      */
     int countGreaterKeys(K key);
 
-    // TODO: Add javadoc and test.
+    /**
+     * Returns ith successor of a node with particular key.
+     * <br><br>
+     * This method considers all key in the tree as if they were in a circular list. T
+     * hat means that successor of the last key is the first key.
+     *
+     * @param key a key whose ith successor will be returned
+     * @param successorIndex index of successor
+     * @return ith successor of a node with a given key
+     */
     K getIthSuccessorCircularOf(K key, int successorIndex);
 }
