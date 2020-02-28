@@ -3,6 +3,8 @@ package ru.alexeylisyutenko.cormen.chapter14.josephuspermutation;
 import ru.alexeylisyutenko.cormen.chapter14.DefaultOrderStatisticTree;
 import ru.alexeylisyutenko.cormen.chapter14.OrderStatisticTree;
 
+import java.util.ArrayList;
+
 public class OrderStatisticTreeJosephusPermutation implements JosephusPermutation {
     @Override
     public int[] generate(int size, int step) {
@@ -16,35 +18,19 @@ public class OrderStatisticTreeJosephusPermutation implements JosephusPermutatio
         // Populate a tree with numbers from 0 to size.
         // Each insertion takes O(log n), therefore the whole insertion process takes O(n log n).
         OrderStatisticTree<Integer> orderStatisticTree = new DefaultOrderStatisticTree<>();
-        for (int i = 0; i <= size; i++) {
+        for (int i = 1; i <= size; i++) {
             orderStatisticTree.insert(i);
         }
 
         // Thew whole loop runs in O(n log n).
         int[] permutation = new int[size];
-        int key = 0;
-        for (int i = 0; i < size; i++) {
-            // Find circular predecessor for the current key. O(log n).
-            int predecessorKey = getPredecessorCircularOf(orderStatisticTree, key);
-
-            // Delete current key from the tree. O(log n).
+        int rank = 1;
+        for (int k = size; k > 0; k--) {
+            rank = ((rank + step - 2) % k) + 1;
+            int key = orderStatisticTree.selectOrderStatistic(rank);
+            permutation[size - k] = key;
             orderStatisticTree.delete(key);
-
-            // Find next key. O(log n)
-            key = orderStatisticTree.getIthSuccessorCircularOf(predecessorKey, step);
-
-            // Save the current key to the resulting array.
-            permutation[i] = key;
         }
         return permutation;
-    }
-
-    private int getPredecessorCircularOf(OrderStatisticTree<Integer> orderStatisticTree, int key) {
-        int rank = orderStatisticTree.findRank(key);
-        if (rank == 1) {
-            return orderStatisticTree.getMaximum();
-        } else {
-            return orderStatisticTree.selectOrderStatistic(rank - 1);
-        }
     }
 }
