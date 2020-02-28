@@ -154,7 +154,6 @@ class DefaultOrderStatisticTreeTest {
         tree.print();
 
         System.out.println(tree.getIthSuccessorOf(2, 3));
-
     }
 
     @Test
@@ -192,6 +191,16 @@ class DefaultOrderStatisticTreeTest {
         for (int i = 1; i <= testSize ; i++) {
             assertEquals(testSize - i, tree.countGreaterKeys(i));
         }
+    }
+
+    @Test
+    void getIthSuccessorCircularOfDemo() {
+        for (int i = 1; i <= 10; i++) {
+            tree.insert(i);
+        }
+        tree.print();
+
+        System.out.println(tree.getIthSuccessorCircularOf(1, 11));
     }
 
 }

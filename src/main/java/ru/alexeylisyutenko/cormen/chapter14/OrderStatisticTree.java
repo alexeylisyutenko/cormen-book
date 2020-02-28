@@ -39,4 +39,7 @@ public interface OrderStatisticTree<K extends Comparable<K>> extends BinarySearc
      * @return number of keys in the tree that are greater than particular key
      */
     int countGreaterKeys(K key);
+
+    // TODO: Add javadoc and test.
+    K getIthSuccessorCircularOf(K key, int successorIndex);
 }

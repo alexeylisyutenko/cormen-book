@@ -3,6 +3,8 @@ package ru.alexeylisyutenko.cormen.chapter14.josephuspermutation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class CircularLinkedListJosephusPermutationTest {
@@ -16,10 +18,8 @@ class CircularLinkedListJosephusPermutationTest {
 
     @Test
     void generatePermutationDemo() {
-        int[] permutation = josephusPermutation.generate(7, 3);
-        for (int i : permutation) {
-            System.out.println(i);
-        }
+        int[] permutation = josephusPermutation.generate(41, 3);
+        System.out.println(Arrays.toString(permutation));
     }
 
     @Test

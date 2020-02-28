@@ -178,4 +178,13 @@ public class DefaultOrderStatisticTree<K extends Comparable<K>> extends Abstract
         }
         return greaterKeysCount;
     }
+
+    @Override
+    public K getIthSuccessorCircularOf(K key, int successorIndex) {
+        Objects.requireNonNull(key, "key cannot be null");
+
+        int rank = findRank(key);
+        int successorsRank = (((rank + successorIndex) - 1) % root.getSize()) + 1;
+        return selectOrderStatistic(successorsRank);
+    }
 }
