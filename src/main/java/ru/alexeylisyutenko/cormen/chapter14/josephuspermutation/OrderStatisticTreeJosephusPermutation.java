@@ -13,29 +13,38 @@ public class OrderStatisticTreeJosephusPermutation implements JosephusPermutatio
             throw new IllegalArgumentException("size must be greater than zero");
         }
 
-        // Populate a tree with numbers from 1 to size. Each insertion takes O(log n), therefore the whole insertion process takes O(n log n).
+        // Populate a tree with numbers from 0 to size.
+        // Each insertion takes O(log n), therefore the whole insertion process takes O(n log n).
         OrderStatisticTree<Integer> orderStatisticTree = new DefaultOrderStatisticTree<>();
-        for (int i = 1; i <= size; i++) {
+        for (int i = 0; i <= size; i++) {
             orderStatisticTree.insert(i);
         }
 
+        // Thew whole loop runs in O(n log n).
         int[] permutation = new int[size];
-//        int key = orderStatisticTree.getIthSuccessorCircularOf(1, step - 1);
-//        for (int i = 0; i < size; i++) {
-//            permutation[i] = key;
-//
-//            // Save original rank
-//            int rank = orderStatisticTree.findRank(key);
-//
-//            int nextRank = rank + step;
-//            if (nextRank < orderStatisticTree.size())
-//
-////            int successorsRank = (((rank + step) - 1) % orderStatisticTree.size()) + 1;
-//
-//            orderStatisticTree.delete(key);
-//
-//            key = orderStatisticTree.selectOrderStatistic(successorsRank);
-//        }
+        int key = 0;
+        for (int i = 0; i < size; i++) {
+            // Find circular predecessor for the current key. O(log n).
+            int predecessorKey = getPredecessorCircularOf(orderStatisticTree, key);
+
+            // Delete current key from the tree. O(log n).
+            orderStatisticTree.delete(key);
+
+            // Find next key. O(log n)
+            key = orderStatisticTree.getIthSuccessorCircularOf(predecessorKey, step);
+
+            // Save the current key to the resulting array.
+            permutation[i] = key;
+        }
         return permutation;
+    }
+
+    private int getPredecessorCircularOf(OrderStatisticTree<Integer> orderStatisticTree, int key) {
+        int rank = orderStatisticTree.findRank(key);
+        if (rank == 1) {
+            return orderStatisticTree.getMaximum();
+        } else {
+            return orderStatisticTree.selectOrderStatistic(rank - 1);
+        }
     }
 }
