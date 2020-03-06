@@ -152,4 +152,30 @@ public class RodCutting {
     public static Pair<Integer, int[]> extendedBottomUpCutRodWithCost(int[] prices, int size) {
         throw new IllegalStateException("Not implemented yet");
     }
+
+    /**
+     * Computes n-th The Fibonacci number using dynamic-programming. Cormen exercise 15.1-5.
+     */
+    public static int fibonacci(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("n must be greater than 0");
+        }
+
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        int previous = 0;
+        int current = 1;
+        for (int i = 2; i <= n; i++) {
+            int fib = current + previous;
+            previous = current;
+            current = fib;
+        }
+        return current;
+    }
+
+
 }
