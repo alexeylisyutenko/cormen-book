@@ -136,5 +136,19 @@ class RodCuttingTest {
         assertArrayEquals(new int[]{1, 2, 3, 2, 2, 6, 1, 2, 3}, revenueAndSplit.getRight());
     }
 
+    @Test
+    void fibonacci() {
+        assertEquals(0, RodCutting.fibonacci(0));
+        assertEquals(1, RodCutting.fibonacci(1));
+        assertEquals(1, RodCutting.fibonacci(2));
+        assertEquals(2, RodCutting.fibonacci(3));
+        assertEquals(3, RodCutting.fibonacci(4));
+        assertEquals(5, RodCutting.fibonacci(5));
+        assertEquals(8, RodCutting.fibonacci(6));
+        assertEquals(13, RodCutting.fibonacci(7));
+        assertEquals(21, RodCutting.fibonacci(8));
+        assertEquals(34, RodCutting.fibonacci(9));
+    }
+
 
 }
