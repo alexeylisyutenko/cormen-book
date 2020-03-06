@@ -107,7 +107,7 @@ public class RodCutting {
      * Helper method that builds a string with a rod split representation inside.
      *
      * @param split split
-     * @param size size of original rod
+     * @param size  size of original rod
      * @return string with a rod split representation inside
      */
     public static String splitToString(int[] split, int size) {
@@ -127,7 +127,7 @@ public class RodCutting {
     }
 
     /**
-     * Recursive top-down implementation. Which also consider cost of a single cut.
+     * Recursive top-down implementation. Which also considers cost of a single cut.
      *
      * @param prices price list
      * @param cost   cost of a single cut
@@ -149,7 +149,67 @@ public class RodCutting {
         return maxRevenue;
     }
 
-    public static Pair<Integer, int[]> extendedBottomUpCutRodWithCost(int[] prices, int size) {
-        throw new IllegalStateException("Not implemented yet");
+    /**
+     * Bottom-up version of the algorithm which returns the optimal split along with the best revenue.
+     * This version of the algorithm also considers cost of a single cut.
+     *
+     * @param prices price list
+     * @param cost   cost of a single cut
+     * @param size   size of a rod
+     * @return best possible revenue and best split
+     */
+    public static Pair<Integer, int[]> extendedBottomUpCutRodWithCost(int[] prices, int cost, int size) {
+        int[] split = new int[size];
+        int[] revenues = new int[size + 1];
+        revenues[0] = 0;
+        for (int j = 1; j <= size; j++) {
+            int maxRevenue = Integer.MIN_VALUE;
+
+            for (int i = 1; i <= j; i++) {
+                int revenue = prices[i - 1] + revenues[j - i] - (i == j ? 0 : cost);
+                if (maxRevenue < revenue) {
+                    maxRevenue = revenue;
+                    split[j - 1] = i;
+                }
+            }
+            revenues[j] = maxRevenue;
+        }
+        return Pair.of(revenues[size], split);
     }
+
+    /**
+     * Memoized version of the algorithm which returns the optimal split along with the best revenue.
+     *
+     * @param prices price list
+     * @param size   size of a rod
+     * @return best possible revenue and best split
+     */
+    public static Pair<Integer, int[]> extendedMemoizedCutRod(int[] prices, int size) {
+        int[] revenueCache = new int[size + 1];
+        Arrays.fill(revenueCache, Integer.MIN_VALUE);
+        int[] split = new int[size];
+        int revenue = extendedMemoizedCutRodAux(prices, size, revenueCache, split);
+        return Pair.of(revenue, split);
+    }
+
+    private static int extendedMemoizedCutRodAux(int[] prices, int size, int[] revenueCache, int[] split) {
+        if (revenueCache[size] >= 0) {
+            return revenueCache[size];
+        }
+        int maxRevenue = Integer.MIN_VALUE;
+        if (size == 0) {
+            maxRevenue = 0;
+        } else {
+            for (int i = 1; i <= size; i++) {
+                int revenue = prices[i - 1] + extendedMemoizedCutRodAux(prices, size - i, revenueCache, split);
+                if (maxRevenue < revenue) {
+                    maxRevenue = revenue;
+                    split[size - 1] = i;
+                }
+            }
+        }
+        revenueCache[size] = maxRevenue;
+        return maxRevenue;
+    }
+
 }

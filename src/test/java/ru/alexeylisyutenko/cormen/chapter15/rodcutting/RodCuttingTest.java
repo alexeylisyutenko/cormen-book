@@ -3,6 +3,7 @@ package ru.alexeylisyutenko.cormen.chapter15.rodcutting;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.alexeylisyutenko.cormen.chapter15.rodcutting.RodCutting.splitToString;
 
@@ -19,9 +20,20 @@ class RodCuttingTest {
 
     @Test
     void demo2() {
-        int size = 7;
+        int size = 5;
+        int cost = 2;
+
         Pair<Integer, int[]> revenueAndSplit = RodCutting.extendedBottomUpCutRod(DEFAULT_PRICES, size);
-        System.out.println("Revenue: " + revenueAndSplit.getLeft() + ",\tsplit: " + splitToString(revenueAndSplit.getRight(), size));
+        System.out.println("Without cost");
+        System.out.println("Revenue: " + revenueAndSplit.getLeft());
+        System.out.println(splitToString(revenueAndSplit.getRight(), size));
+        System.out.println();
+
+        Pair<Integer, int[]> revenueAndSplitWithCost = RodCutting.extendedBottomUpCutRodWithCost(DEFAULT_PRICES, cost, size);
+        System.out.println("With cost: " + cost);
+        System.out.println("Revenue: " + revenueAndSplitWithCost.getLeft());
+        System.out.println(splitToString(revenueAndSplitWithCost.getRight(), size));
+        System.out.println();
     }
 
     @Test
@@ -84,6 +96,44 @@ class RodCuttingTest {
         assertEquals(9, RodCutting.cutRoadWithCost(DEFAULT_PRICES, 10, 4));
         assertEquals(10, RodCutting.cutRoadWithCost(DEFAULT_PRICES, 10, 5));
         assertEquals(17, RodCutting.cutRoadWithCost(DEFAULT_PRICES, 10, 7));
+    }
+
+    @Test
+    void extendedBottomUpCutRodWithCost() {
+        Pair<Integer, int[]> revenueAndSplit;
+
+        revenueAndSplit = RodCutting.extendedBottomUpCutRodWithCost(DEFAULT_PRICES, 0, 1);
+        assertEquals(Integer.valueOf(1), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1}, revenueAndSplit.getRight());
+
+        revenueAndSplit = RodCutting.extendedBottomUpCutRodWithCost(DEFAULT_PRICES, 0, 5);
+        assertEquals(Integer.valueOf(13), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1, 2, 3, 2, 2}, revenueAndSplit.getRight());
+
+        revenueAndSplit = RodCutting.extendedBottomUpCutRodWithCost(DEFAULT_PRICES, 2, 5);
+        assertEquals(Integer.valueOf(11), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1, 2, 3, 4, 2}, revenueAndSplit.getRight());
+
+        revenueAndSplit = RodCutting.extendedBottomUpCutRodWithCost(DEFAULT_PRICES, 0, 9);
+        assertEquals(Integer.valueOf(25), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1, 2, 3, 2, 2, 6, 1, 2, 3}, revenueAndSplit.getRight());
+    }
+
+    @Test
+    void extendedMemoizedCutRod() {
+        Pair<Integer, int[]> revenueAndSplit;
+
+        revenueAndSplit = RodCutting.extendedMemoizedCutRod(DEFAULT_PRICES, 1);
+        assertEquals(Integer.valueOf(1), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1}, revenueAndSplit.getRight());
+
+        revenueAndSplit = RodCutting.extendedMemoizedCutRod(DEFAULT_PRICES, 5);
+        assertEquals(Integer.valueOf(13), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1, 2, 3, 2, 2}, revenueAndSplit.getRight());
+
+        revenueAndSplit = RodCutting.extendedMemoizedCutRod(DEFAULT_PRICES, 9);
+        assertEquals(Integer.valueOf(25), revenueAndSplit.getLeft());
+        assertArrayEquals(new int[]{1, 2, 3, 2, 2, 6, 1, 2, 3}, revenueAndSplit.getRight());
     }
 
 
