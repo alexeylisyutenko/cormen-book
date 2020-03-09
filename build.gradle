@@ -26,6 +26,8 @@ dependencies {
     jmh 'org.apache.commons:commons-lang3:3.8.1'
     compile 'com.google.guava:guava:27.1-jre'
     compile 'org.apache.commons:commons-lang3:3.8.1'
+    compile 'org.apache.commons:commons-math3:3.6.1'
+    compile 'com.jakewharton.fliptables:fliptables:1.1.0'
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
