@@ -56,7 +56,7 @@ public final class Matrices {
         RealMatrix matrix = MatrixUtils.createRealMatrix(rows, columns);
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
-                matrix.setEntry(row, column, RandomUtils.nextInt(1, 1000));
+                matrix.setEntry(row, column, RandomUtils.nextInt(0, 11) - 5);
             }
         }
         return matrix;
