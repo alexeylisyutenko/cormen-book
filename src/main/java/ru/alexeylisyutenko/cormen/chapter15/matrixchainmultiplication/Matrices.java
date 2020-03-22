@@ -25,6 +25,18 @@ public final class Matrices {
      * @return real matrix chain
      */
     public static List<RealMatrix> createRealMatrixChain(int chainSize) {
+        return createRealMatrixChain(chainSize, 100, 100);
+    }
+
+    /**
+     * Create a matrix chain for successive multiplications.
+     *
+     * @param chainSize chain size
+     * @param maxRows maximum number of rows in each matrix
+     * @param maxColumns maximum number of columns in each matrix
+     * @return real matrix chain
+     */
+    public static List<RealMatrix> createRealMatrixChain(int chainSize, int maxRows, int maxColumns) {
         if (chainSize < 0) {
             throw new IllegalArgumentException("chainSize must be greater or equal than 0");
         }
@@ -33,11 +45,11 @@ public final class Matrices {
         for (int i = 0; i < chainSize; i++) {
             int rows;
             if (matrices.size() == 0) {
-                rows = RandomUtils.nextInt(1, 100);
+                rows = RandomUtils.nextInt(1, maxRows);
             } else {
                 rows = matrices.get(matrices.size() - 1).getColumnDimension();
             }
-            int columns = RandomUtils.nextInt(1, 100);
+            int columns = RandomUtils.nextInt(1, maxColumns);
 
             RealMatrix matrix = createRandomDataMatrix(rows, columns);
             matrices.add(matrix);
