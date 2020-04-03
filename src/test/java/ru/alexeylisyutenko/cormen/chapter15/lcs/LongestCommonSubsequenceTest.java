@@ -1,5 +1,6 @@
 package ru.alexeylisyutenko.cormen.chapter15.lcs;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +10,7 @@ class LongestCommonSubsequenceTest {
     @Test
     void findLcsDemo() {
         System.out.println(LongestCommonSubsequence.findLcs("ABCBDAB", "BDCABA"));
+        System.out.println(LongestCommonSubsequence.findLcs("10010101", "010110110"));
     }
 
     @Test
@@ -49,7 +51,10 @@ class LongestCommonSubsequenceTest {
 
     @Test
     void findLcs() {
-        fail();
+        assertEquals("BCBA", LongestCommonSubsequence.findLcs("ABCBDAB", "BDCABA"));
+        assertEquals("", LongestCommonSubsequence.findLcs("ABCBDAB", ""));
+        assertEquals("", LongestCommonSubsequence.findLcs("", "BDCABA"));
+        assertEquals("", LongestCommonSubsequence.findLcs("", ""));
     }
 
 }

@@ -54,16 +54,17 @@ public final class LongestCommonSubsequence {
     }
 
     /**
+     * Constructs the longest common subsequence by data from {@link LcsLengths} object.
      *
-     * @param lcsLengths
-     * @param sequence1
-     * @param i
-     * @param j
-     * @return
+     * @param lcsLengths lengths of subproblems.
+     * @param sequence1 first sequence
+     * @param m number of elements in the first sequence
+     * @param n number of elements in the second sequence
+     * @return the longest common subsequence
      */
-    public static String constructLcs(LongestCommonSubsequence.LcsLengths lcsLengths, String sequence1, int i, int j) {
+    public static String constructLcs(LongestCommonSubsequence.LcsLengths lcsLengths, String sequence1, int m, int n) {
         StringBuilder stringBuilder = new StringBuilder();
-        constructLcsAux(lcsLengths.getChosenSolutions(), sequence1, i, j, stringBuilder);
+        constructLcsAux(lcsLengths.getChosenSolutions(), sequence1, m, n, stringBuilder);
         return stringBuilder.toString();
     }
 
@@ -82,10 +83,11 @@ public final class LongestCommonSubsequence {
     }
 
     /**
+     * Finds the longest common subsequence of two sequences.
      *
-     * @param sequence1
-     * @param sequence2
-     * @return
+     * @param sequence1 first sequence
+     * @param sequence2 second sequence
+     * @return the longest common subsequence
      */
     public static String findLcs(String sequence1, String sequence2) {
         LcsLengths lcsLengths = lcsLength(sequence1, sequence2);
