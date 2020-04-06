@@ -158,7 +158,47 @@ public final class LongestCommonSubsequence {
         return length;
     }
 
-    // Print all LCS? How to do that? Can we use information in
+    /**
+     * Exercise 15.4-4.
+     */
+    public static int onlyLcsLengthWithOptimizedSpace(String sequence1, String sequence2) {
+        Objects.requireNonNull(sequence1, "sequence1 cannot be null");
+        Objects.requireNonNull(sequence2, "sequence2 cannot be null");
+
+        if (sequence2.length() > sequence1.length()) {
+            String temp = sequence1;
+            sequence1 = sequence2;
+            sequence2 = temp;
+        }
+
+        int m = sequence1.length();
+        int n = sequence2.length();
+
+        int topLeft;
+        int top;
+        int left;
+        int[] c = new int[n];
+        for (int i = 1; i <= m; i++) {
+            topLeft = 0;
+            left = 0;
+            for (int j = 1; j <= n; j++) {
+                top = c[j - 1];
+                if (sequence1.charAt(i - 1) == sequence2.charAt(j - 1)) {
+                    c[j - 1] = topLeft + 1;
+                } else {
+                    c[j - 1] = Math.max(top, left);
+                }
+                topLeft = top;
+                left = c[j - 1];
+            }
+        }
+
+        if (c.length == 0) {
+            return 0;
+        } else {
+            return c[c.length - 1];
+        }
+    }
 
     /**
      * Finds the longest common subsequence of two sequences.

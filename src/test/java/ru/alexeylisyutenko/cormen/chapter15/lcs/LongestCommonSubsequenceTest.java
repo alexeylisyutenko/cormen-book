@@ -1,5 +1,8 @@
 package ru.alexeylisyutenko.cormen.chapter15.lcs;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -78,5 +81,27 @@ class LongestCommonSubsequenceTest {
         assertEquals("", LongestCommonSubsequence.findLcs("ABCBDAB", ""));
         assertEquals("", LongestCommonSubsequence.findLcs("", "BDCABA"));
         assertEquals("", LongestCommonSubsequence.findLcs("", ""));
+    }
+
+    @Test
+    void onlyLcsLengthWithOptimizedSpaceDemo() {
+        System.out.println(LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("ABCBDAB", "BDCABA"));
+        System.out.println(LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("BDCABA", "ABCBDAB"));
+    }
+
+    @Test
+    void onlyLcsLengthWithOptimizedSpace() {
+        assertEquals(4, LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("ABCBDAB", "BDCABA"));
+        assertEquals(4, LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("BDCABA", "ABCBDAB"));
+        assertEquals(0, LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("ABCBDAB", ""));
+        assertEquals(0, LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("", "BDCABA"));
+        assertEquals(0, LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace("", ""));
+    }
+
+    @RepeatedTest(1000)
+    void onlyLcsLengthWithOptimizedSpaceRandomized() {
+        String sequence1 = RandomStringUtils.randomAlphabetic(0, 100);
+        String sequence2 = RandomStringUtils.randomAlphabetic(0, 100);
+        assertEquals(LongestCommonSubsequence.findLcs(sequence1, sequence2).length(), LongestCommonSubsequence.onlyLcsLengthWithOptimizedSpace(sequence1, sequence2));
     }
 }
