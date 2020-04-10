@@ -1,10 +1,12 @@
 package ru.alexeylisyutenko.helper;
 
+import com.jakewharton.fliptables.FlipTable;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -110,4 +112,20 @@ public final class Helpers {
         }
         return new ArrayList<>(integerHashSet);
     }
+
+    public static void print2dArrayAsTable(int[][] source) {
+        int rows = source.length;
+        int columns = (rows == 0) ? 0 : source[0].length;
+
+        String[] headers = new String[columns];
+        for (int i = 0; i < columns; i++) {
+            headers[i] = "-";
+        }
+
+        String[][] data = Arrays.stream(source)
+                .map(ints -> Arrays.stream(ints).mapToObj(String::valueOf).toArray(String[]::new))
+                .toArray(String[][]::new);
+        System.out.println(FlipTable.of(headers, data));
+    }
+
 }

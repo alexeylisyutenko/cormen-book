@@ -2,6 +2,7 @@ package ru.alexeylisyutenko.cormen.chapter15.matrixchainmultiplication;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +39,7 @@ public class GreedyApproachTest {
         System.out.println(printOptimalParenthesis(optimalParenthesization));
     }
 
+    @Disabled
     @RepeatedTest(1000)
     void findCounterExample() {
         List<RealMatrix> matrixChain = createRealMatrixChain(3, 10, 10);
