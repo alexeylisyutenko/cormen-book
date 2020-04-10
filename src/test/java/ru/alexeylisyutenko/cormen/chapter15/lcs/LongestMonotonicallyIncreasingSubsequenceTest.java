@@ -28,7 +28,17 @@ class LongestMonotonicallyIncreasingSubsequenceTest {
 
     @Test
     void lengthOnlyDynamic() {
+        assertEquals(0, LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{}));
+        assertEquals(1, LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{6}));
+        assertEquals(2, LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{1, 2}));
+        assertEquals(1, LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{2, 1}));
+        assertEquals(3, LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{1, 9, 2, 3}));
+    }
+
+    @Test
+    void lengthOnlyDynamicDemo() {
         System.out.println(LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{1, 9, 2, 3}));
+        System.out.println(LongestMonotonicallyIncreasingSubsequence.lengthOnlyDynamic(new int[]{}));
     }
 
 }

@@ -73,6 +73,9 @@ public final class LongestMonotonicallyIncreasingSubsequence {
         Objects.requireNonNull(sequence, "sequence cannot be null");
 
         int size = sequence.length;
+        if (size == 0) {
+            return 0;
+        }
 
         // Add a special value to the front of the sequence.
         int[] modifiedSequence = new int[size + 1];
