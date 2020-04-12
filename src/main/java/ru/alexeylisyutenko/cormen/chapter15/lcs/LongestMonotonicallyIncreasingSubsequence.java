@@ -142,8 +142,7 @@ public final class LongestMonotonicallyIncreasingSubsequence {
                 candidates.get(0).clear();
                 candidates.get(0).add(sequence[i]);
             } else {
-                int searchResult = Arrays.binarySearch(lastElements, sequence[i]);
-                int j = searchResult < 0 ? -(searchResult + 1) : searchResult;
+                int j = binSearch(lastElements, sequence[i]);
                 lastElements[j] = sequence[i];
                 candidates.get(j).clear();
                 candidates.get(j).addAll(candidates.get(j - 1));
@@ -157,6 +156,18 @@ public final class LongestMonotonicallyIncreasingSubsequence {
 
         ArrayList<Integer> lmis = candidates.get(longestCandidateLength - 1);
         return lmis.stream().mapToInt(value -> value).toArray();
+    }
+
+    private static int binSearch(int[] sequence, int key) {
+        int searchResult = Arrays.binarySearch(sequence, key);
+        if (searchResult < 0) {
+            return -(searchResult + 1);
+        } else {
+            while (searchResult < sequence.length && sequence[searchResult] == key) {
+                searchResult++;
+            }
+            return searchResult;
+        }
     }
 
     @Value

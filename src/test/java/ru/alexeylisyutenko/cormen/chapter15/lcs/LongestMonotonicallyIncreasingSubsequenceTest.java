@@ -61,12 +61,14 @@ class LongestMonotonicallyIncreasingSubsequenceTest {
         assertArrayEquals(new int[] {1}, findLMISFast(new int[]{2, 1}));
         assertArrayEquals(new int[] {1, 2, 3}, findLMISFast(new int[]{1, 9, 2, 3}));
 
-        fail(); // TODO: Check how it deals with repeated elements.
+        assertArrayEquals(new int[] {1, 2, 2, 2, 3}, findLMISFast(new int[]{1, 2, 2, 2, 3}));
+        assertArrayEquals(new int[] {3, 3, 3, 3}, findLMISFast(new int[]{5, 6, 7, 3, 3, 3, 3}));
+        assertArrayEquals(new int[] {1, 1, 1}, findLMISFast(new int[]{1, 1, 1}));
     }
 
     @Test
     void findLongestMonotonicallyIncreasingSubsequenceDemo() {
-        int[] sequence = randomSequence(100, 10000);
+        int[] sequence = randomSequence(10, 5);
         System.out.println(Arrays.toString(sequence));
 
         int[] solution = findLongestMonotonicallyIncreasingSubsequence(sequence);
@@ -75,14 +77,4 @@ class LongestMonotonicallyIncreasingSubsequenceTest {
         int[] solution2 = findLMISFast(sequence);
         System.out.println(Arrays.toString(solution2));
     }
-
-    @Test
-    void bindarySearchDemo() {
-        int[] ints = {1, 5, 10};
-        int i = Arrays.binarySearch(ints, 6);
-        int ip = -i - 1;
-        System.out.println(ip);
-    }
-
-
 }
