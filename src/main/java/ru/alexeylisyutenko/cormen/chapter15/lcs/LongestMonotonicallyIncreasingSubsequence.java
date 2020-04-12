@@ -2,7 +2,7 @@ package ru.alexeylisyutenko.cormen.chapter15.lcs;
 
 import lombok.Value;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Exercise 15.4-5.
@@ -49,7 +49,7 @@ public final class LongestMonotonicallyIncreasingSubsequence {
     }
 
     /**
-     * Returns the longestMonotonically increasing subsequence.
+     * Returns the longest monotonically increasing subsequence. O(n^2).
      *
      * @param sequence sequence of integers
      * @return the longestMonotonically increasing subsequence
@@ -110,6 +110,53 @@ public final class LongestMonotonicallyIncreasingSubsequence {
         }
 
         return new LMISLengthsAndDirections(lengths, directions);
+    }
+
+    /**
+     * Returns the longest monotonically increasing subsequence. O(n log n).
+     *
+     * @param sequence sequence of integers
+     * @return the longestMonotonically increasing subsequence
+     */
+    public static int[] findLMISFast(int[] sequence) {
+        Objects.requireNonNull(sequence, "sequence cannot be null");
+        int size = sequence.length;
+        if (size == 0) {
+            return new int[0];
+        }
+
+        int[] lastElements = new int[size];
+        for (int i = 0; i < size; i++) {
+            lastElements[i] = Integer.MAX_VALUE;
+        }
+
+        ArrayList<ArrayList<Integer>> candidates = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            candidates.add(new ArrayList<>(size));
+        }
+
+        int longestCandidateLength = 1;
+        for (int i = 0; i < size; i++) {
+            if (sequence[i] < lastElements[0]) {
+                lastElements[0] = sequence[i];
+                candidates.get(0).clear();
+                candidates.get(0).add(sequence[i]);
+            } else {
+                int searchResult = Arrays.binarySearch(lastElements, sequence[i]);
+                int j = searchResult < 0 ? -(searchResult + 1) : searchResult;
+                lastElements[j] = sequence[i];
+                candidates.get(j).clear();
+                candidates.get(j).addAll(candidates.get(j - 1));
+                candidates.get(j).add(sequence[i]);
+                if (j + 1> longestCandidateLength) {
+                    longestCandidateLength++;
+                }
+            }
+
+        }
+
+        ArrayList<Integer> lmis = candidates.get(longestCandidateLength - 1);
+        return lmis.stream().mapToInt(value -> value).toArray();
     }
 
     @Value
