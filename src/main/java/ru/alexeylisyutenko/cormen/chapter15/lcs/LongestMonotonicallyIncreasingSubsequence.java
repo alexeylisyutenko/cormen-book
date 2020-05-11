@@ -151,7 +151,6 @@ public final class LongestMonotonicallyIncreasingSubsequence {
                     longestCandidateLength++;
                 }
             }
-
         }
 
         ArrayList<Integer> lmis = candidates.get(longestCandidateLength - 1);
