@@ -9,7 +9,7 @@ class ProbabilitiesTest {
 
     @Test
     void validConstruction() {
-        Probabilities probabilities = new Probabilities(
+        new Probabilities(
                 new double[]{0.3},
                 new double[]{0.5, 0.2}
         );

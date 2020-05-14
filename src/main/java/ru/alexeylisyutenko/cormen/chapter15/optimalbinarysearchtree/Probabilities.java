@@ -37,6 +37,6 @@ public class Probabilities {
     }
 
     public double getMissProbability(int index) {
-        return miss[index - 1];
+        return miss[index];
     }
 }

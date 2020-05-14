@@ -27,11 +27,26 @@ public final class OptimalBinarySearchTrees {
             probabilitySums[i][i - 1] = probabilities.getMissProbability(i - 1);
         }
 
-        return null;
+        for (int len = 1; len <= size ; len++) {
+            for (int i = 1; i <= size - len + 1; i++) {
+                int j = i + len - 1;
+                expectedCosts[i][j] = Integer.MAX_VALUE;
+                probabilitySums[i][j] = probabilitySums[i][j - 1] + probabilities.getHitProbability(j) + probabilities.getMissProbability(j);
+                for (int r = i; r <= j ; r++) {
+                    double currentExpectedCost = expectedCosts[i][r - 1] + expectedCosts[r + 1][j] + probabilitySums[i][j];
+                    if (currentExpectedCost < expectedCosts[i][j]) {
+                        expectedCosts[i][j] = currentExpectedCost;
+                        roots[i][j] = r;
+                    }
+                }
+            }
+        }
+
+        return new ExpectedCostsAndRoots(expectedCosts, roots);
     }
 
     @Value
-    private static class ExpectedCostsAndRoots {
+    public static class ExpectedCostsAndRoots {
         double[][] expectedCosts;
         int[][] roots;
     }
