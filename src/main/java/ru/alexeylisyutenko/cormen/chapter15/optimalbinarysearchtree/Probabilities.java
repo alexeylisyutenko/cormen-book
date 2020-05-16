@@ -19,6 +19,10 @@ public class Probabilities {
         Objects.requireNonNull(hit);
         Objects.requireNonNull(miss);
 
+        if (hit.length == 0) {
+            throw new IllegalArgumentException("There must be at least one hit probability");
+        }
+
         if (miss.length != hit.length + 1) {
             throw new IllegalArgumentException("miss.length must be equal to hit.length + 1");
         }
