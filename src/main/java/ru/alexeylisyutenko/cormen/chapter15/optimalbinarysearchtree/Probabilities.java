@@ -1,6 +1,7 @@
 package ru.alexeylisyutenko.cormen.chapter15.optimalbinarysearchtree;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Objects;
  * Class which contains probabilities required for optimal binary search tree construction. Cormen 15.5.
  */
 @Getter
+@ToString
 public class Probabilities {
     public static final double THRESHOLD = 0.0001;
     private final double[] hit;
