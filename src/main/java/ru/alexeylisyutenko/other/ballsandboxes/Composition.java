@@ -1,46 +1,59 @@
 package ru.alexeylisyutenko.other.ballsandboxes;
 
+import com.google.common.collect.ImmutableList;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode
 public class Composition {
-    private final List<Box> boxes;
+    protected final List<Box> boxes;
 
-//        private final List<Set<Integer>> boxes2;
+    protected Composition(List<Box> boxes) {
+        this.boxes = boxes;
+    }
 
-    public Composition(int boxCount) {
+    public static Composition ofSize(int boxCount) {
         if (boxCount < 0) {
             throw new IllegalArgumentException("boxCount cannot be negative");
         }
 
-        this.boxes = new ArrayList<>(boxCount);
+        ImmutableList.Builder<Box> listBuilder = ImmutableList.builder();
         for (int i = 0; i < boxCount; i++) {
-//                this.boxes.add(new Box());
+            listBuilder.add(Box.of());
         }
+        return new Composition(listBuilder.build());
     }
 
     public List<Box> getBoxes() {
-        return Collections.unmodifiableList(boxes);
+        return boxes;
     }
 
-    public Composition putBallIntoBox(int ball, int box) {
+    public Composition putBallIntoBox(int box, int ball) {
         if (box < 1 || box > boxes.size()) {
             throw new IllegalArgumentException("Incorrect box number");
         }
 
+        ArrayList<Box> newBoxes = new ArrayList<>(this.boxes);
 
-        // TODO: Finish this!
+        Box boxWithBallAdded = newBoxes.get(box - 1).putBall(ball);
+        newBoxes.set(box - 1, boxWithBallAdded);
 
-        return null;
+        return new Composition(ImmutableList.copyOf(newBoxes));
+    }
+
+    public int getBoxCount() {
+        return boxes.size();
+    }
+
+    public Box getBox(int box) {
+        return boxes.get(box - 1);
     }
 
     @Override
     public String toString() {
-        return boxes.stream().map(Box::toString).collect(Collectors.joining(", "));
+        return boxes.stream().map(Box::toString).collect(Collectors.joining(" "));
     }
 }

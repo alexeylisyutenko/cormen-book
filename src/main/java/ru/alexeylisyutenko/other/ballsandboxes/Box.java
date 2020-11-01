@@ -15,11 +15,11 @@ public class Box {
         this.balls = balls;
     }
 
-    public static Box valueOf(Set<Integer> balls) {
-        return new Box(new HashSet<>(balls));
+    public static Box of(Integer... balls) {
+        return new Box(Set.of(balls));
     }
 
-    public static Box valueOf() {
+    public static Box of() {
         return new Box(new HashSet<>());
     }
 
@@ -37,8 +37,12 @@ public class Box {
         return Collections.unmodifiableSet(balls);
     }
 
+    public int getSize() {
+        return balls.size();
+    }
+
     @Override
     public String toString() {
-        return balls.stream().map(Object::toString).collect(Collectors.joining(", ", "(", ")"));
+        return balls.stream().sorted().map(Object::toString).collect(Collectors.joining(", ", "(", ")"));
     }
 }
